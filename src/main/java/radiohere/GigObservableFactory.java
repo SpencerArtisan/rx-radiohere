@@ -1,5 +1,8 @@
 package radiohere;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -19,44 +22,48 @@ public class GigObservableFactory {
 	}
 
 	public Observable<Gig> create() {
-		Observable<Integer> pagesObservable = Observable.range(0, pages);
-		Observable<String> songKickResultPages = pagesObservable.flatMap((page) -> createSinglePageGigObservable(page));
-		Observable<Gig> gigs = songKickResultPages.flatMap(this::songKickToGigs);
-		return gigs.flatMap(this::gigToGigWithVenue);
+		return Observable
+				.range(0, pages)
+				.flatMap(this::createSongKickPageObservable)
+				.flatMap(this::createGigObservable)
+				.flatMap(this::createGigWithVenueObservable);
 	}
 
-	private Observable<Gig> gigToGigWithVenue(Gig gig) {
-		if (gig.getVenueId() == null) {
-			return Observable.empty();
-		}
-		return venueObservableFactory.create(gig.getVenueId()).map((venue) -> gig.addVenue(venue));
-	}
-	
-	private Observable<String> createSinglePageGigObservable(Integer page) {
+	private Observable<String> createSongKickPageObservable(Integer page) {
 		return Async.fromCallable(() -> songKick.getGigs(page));
 	}
 	
-	public Observable<Gig> songKickToGigs(String songKickJson) {
-		return Observable.create((Subscriber<? super Gig> subscriber) -> {
-			JSONArray events = extractEvents(songKickJson);
-			for (int i = 0; i < events.length(); i++) {
-				if (canCreateGig(events.getJSONObject(i))) {
-					subscriber.onNext(createGig(events.getJSONObject(i)));
-				}
-			}
-			subscriber.onCompleted();
-		});
+	public Observable<Gig> createGigObservable(String songKickPage) {
+		return Observable
+				.from(extractEvents(songKickPage))
+				.filter(this::canCreateGig)
+				.map(this::createGig);
 	}
 	
+	private Observable<Gig> createGigWithVenueObservable(Gig gig) {
+		return venueObservableFactory
+				.create(gig.getVenueId())
+				.map(gig::addVenue);
+	}
+		
 	private boolean canCreateGig(JSONObject event) {
 		return event.getJSONArray("performance").length() > 0;
 	}
 
-	private JSONArray extractEvents(String songKickJson) {
-		return new JSONObject(songKickJson)
+	private List<JSONObject> extractEvents(String songKickJson) {
+		JSONArray events = new JSONObject(songKickJson)
 				.getJSONObject("resultsPage")
 				.getJSONObject("results")
 				.getJSONArray("event");
+		return convertToList(events);
+	}
+
+	private List<JSONObject> convertToList(JSONArray events) {
+		List<JSONObject> eventsList = new ArrayList<>();
+		for (int i = 0; i < events.length(); i++) {
+			eventsList.add(events.getJSONObject(i));
+		}
+		return eventsList;
 	}
 
 	private Gig createGig(JSONObject event) {

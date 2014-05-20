@@ -12,10 +12,14 @@ public class VenueObservableFactory {
 		this.songKick = songKick;
 	}
 
-	public Observable<Venue> create(int id) {
+	public Observable<Venue> create(Integer id) {
+		if (id == null) {
+			return Observable.empty();
+		}
 		return Async.fromCallable(() -> songKick.getVenue(id))
 				.map(this::songKickToVenue);
 	}
+
 	public Venue songKickToVenue(String songKickJson) {
 		JSONObject venue = extractVenue(songKickJson);
 		return createVenue(venue);

@@ -136,6 +136,7 @@ public class GigObservableFactoryTest {
 		
 		@Before
 		public void before() throws Exception {
+			when(venueObservableFactory.create(null)).thenReturn(Observable.empty());
 			gigObservableFactory = new GigObservableFactory(songKick, venueObservableFactory, 1);
 			when(songKick.getGigs(0)).thenReturn(gigsJson);
 			Observable<Gig> observable = gigObservableFactory.create();
