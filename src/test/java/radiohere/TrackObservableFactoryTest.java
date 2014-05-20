@@ -1,6 +1,6 @@
 package radiohere;
 
-import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
@@ -19,6 +19,53 @@ import rx.Observable;
 
 @RunWith(Nested.class)
 public class TrackObservableFactoryTest {
+	public class WithNoTracks {
+		private static final String tracksJson = "[]";
+	                                                                                                                                  
+		private List<Track> tracks;
+	        
+		@Before
+		public void before() throws Exception {
+			SoundCloud soundCloud = mock(SoundCloud.class);
+			when(soundCloud.getTracks("Kate Denny")).thenReturn(tracksJson);
+			when(soundCloud.getClientId()).thenReturn("CLIENT_ID");
+			TrackObservableFactory factory = new TrackObservableFactory(soundCloud);
+			Observable<Track> observable = factory.create("Kate Denny");
+			tracks = observable.toList().toBlockingObservable().single();	
+		}
+		
+		@Test
+		public void shouldObserveNoTracks() throws Exception {
+			assertThat(tracks, empty());
+		}
+	}
+	
+	public class WithOneTrackWithoutStreamUrl {
+		private static final String tracksJson = 
+				"[																		" +
+				"	{																	" +
+				"		'title':'kate denny - closer to home (album preview)',			" +
+				"	}																	" + 
+				"]																		";
+		
+		private List<Track> tracks;
+		
+		@Before
+		public void before() throws Exception {
+			SoundCloud soundCloud = mock(SoundCloud.class);
+			when(soundCloud.getTracks("Kate Denny")).thenReturn(tracksJson);
+			when(soundCloud.getClientId()).thenReturn("CLIENT_ID");
+			TrackObservableFactory factory = new TrackObservableFactory(soundCloud);
+			Observable<Track> observable = factory.create("Kate Denny");
+			tracks = observable.toList().toBlockingObservable().single();	
+		}
+		
+		@Test
+		public void shouldObserveOneTrack() throws Exception {
+			assertThat(tracks, empty());
+		}
+	}
+	
 	public class WithOneTrack {
 		private static final String tracksJson = 
 				"[																		" +
@@ -27,11 +74,11 @@ public class TrackObservableFactoryTest {
 				"		'stream_url':'http://api.soundcloud.com/tracks/52641865/stream',	" +
 				"	}																	" + 
 				"]																		";
-	                                                                                                                                  
+		
 		private List<Track> tracks;
-	        
+		
 		@Before
-		public void before() throws IOException {
+		public void before() throws Exception {
 			SoundCloud soundCloud = mock(SoundCloud.class);
 			when(soundCloud.getTracks("Kate Denny")).thenReturn(tracksJson);
 			when(soundCloud.getClientId()).thenReturn("CLIENT_ID");
@@ -72,7 +119,7 @@ public class TrackObservableFactoryTest {
 		private List<Track> tracks;
 		
 		@Before
-		public void before() throws IOException {
+		public void before() throws Exception {
 			SoundCloud soundCloud = mock(SoundCloud.class);
 			when(soundCloud.getTracks("Kate Denny")).thenReturn(tracksJson);
 			when(soundCloud.getClientId()).thenReturn("CLIENT_ID");

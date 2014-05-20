@@ -12,7 +12,7 @@ public class GigWithTracks {
 		this(gig, new ArrayList<>());
 	}
 
-	private GigWithTracks(Gig gig, List<Track> tracks) {
+	public GigWithTracks(Gig gig, List<Track> tracks) {
 		this.gig = gig;
 		this.tracks = tracks;
 	}
@@ -29,5 +29,10 @@ public class GigWithTracks {
 
 	public List<Track> getTracks() {
 		return Collections.unmodifiableList(tracks);
+	}
+
+	@Override
+	public String toString() {
+		return "GigWithTracks [gig=" + gig + ", tracks=" + tracks + "]";
 	}
 }

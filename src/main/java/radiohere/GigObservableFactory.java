@@ -55,15 +55,7 @@ public class GigObservableFactory {
 				.getJSONObject("resultsPage")
 				.getJSONObject("results")
 				.getJSONArray("event");
-		return convertToList(events);
-	}
-
-	private List<JSONObject> convertToList(JSONArray events) {
-		List<JSONObject> eventsList = new ArrayList<>();
-		for (int i = 0; i < events.length(); i++) {
-			eventsList.add(events.getJSONObject(i));
-		}
-		return eventsList;
+		return JSONUtil.convertToList(events);
 	}
 
 	private Gig createGig(JSONObject event) {

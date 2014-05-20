@@ -141,8 +141,8 @@ public class GigWithTracksObservableFactoryTest {
 		}
 		
 		@Test
-		public void shouldBeThreeItems() throws Exception {
-			assertThat(gigWithTracks.size(), is(3));
+		public void shouldBeTwoItems() throws Exception {
+			assertThat(gigWithTracks.size(), is(2));
 		}
 		
 		@Test
@@ -161,28 +161,13 @@ public class GigWithTracksObservableFactoryTest {
 		}
 		
 		@Test
-		public void secondItemShouldHaveOneTrack() throws Exception {
-			assertThat(gigWithTracks.get(1).getTracks().size(), is(1));
+		public void secondItemShouldHaveTwoTracks() throws Exception {
+			assertThat(gigWithTracks.get(1).getTracks().size(), is(2));
 		}
 		
 		@Test
 		public void secondItemShouldHaveTheTrackDetails() throws Exception {
-			assertThat(gigWithTracks.get(1).getTracks(), contains(track1));
-		}
-		
-		@Test
-		public void thirdItemShouldHaveTheGigDetails() throws Exception {
-			assertThat(gigWithTracks.get(2).getGig(), equalTo(gig));
-		}
-		
-		@Test
-		public void thirdItemShouldHaveTwoTracks() throws Exception {
-			assertThat(gigWithTracks.get(2).getTracks().size(), is(2));
-		}
-		
-		@Test
-		public void thirdItemShouldHaveTheTrackDetails() throws Exception {
-			assertThat(gigWithTracks.get(2).getTracks(), contains(track1, track2));
+			assertThat(gigWithTracks.get(1).getTracks(), contains(track1, track2));
 		}
 	}
 	

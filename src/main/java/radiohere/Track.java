@@ -16,4 +16,9 @@ public class Track {
 	public String getStreamUrl() {
 		return streamUri;
 	}
+
+	@Override
+	public String toString() {
+		return "Track [name=" + name + ", streamUri=" + streamUri + "]";
+	}
 }

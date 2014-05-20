@@ -14,13 +14,18 @@ public class GigWithTracksObservableFactory {
 	}
 
 	public Observable<GigWithTracks> create() {
-		Observable<Gig> gigObservable = gigObservableFactory.create();
-		return gigObservable.flatMap((gig) -> createGigWithGrowingTrackList(gig));
+		return gigObservableFactory
+				.create()
+				.flatMap(this::createGigWithTrackList);
 	}
 
-	private Observable<GigWithTracks> createGigWithGrowingTrackList(Gig gig) {
-		Observable<Track> create = trackObservableFactory.create(gig.getArtist());
-		return create.scan(new GigWithTracks(gig), 
-				(existingGigWithTracks, newTrack) -> existingGigWithTracks.add(newTrack));
+	private Observable<GigWithTracks> createGigWithTrackList(Gig gig) {
+		Observable<GigWithTracks> gigWithoutTracks = Observable.just(new GigWithTracks(gig));
+		Observable<GigWithTracks> gigWithTracks = trackObservableFactory
+				.create(gig.getArtist())
+				.toList()
+				.filter((tracks) -> !tracks.isEmpty())
+				.map((tracks) -> new GigWithTracks(gig, tracks));
+		return Observable.concat(gigWithoutTracks, gigWithTracks);
 	}
 }
