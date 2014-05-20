@@ -9,7 +9,7 @@ public class GigWithTracksObservableFactoryIntegrationTest {
 	public void dumpGigsWithTracks() throws Exception {
 		SongKick songKick = new SongKick();
 		TrackObservableFactory trackObservableFactory = 
-				new TrackObservableFactory(new SoundCloud());
+				new TrackObservableFactory(new SoundCloud(), 4);
 		VenueObservableFactory venueObservableFactory = new VenueObservableFactory(songKick);
 		GigObservableFactory gigObservableFactory = 
 				new GigObservableFactory(songKick, venueObservableFactory, 10);

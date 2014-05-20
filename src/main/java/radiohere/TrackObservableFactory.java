@@ -1,21 +1,21 @@
 package radiohere;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.schedulers.Schedulers;
 import rx.util.async.Async;
 
 public class TrackObservableFactory {
 	private SoundCloud soundCloud;
+	private int maxTracks;
 
-	public TrackObservableFactory(SoundCloud soundCloud) {
+	public TrackObservableFactory(SoundCloud soundCloud, int maxTracks) {
 		this.soundCloud = soundCloud;
+		this.maxTracks = maxTracks;
 	}
 
 	public Observable<Track> create(String artist) {
@@ -31,6 +31,7 @@ public class TrackObservableFactory {
 		return Observable
 				.from(extractTracks(soundCloudJson))
 				.filter(this::canCreateTrack)
+				.take(maxTracks)
 				.map(this::createTrack);
 	}
 	

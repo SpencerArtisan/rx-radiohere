@@ -29,7 +29,7 @@ public class TrackObservableFactoryTest {
 			SoundCloud soundCloud = mock(SoundCloud.class);
 			when(soundCloud.getTracks("Kate Denny")).thenReturn(tracksJson);
 			when(soundCloud.getClientId()).thenReturn("CLIENT_ID");
-			TrackObservableFactory factory = new TrackObservableFactory(soundCloud);
+			TrackObservableFactory factory = new TrackObservableFactory(soundCloud, 99);
 			Observable<Track> observable = factory.create("Kate Denny");
 			tracks = observable.toList().toBlockingObservable().single();	
 		}
@@ -42,11 +42,11 @@ public class TrackObservableFactoryTest {
 	
 	public class WithOneTrackWithoutStreamUrl {
 		private static final String tracksJson = 
-				"[																		" +
-				"	{																	" +
-				"		'title':'kate denny - closer to home (album preview)',			" +
-				"	}																	" + 
-				"]																		";
+				"[											" +
+				"	{										" +
+				"		'title':'Closer to home',			" +
+				"	}										" + 
+				"]											";
 		
 		private List<Track> tracks;
 		
@@ -55,7 +55,7 @@ public class TrackObservableFactoryTest {
 			SoundCloud soundCloud = mock(SoundCloud.class);
 			when(soundCloud.getTracks("Kate Denny")).thenReturn(tracksJson);
 			when(soundCloud.getClientId()).thenReturn("CLIENT_ID");
-			TrackObservableFactory factory = new TrackObservableFactory(soundCloud);
+			TrackObservableFactory factory = new TrackObservableFactory(soundCloud, 99);
 			Observable<Track> observable = factory.create("Kate Denny");
 			tracks = observable.toList().toBlockingObservable().single();	
 		}
@@ -70,7 +70,7 @@ public class TrackObservableFactoryTest {
 		private static final String tracksJson = 
 				"[																		" +
 				"	{																	" +
-				"		'title':'kate denny - closer to home (album preview)',			" +
+				"		'title':'Closer to home',			" +
 				"		'stream_url':'http://api.soundcloud.com/tracks/52641865/stream',	" +
 				"	}																	" + 
 				"]																		";
@@ -82,7 +82,7 @@ public class TrackObservableFactoryTest {
 			SoundCloud soundCloud = mock(SoundCloud.class);
 			when(soundCloud.getTracks("Kate Denny")).thenReturn(tracksJson);
 			when(soundCloud.getClientId()).thenReturn("CLIENT_ID");
-			TrackObservableFactory factory = new TrackObservableFactory(soundCloud);
+			TrackObservableFactory factory = new TrackObservableFactory(soundCloud, 99);
 			Observable<Track> observable = factory.create("Kate Denny");
 			tracks = observable.toList().toBlockingObservable().single();	
 		}
@@ -93,13 +93,9 @@ public class TrackObservableFactoryTest {
 		}
 		
 		@Test
-		public void shouldProvideTheName() throws Exception {
-			assertThat(tracks.get(0).getName(), equalTo("kate denny - closer to home (album preview)"));
-		}
-		
-		@Test
-		public void shouldProvideTheStreamUrl() throws Exception {
-			assertThat(tracks.get(0).getStreamUrl(), equalTo("http://api.soundcloud.com/tracks/52641865/stream?client_id=CLIENT_ID"));
+		public void shouldProvideTheTrack() throws Exception {
+			assertThat(tracks.get(0), equalTo(
+					new Track("Closer to home", "http://api.soundcloud.com/tracks/52641865/stream?client_id=CLIENT_ID")));
 		}
 	}
 	
@@ -107,7 +103,7 @@ public class TrackObservableFactoryTest {
 		private static final String tracksJson = 
 				"[																		" +
 				"	{																	" +
-				"		'title':'kate denny - closer to home (album preview)',			" +
+				"		'title':'Closer to home',			" +
 				"		'stream_url':'http://api.soundcloud.com/tracks/52641865/stream',	" +
 				"	},																	" + 
 				"	{																	" +
@@ -123,7 +119,7 @@ public class TrackObservableFactoryTest {
 			SoundCloud soundCloud = mock(SoundCloud.class);
 			when(soundCloud.getTracks("Kate Denny")).thenReturn(tracksJson);
 			when(soundCloud.getClientId()).thenReturn("CLIENT_ID");
-			TrackObservableFactory factory = new TrackObservableFactory(soundCloud);
+			TrackObservableFactory factory = new TrackObservableFactory(soundCloud, 99);
 			Observable<Track> observable = factory.create("Kate Denny");
 			tracks = observable.toList().toBlockingObservable().single();	
 		}
@@ -134,23 +130,52 @@ public class TrackObservableFactoryTest {
 		}
 		
 		@Test
-		public void shouldProvideTheFirstTrackName() throws Exception {
-			assertThat(tracks.get(0).getName(), equalTo("kate denny - closer to home (album preview)"));
+		public void shouldProvideTheFirstTrack() throws Exception {
+			assertThat(tracks.get(0), equalTo(
+					new Track("Closer to home", "http://api.soundcloud.com/tracks/52641865/stream?client_id=CLIENT_ID")));
 		}
 		
 		@Test
-		public void shouldProvideTheFirstTrackStreamUrl() throws Exception {
-			assertThat(tracks.get(0).getStreamUrl(), equalTo("http://api.soundcloud.com/tracks/52641865/stream?client_id=CLIENT_ID"));
+		public void shouldProvideTheSecondTrack() throws Exception {
+			assertThat(tracks.get(1), equalTo(
+					new Track("William and The Boat", "http://api.soundcloud.com/tracks/25533842/stream?client_id=CLIENT_ID")));
+		}
+	}
+	
+	public class WithMoreTracksThanRequired {
+		private static final String tracksJson = 
+				"[																		" +
+						"	{																	" +
+						"		'title':'Closer to home',			" +
+						"		'stream_url':'http://api.soundcloud.com/tracks/52641865/stream',	" +
+						"	},																	" + 
+						"	{																	" +
+						"		'title':'William and The Boat',									" +
+						"		'stream_url':'http://api.soundcloud.com/tracks/25533842/stream',	" +
+						"	}																	" + 
+						"]																		";
+		
+		private List<Track> tracks;
+		
+		@Before
+		public void before() throws Exception {
+			SoundCloud soundCloud = mock(SoundCloud.class);
+			when(soundCloud.getTracks("Kate Denny")).thenReturn(tracksJson);
+			when(soundCloud.getClientId()).thenReturn("CLIENT_ID");
+			TrackObservableFactory factory = new TrackObservableFactory(soundCloud, 1);
+			Observable<Track> observable = factory.create("Kate Denny");
+			tracks = observable.toList().toBlockingObservable().single();	
 		}
 		
 		@Test
-		public void shouldProvideTheSecondTrackName() throws Exception {
-			assertThat(tracks.get(1).getName(), equalTo("William and The Boat"));
+		public void shouldObserveOneTrack() throws Exception {
+			assertThat(tracks.size(), is(1));
 		}
 		
 		@Test
-		public void shouldProvideTheSecondTrackStreamUrl() throws Exception {
-			assertThat(tracks.get(1).getStreamUrl(), equalTo("http://api.soundcloud.com/tracks/25533842/stream?client_id=CLIENT_ID"));
+		public void shouldProvideTheFirstTrack() throws Exception {
+			assertThat(tracks.get(0), equalTo(
+					new Track("Closer to home", "http://api.soundcloud.com/tracks/52641865/stream?client_id=CLIENT_ID")));
 		}
 	}
 }
