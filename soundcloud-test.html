@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="http://connect.soundcloud.com/sdk.js"></script>
+	<script>
+	SC.initialize({
+	  client_id: 'ab2cd50270f2b1097c169d43f06a3d17'
+	});
+	// find all sounds of buskers licensed under 'creative commons share alike'
+	SC.get('/tracks', { q: 'kate denny' }, function(tracks) {
+	  console.log(tracks);
+	});
+	</script>
+</head>
+<body>
+	soundcloud test
+</body>
+</html>
