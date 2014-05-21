@@ -47,5 +47,15 @@ public class VenueObservableFactoryTest {
 		public void shouldProvideTheName() throws Exception {
 			assertThat(venue.getName(), equalTo("O2 Academy Brixton"));
 		}
+
+		@Test
+		public void shouldProvideTheLatitude() throws Exception {
+			assertThat(venue.getLatitude(), equalTo(51.4651268));
+		}
+		
+		@Test
+		public void shouldProvideTheLongitude() throws Exception {
+			assertThat(venue.getLongitude(), equalTo(-0.115187));
+		}
 	}
 }

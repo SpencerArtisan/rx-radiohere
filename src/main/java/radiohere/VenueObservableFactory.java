@@ -35,6 +35,8 @@ public class VenueObservableFactory {
 	private Venue createVenue(JSONObject event) {
 		String name = event.getString("displayName");
 		String postcode = event.getString("zip");
-		return new Venue(name, postcode);
+		double latitude = event.getDouble("lat");
+		double longitude = event.getDouble("lng");
+		return new Venue(name, postcode, latitude, longitude);
 	}
 }
