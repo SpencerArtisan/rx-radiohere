@@ -49,13 +49,8 @@ public class VenueObservableFactoryTest {
 		}
 
 		@Test
-		public void shouldProvideTheLatitude() throws Exception {
-			assertThat(venue.getLatitude(), equalTo(51.4651268));
-		}
-		
-		@Test
-		public void shouldProvideTheLongitude() throws Exception {
-			assertThat(venue.getLongitude(), equalTo(-0.115187));
+		public void shouldProvideTheLocation() throws Exception {
+			assertThat(venue.getCoordinate(), equalTo(new Coordinate(51.4651268, -0.115187)));
 		}
 	}
 }

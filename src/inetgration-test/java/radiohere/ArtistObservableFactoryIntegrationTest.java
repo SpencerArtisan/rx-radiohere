@@ -12,9 +12,9 @@ public class ArtistObservableFactoryIntegrationTest {
 				new TrackObservableFactory(new SoundCloud(), 4);
 		VenueObservableFactory venueObservableFactory = new VenueObservableFactory(songKick);
 		GigObservableFactory gigObservableFactory = 
-				new GigObservableFactory(songKick, venueObservableFactory, 5);
+				new GigObservableFactory(songKick, venueObservableFactory, 5, 5.0);
 		Observable<Artist> artistObservable = 
 				new ArtistObservableFactory(gigObservableFactory, trackObservableFactory).create();
-		Dumper.dumpForTimePeriod(artistObservable, 20000);
+		Dumper.dumpForTimePeriod(artistObservable, 2000);
 	}
 }

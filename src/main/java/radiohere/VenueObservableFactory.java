@@ -17,12 +17,18 @@ public class VenueObservableFactory {
 			return Observable.empty();
 		}
 		return Async.fromCallable(() -> songKick.getVenue(id))
+				.filter(this::canCreateVenue)
 				.map(this::songKickToVenue);
 	}
 
 	public Venue songKickToVenue(String songKickJson) {
 		JSONObject venue = extractVenue(songKickJson);
 		return createVenue(venue);
+	}
+	
+	private boolean canCreateVenue(String songKickJson) {
+		JSONObject venue = extractVenue(songKickJson);
+		return venue.has("lat") && venue.has("lng") && !venue.isNull("lat") && !venue.isNull("lng");
 	}
 	
 	private JSONObject extractVenue(String songKickJson) {
@@ -32,11 +38,11 @@ public class VenueObservableFactory {
 				.getJSONObject("venue");
 	}
 
-	private Venue createVenue(JSONObject event) {
-		String name = event.getString("displayName");
-		String postcode = event.getString("zip");
-		double latitude = event.getDouble("lat");
-		double longitude = event.getDouble("lng");
-		return new Venue(name, postcode, latitude, longitude);
+	private Venue createVenue(JSONObject venue) {
+		String name = venue.getString("displayName");
+		String postcode = venue.getString("zip");
+		double latitude = venue.getDouble("lat");
+		double longitude = venue.getDouble("lng");
+		return new Venue(name, postcode, new Coordinate(latitude, longitude));
 	}
 }

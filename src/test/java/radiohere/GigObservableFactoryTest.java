@@ -1,6 +1,6 @@
 package radiohere;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
@@ -48,7 +48,7 @@ public class GigObservableFactoryTest {
 	        
 		@Before
 		public void before() throws Exception {
-			gigObservableFactory = new GigObservableFactory(songKick, venueObservableFactory, 1);
+			gigObservableFactory = new GigObservableFactory(songKick, venueObservableFactory, 1, 100.0);
 			when(songKick.getGigs(0)).thenReturn(gigsJson);
 			Observable<Gig> observable = gigObservableFactory.create();
 			gigs = observable.toList().toBlockingObservable().single();	
@@ -79,8 +79,8 @@ public class GigObservableFactoryTest {
 	        
 		@Before
 		public void before() throws Exception {
-			gigObservableFactory = new GigObservableFactory(songKick, venueObservableFactory, 1);
-			venue = new Venue("name", "postcode", 51, 1);
+			gigObservableFactory = new GigObservableFactory(songKick, venueObservableFactory, 1, 100.0);
+			venue = new Venue("name", "postcode", new Coordinate(51, 1));
 			when(venueObservableFactory.create(42)).thenReturn(Observable.just(venue));
 			when(songKick.getGigs(0)).thenReturn(gigsJson);
 			Observable<Gig> observable = gigObservableFactory.create();
@@ -118,6 +118,39 @@ public class GigObservableFactoryTest {
 		}
 	}
 
+	public class WithOneGigALongWayAway {
+		private static final String gigsJson = 
+				"{                                                        " +
+				"  'resultsPage': {                                       " +
+				"    'results': { 'event': [                              " +
+				"      {                                                  " +
+				"        'start':{'date':'2012-04-18'},                   " +
+				"        'performance':[{'displayName':'Wild Flag'}],     " +
+				"        'venue':{'displayName':'The Fillmore', 'id':42}  " +
+				"      }                                                  " +
+				"    ]}                                                   " +
+				"  }                                                      " +
+				"}  														 ";
+	                                                                                                                                  
+		private List<Gig> gigs;
+		private Venue venue;
+	        
+		@Before
+		public void before() throws Exception {
+			gigObservableFactory = new GigObservableFactory(songKick, venueObservableFactory, 1, 100.0);
+			venue = new Venue("name", "postcode", new Coordinate(12, 30));
+			when(venueObservableFactory.create(42)).thenReturn(Observable.just(venue));
+			when(songKick.getGigs(0)).thenReturn(gigsJson);
+			Observable<Gig> observable = gigObservableFactory.create();
+			gigs = observable.toList().toBlockingObservable().single();	
+		}
+		
+		@Test
+		public void shouldObserveNoGigs() throws Exception {
+			assertThat(gigs, empty());
+		}
+	}
+	
 	public class WithUnknownVenue {
 		private static final String gigsJson = 
 				"{                                                        " +
@@ -137,7 +170,7 @@ public class GigObservableFactoryTest {
 		@Before
 		public void before() throws Exception {
 			when(venueObservableFactory.create(null)).thenReturn(Observable.empty());
-			gigObservableFactory = new GigObservableFactory(songKick, venueObservableFactory, 1);
+			gigObservableFactory = new GigObservableFactory(songKick, venueObservableFactory, 1, 100.0);
 			when(songKick.getGigs(0)).thenReturn(gigsJson);
 			Observable<Gig> observable = gigObservableFactory.create();
 			gigs = observable.toList().toBlockingObservable().single();	
@@ -174,9 +207,9 @@ public class GigObservableFactoryTest {
 		
 		@Before
 		public void before() throws Exception {
-			gigObservableFactory = new GigObservableFactory(songKick, venueObservableFactory, 1);
-			venue1 = new Venue("name1", "postcode1", 51, 1);
-			venue2 = new Venue("name2", "postcode2", 53, 2);
+			gigObservableFactory = new GigObservableFactory(songKick, venueObservableFactory, 1, 100.0);
+			venue1 = new Venue("name1", "postcode1", new Coordinate(51, 1));
+			venue2 = new Venue("name2", "postcode2", new Coordinate(51.1, 0));
 			when(venueObservableFactory.create(42)).thenReturn(Observable.just(venue1));
 			when(venueObservableFactory.create(43)).thenReturn(Observable.just(venue2));
 			when(songKick.getGigs(0)).thenReturn(gigsJson);
@@ -232,9 +265,9 @@ public class GigObservableFactoryTest {
 	        
 		@Before
 		public void before() throws Exception {
-			gigObservableFactory = new GigObservableFactory(songKick, venueObservableFactory, 2);
-			venue1 = new Venue("name1", "postcode1", 51, -1);
-			venue2 = new Venue("name2", "postcode2", 52, 0);
+			gigObservableFactory = new GigObservableFactory(songKick, venueObservableFactory, 2, 100.0);
+			venue1 = new Venue("name1", "postcode1", new Coordinate(51, -1));
+			venue2 = new Venue("name2", "postcode2", new Coordinate(52, 0));
 			when(venueObservableFactory.create(42)).thenReturn(Observable.just(venue1));
 			when(venueObservableFactory.create(43)).thenReturn(Observable.just(venue2));
 			when(songKick.getGigs(0)).thenReturn(gigsJsonPage1);
