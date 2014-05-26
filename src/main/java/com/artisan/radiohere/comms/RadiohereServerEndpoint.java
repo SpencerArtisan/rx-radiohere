@@ -32,6 +32,7 @@ public class RadiohereServerEndpoint {
     
     private void sendToClient(Session session, Artist artist) {
     		try {
+    	        logger.info("Server sending artist to client... " + artist.getGigs().get(0).getArtist());
     			session.getBasicRemote().sendText(artist.toString());
 		} catch (IOException e) {
 			e.printStackTrace();
