@@ -16,6 +16,10 @@ public class ArtistObservableFactory {
 		this.trackObservableFactory = trackObservableFactory;
 	}
 
+	public ArtistObservableFactory() {
+		this(new GigObservableFactory(), new TrackObservableFactory());
+	}
+
 	public Observable<Artist> create() {
 		return gigObservableFactory
 				.create()

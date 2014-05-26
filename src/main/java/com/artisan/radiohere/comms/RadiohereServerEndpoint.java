@@ -1,6 +1,7 @@
 package com.artisan.radiohere.comms;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.logging.Logger;
 
@@ -19,13 +20,18 @@ public class RadiohereServerEndpoint {
 
     @OnOpen
     public void onOpen(Session session) {
-        logger.info("Connected ... " + session.getId());
+        logger.info("Client initiates Radiohere... " + session.getId());
+        try {
+			session.getBasicRemote().sendText("{artist json}");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
     @OnMessage
     public String onMessage(String unscrambledWord, Session session) {
         logger.info("Server receives ...." + unscrambledWord);
-        return unscrambledWord;
+        return null;
     }
 
     @OnClose

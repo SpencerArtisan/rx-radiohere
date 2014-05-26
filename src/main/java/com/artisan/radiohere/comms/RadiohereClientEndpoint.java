@@ -22,17 +22,12 @@ public class RadiohereClientEndpoint {
     @OnOpen
     public void onOpen(Session session) {
         logger.info("Connected ... " + session.getId());
-        try {
-            session.getBasicRemote().sendText("Client sends START");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @OnMessage
     public String onMessage(String scrambledWord, Session session) {
         logger.info("Client receives ...." + scrambledWord);
-        return "Return from Client " + scrambledWord;
+        return null;
     }
 
     @OnClose

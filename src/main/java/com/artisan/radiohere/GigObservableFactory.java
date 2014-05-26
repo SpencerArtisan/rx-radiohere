@@ -22,6 +22,10 @@ public class GigObservableFactory {
 		this.maximumDistanceFromCentralLondon = maximumDistanceFromCentralLondon;
 	}
 
+	public GigObservableFactory() {
+		this(new SongKick(), new VenueObservableFactory(new SongKick()), 4, 3);
+	}
+
 	public Observable<Gig> create() {
 		return Observable
 				.range(0, pages)

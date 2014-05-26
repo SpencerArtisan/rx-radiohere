@@ -18,6 +18,10 @@ public class TrackObservableFactory {
 		this.maxTracks = maxTracks;
 	}
 
+	public TrackObservableFactory() {
+		this(new SoundCloud(), 4);
+	}
+
 	public Observable<Track> create(String artist) {
 		return createSoundCloudPageObservable(artist)
 				.flatMap(this::createTrackObservable);
