@@ -14,6 +14,11 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.glassfish.tyrus.server.Server;
 
+import rx.Observable;
+
+import com.artisan.radiohere.Artist;
+import com.artisan.radiohere.ArtistObservableFactory;
+
 @ServerEndpoint(value = "/game")
 public class RadiohereServerEndpoint {
     private Logger logger = Logger.getLogger(this.getClass().getName());
@@ -21,8 +26,13 @@ public class RadiohereServerEndpoint {
     @OnOpen
     public void onOpen(Session session) {
         logger.info("Client initiates Radiohere... " + session.getId());
-        try {
-			session.getBasicRemote().sendText("{artist json}");
+    		Observable<Artist> factory = new ArtistObservableFactory().create();
+    		factory.subscribe((artist) -> sendToClient(session, artist));
+    }
+    
+    private void sendToClient(Session session, Artist artist) {
+    		try {
+    			session.getBasicRemote().sendText(artist.toString());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
