@@ -1,0 +1,7 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<testsuite name="com.artisan.radiohere.ArtistObservableFactoryTest$WithNoGigs" tests="1" failures="0" errors="0" timestamp="2014-05-26T07:24:34" hostname="localhost" time="0.002">
+  <properties/>
+  <testcase name="shouldBeNoArtists" classname="com.artisan.radiohere.ArtistObservableFactoryTest$WithNoGigs" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

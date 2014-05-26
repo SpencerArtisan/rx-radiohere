@@ -1,8 +1,0 @@
-<?xml version="1.1" encoding="UTF-8"?>
-<testsuite name="radiohere.TrackObservableFactoryTest$WithOneTrack" tests="2" failures="0" errors="0" timestamp="2014-05-26T06:55:05" hostname="localhost" time="0.002">
-  <properties/>
-  <testcase name="shouldProvideTheTrack" classname="radiohere.TrackObservableFactoryTest$WithOneTrack" time="0.001"/>
-  <testcase name="shouldObserveOneTrack" classname="radiohere.TrackObservableFactoryTest$WithOneTrack" time="0.001"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

@@ -1,0 +1,11 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<testsuite name="com.artisan.radiohere.ArtistObservableFactoryTest$WithOneGigAndTwoTracks" tests="5" failures="0" errors="0" timestamp="2014-05-26T07:24:34" hostname="localhost" time="0.013">
+  <properties/>
+  <testcase name="shouldHaveTheGigDetails" classname="com.artisan.radiohere.ArtistObservableFactoryTest$WithOneGigAndTwoTracks" time="0.003"/>
+  <testcase name="shouldHaveTheTrackDetails" classname="com.artisan.radiohere.ArtistObservableFactoryTest$WithOneGigAndTwoTracks" time="0.002"/>
+  <testcase name="shouldBeOneArtist" classname="com.artisan.radiohere.ArtistObservableFactoryTest$WithOneGigAndTwoTracks" time="0.003"/>
+  <testcase name="shouldBeOneGig" classname="com.artisan.radiohere.ArtistObservableFactoryTest$WithOneGigAndTwoTracks" time="0.002"/>
+  <testcase name="shouldBeTwoTracks" classname="com.artisan.radiohere.ArtistObservableFactoryTest$WithOneGigAndTwoTracks" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
