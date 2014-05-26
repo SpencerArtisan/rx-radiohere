@@ -10,11 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.artisan.radiohere.Coordinate;
-import com.artisan.radiohere.SongKick;
-import com.artisan.radiohere.Venue;
-import com.artisan.radiohere.VenueObservableFactory;
-
 import rx.Observable;
 
 @RunWith(Nested.class)

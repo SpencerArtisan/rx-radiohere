@@ -6,12 +6,9 @@ import static org.junit.Assert.assertThat;
 import net.avh4.test.junit.Nested;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import com.artisan.radiohere.SoundCloud;
 
 @RunWith(Nested.class)
 public class SoundCloudIntegrationTest {

@@ -17,13 +17,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.artisan.radiohere.Artist;
-import com.artisan.radiohere.ArtistObservableFactory;
-import com.artisan.radiohere.Gig;
-import com.artisan.radiohere.GigObservableFactory;
-import com.artisan.radiohere.Track;
-import com.artisan.radiohere.TrackObservableFactory;
-
 import rx.Observable;
 
 @RunWith(Nested.class)

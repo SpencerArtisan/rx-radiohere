@@ -2,14 +2,6 @@ package com.artisan.radiohere;
 
 import org.junit.Test;
 
-import com.artisan.radiohere.Artist;
-import com.artisan.radiohere.ArtistObservableFactory;
-import com.artisan.radiohere.GigObservableFactory;
-import com.artisan.radiohere.SongKick;
-import com.artisan.radiohere.SoundCloud;
-import com.artisan.radiohere.TrackObservableFactory;
-import com.artisan.radiohere.VenueObservableFactory;
-
 import rx.Observable;
 
 public class ArtistObservableFactoryIntegrationTest {

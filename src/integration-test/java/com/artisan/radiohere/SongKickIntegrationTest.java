@@ -10,8 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.artisan.radiohere.SongKick;
-
 @RunWith(Nested.class)
 public class SongKickIntegrationTest {
 	public class WhenGigsAreRetrieved {		

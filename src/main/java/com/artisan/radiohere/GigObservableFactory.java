@@ -1,13 +1,11 @@
 package com.artisan.radiohere;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.util.async.Async;
 
 public class GigObservableFactory {

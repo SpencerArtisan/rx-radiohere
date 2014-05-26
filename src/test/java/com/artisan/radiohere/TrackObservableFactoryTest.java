@@ -1,12 +1,12 @@
 package com.artisan.radiohere;
 
-import static org.hamcrest.Matchers.*;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
 import java.util.List;
 
 import net.avh4.test.junit.Nested;
@@ -14,10 +14,6 @@ import net.avh4.test.junit.Nested;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import com.artisan.radiohere.SoundCloud;
-import com.artisan.radiohere.Track;
-import com.artisan.radiohere.TrackObservableFactory;
 
 import rx.Observable;
 
