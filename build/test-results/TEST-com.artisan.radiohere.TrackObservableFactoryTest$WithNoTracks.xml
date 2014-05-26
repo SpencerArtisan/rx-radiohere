@@ -1,7 +1,0 @@
-<?xml version="1.1" encoding="UTF-8"?>
-<testsuite name="com.artisan.radiohere.TrackObservableFactoryTest$WithNoTracks" tests="1" failures="0" errors="0" timestamp="2014-05-26T07:24:34" hostname="localhost" time="0.001">
-  <properties/>
-  <testcase name="shouldObserveNoTracks" classname="com.artisan.radiohere.TrackObservableFactoryTest$WithNoTracks" time="0.001"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
