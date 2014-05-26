@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/SpencerArtisan/rx-radiohere.svg?branch=master)](https://travis-ci.org/SpencerArtisan/rx-radiohere)
+
 rx-radiohere
 ============
 
