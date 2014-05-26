@@ -1,0 +1,8 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<testsuite name="radiohere.CoordinateTest" tests="2" failures="0" errors="0" timestamp="2014-05-26T06:55:05" hostname="localhost" time="0.001">
+  <properties/>
+  <testcase name="distanceBetweenSamePoint" classname="radiohere.CoordinateTest" time="0.001"/>
+  <testcase name="distanceBetweenPoints" classname="radiohere.CoordinateTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,7 +1,6 @@
 package radiohere;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import rx.Observable;

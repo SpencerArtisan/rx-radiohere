@@ -1,0 +1,15 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<testsuite name="radiohere.ArtistObservableFactoryTest$WithTwoGigsFromSameArtistAndTwoTracks" tests="9" failures="0" errors="0" timestamp="2014-05-26T06:55:05" hostname="localhost" time="0.028">
+  <properties/>
+  <testcase name="firstEmittedArtistShouldHaveOneGig" classname="radiohere.ArtistObservableFactoryTest$WithTwoGigsFromSameArtistAndTwoTracks" time="0.003"/>
+  <testcase name="firstEmittedArtistShouldHaveTwoTracks" classname="radiohere.ArtistObservableFactoryTest$WithTwoGigsFromSameArtistAndTwoTracks" time="0.002"/>
+  <testcase name="firstEmittedArtistShouldHaveTheGigDetails" classname="radiohere.ArtistObservableFactoryTest$WithTwoGigsFromSameArtistAndTwoTracks" time="0.002"/>
+  <testcase name="firstEmittedArtistShouldHaveTheTrackDetails" classname="radiohere.ArtistObservableFactoryTest$WithTwoGigsFromSameArtistAndTwoTracks" time="0.006"/>
+  <testcase name="secondEmittedArtistShouldHaveTwoGigs" classname="radiohere.ArtistObservableFactoryTest$WithTwoGigsFromSameArtistAndTwoTracks" time="0.002"/>
+  <testcase name="secondEmittedArtistShouldHaveTwoTracks" classname="radiohere.ArtistObservableFactoryTest$WithTwoGigsFromSameArtistAndTwoTracks" time="0.002"/>
+  <testcase name="secondEmittedArtistShouldHaveTheGigDetails" classname="radiohere.ArtistObservableFactoryTest$WithTwoGigsFromSameArtistAndTwoTracks" time="0.003"/>
+  <testcase name="secondEmittedArtistShouldHaveTheTrackDetails" classname="radiohere.ArtistObservableFactoryTest$WithTwoGigsFromSameArtistAndTwoTracks" time="0.002"/>
+  <testcase name="shouldBeTwoArtists" classname="radiohere.ArtistObservableFactoryTest$WithTwoGigsFromSameArtistAndTwoTracks" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
