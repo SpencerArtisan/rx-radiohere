@@ -13,6 +13,7 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 import org.glassfish.tyrus.server.Server;
+import org.json.JSONObject;
 
 import rx.Observable;
 
@@ -32,17 +33,12 @@ public class RadiohereServerEndpoint {
     
     private void sendToClient(Session session, Artist artist) {
     		try {
-    	        logger.info("Server sending artist to client... " + artist.getGigs().get(0).getArtist());
-    			session.getBasicRemote().sendText(artist.toString());
+    	        logger.info("Server sending artist to client... " + artist.getName());
+    			String artistJSON = new JSONObject(artist).toString();
+			session.getBasicRemote().sendText(artistJSON);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    }
-
-    @OnMessage
-    public String onMessage(String unscrambledWord, Session session) {
-        logger.info("Server receives ...." + unscrambledWord);
-        return null;
     }
 
     @OnClose

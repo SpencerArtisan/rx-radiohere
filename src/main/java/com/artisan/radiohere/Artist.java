@@ -18,6 +18,10 @@ public class Artist {
 	public List<Track> getTracks() {
 		return tracks;
 	}
+	
+	public String getName() {
+		return gigs.get(0).getArtist();
+	}
 
 	@Override
 	public String toString() {

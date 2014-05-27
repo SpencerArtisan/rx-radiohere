@@ -1,0 +1,458 @@
+body {
+  margin: 0;
+  padding: 0;
+  color: #000;
+  font: 16px "Source Sans", helvetica, arial, sans-serif;
+  font-weight: 400;
+  background-color: rgba(255,255,255,0.7);
+  width: 320px;
+}
+
+.content {
+  width: 320px
+}
+
+.topcoat-icon,
+.topcoat-icon--large {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  overflow: hidden;
+  width: 1.62rem;
+  height: 1.62rem;
+  vertical-align: middle;
+  top: -1px;
+}
+
+.topcoat-icon--large {
+  width: 2.499999998125rem;
+  height: 2.499999998125rem;
+  top: -2px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.main {
+  margin-top: 0px;
+  height: 550px;
+  position: absolute;
+  width: 320px;
+  z-index:-2;
+  top: 0px;
+}
+
+.filler {
+  background-color: rgba(255,255,255,0.85);
+  height: 550px;
+  width: 320px;
+}
+
+.review {
+  margin: 0px;
+  padding: 4px 15px 10px 20px;
+  background-color: rgba(0,0,0,0.05);
+  font-style: italic;
+}
+
+.norating {
+  margin: 0px;
+  padding: 10px;
+  background-color: rgba(0,0,0,0.05);
+  font-weight: lighter;
+  text-align: right;
+  color: #444;
+}
+.rating {
+  margin: 0px;
+  padding: 0px 10px;
+  padding-bottom: 0px;
+  background-color: rgba(0,0,0,0.05);
+  font-weight: normal;
+  text-align: right;
+  color: #444;
+}
+.rating .value {
+  font-weight: lighter;
+  font-size: 75px;
+}
+
+.film {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  display: block;
+  position: relative;
+  margin-left: 10px;
+}
+
+.title {
+  margin-right: 20px;
+  display: inline-block;
+}
+
+header {
+  position: absolute;
+  top:0;
+  height: 44px;
+  width: 320px;
+  padding-top: 0;
+  border-bottom: 1px solid rgba(50, 50, 50, 0.5);
+  background-color: rgba(248, 248, 248, 0.7);
+  background-image: linear-gradient(0deg, rgb(200, 199, 204), rgb(200, 199, 204) 50%, transparent 50%);
+  background-size: 100% 1px;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  z-index: 10;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+header div {
+  line-height: 44px;
+  height:44px;
+  text-align: center;
+}
+
+header a {
+  margin-left: 10px;
+  color: #157dfb;
+  position: absolute;
+  display: inline-block;
+}
+
+h1 {
+  display: inline-block;
+  padding: 0;
+  font-size: 17px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+  overflow: hidden;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  margin: 0px;
+  font-weight: bold;
+  -webkit-tap-highlight-color: transparent;
+  width: 252px;
+}
+
+ul {
+  margin-bottom:10px;
+  margin:0px;
+  padding: 0px;
+  clear:both;
+  border-top: none !important;
+}
+
+li {
+  list-style-type: none;
+  border-bottom: 1px solid rgba(250, 250, 250, 0.7);
+  border-top: none;
+}
+
+.list {
+  list-style-type: none;
+  margin-bottom: 0px;
+}
+
+.list > li {
+  position: relative;
+  clear: both;
+  padding: 0px;
+  margin: 0px;
+}
+
+.list > li  p {
+  padding-left: 10px;
+}
+
+.list > li.day {
+  border: none;
+}
+
+.list > li.day > p {
+  background-color: rgba(0,0,0,0.4);
+  color: white;
+  margin: 0px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.list > li:last-of-type {
+  border-bottom: none;
+}
+
+.link {
+  cursor: pointer;
+}
+
+.cinema {
+  margin-left: 10px
+}
+
+.scroller {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  position: absolute;
+  top: 44px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  height: 505px;
+}
+
+#by-date {
+  padding: 0px;
+  margin: 0px;
+  position: absolute;
+  top: 0px; 
+  right: 0px;
+}
+
+.rating-0 {
+  margin: 11px;
+  position: absolute;
+  background: url("/images/star.png") no-repeat;
+  background-size: contain;
+  width: 20px;
+  top: 1px;
+  margin-left:23px;
+}
+
+.rating-1 {
+  margin: 7px;
+  position: absolute;
+  background: url("/images/filled-star.png") no-repeat;
+  background-size: contain;
+  margin-left:20px;
+  width: 20px;
+  top: 2px;
+  padding:3px;
+}
+
+.rating-2 {
+  margin: 7px;
+  position: absolute;
+  background: url("/images/filled-star.png") repeat-x;
+  background-size: contain;
+  top: 2px;
+  width: 43px;
+  padding:3px;
+}
+
+.background-0 {
+  background: url("/images/batman.min.jpg");
+  background-size:320px 550px;
+  background-repeat: no-repeat
+}
+
+.background-1 {
+  background: url("/images/Frankenstein3.min.jpg");
+  background-size:320px 550px;
+  background-repeat: no-repeat
+}
+
+.background-2 {
+  background: url("/images/slave.min.jpg");
+  background-size:320px 550px;
+  background-repeat: no-repeat
+}
+
+.icon {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  width: 20px;
+  height: 20px;
+  margin: 10px;
+  top: 1px;
+}
+
+.icon-great {
+  background: url("/images/filled-star.png") no-repeat;
+  background-size: contain;
+  margin-left: 0px;
+  padding-left:19px;
+}
+
+.icon-superb {
+  background: url("/images/filled-two-stars.png") no-repeat;
+  background-size: contain;
+  margin-left: 0px;
+  padding-left:23px;
+  margin-right:15px;
+}
+
+.icon-calendar {
+  background: url("/images/calendar-25.png") no-repeat;
+  background-size: cover;
+}
+
+.icon-movie {
+  background: url("/images/movie-25.png") no-repeat;
+  background-size: cover;
+}
+
+.page-back {
+  position: absolute;
+  background: url("/images/back_light.svg") no-repeat;
+  background-size: contain;
+  width: 32px;
+  height: 32px;
+  font-size: 23px;
+  top: 5px;
+  left: 10px;
+}
+
+.previous {
+  position: absolute;
+  background: url("/images/back.svg") no-repeat;
+  background-size: contain;
+  width: 32px;
+  height: 32px;
+  top: 5px;
+  left:64px;
+}
+
+.next {
+  position: absolute;
+  background: url("/images/next.svg") no-repeat;
+  background-size: contain;
+  width: 32px;
+  height: 32px;
+  top: 5px;
+  right:64px;
+}
+
+.topcoat-icon--back {
+  background: url("/images/back_light.svg") no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  width: 20px;
+  height: 20px;
+}
+
+.chevron {
+  position: absolute;
+  background: transparent url("/images/next.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 18px;
+  height: 14px;
+  top: 50%;
+  margin-top: -7px;
+  right: 4px;
+}
+
+.slide-left.ng-enter,
+.slide-left.ng-leave,
+.slide-right.ng-enter,
+.slide-right.ng-leave {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: inherit;
+  -ms-transition: .25s ease-in-out;
+  -webkit-transition: .25s ease-in-out;
+  transition:  .25s ease-in-out;
+}
+
+.slide-left.ng-enter {
+  z-index: 101;
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
+}
+
+.slide-left.ng-enter.ng-enter-active {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.slide-left.ng-leave {
+  z-index: 100;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.slide-left.ng-leave.ng-leave-active {
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+}
+
+.slide-right.ng-enter {
+  z-index: 100;
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+}
+
+.slide-right.ng-enter.ng-enter-active {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.slide-right.ng-leave {
+  z-index: 101;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.slide-right.ng-leave.ng-leave-active {
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
+}
+
+.ball {
+  background-color: rgba(0,0,0,0);
+  border: 5px solid rgba(150,153,150,0.9);
+  opacity: .9;
+  border-top: 5px solid rgba(0,0,0,0);
+  border-left: 5px solid rgba(0,0,0,0);
+  border-radius: 50px;
+  box-shadow: 0 0 35px #999;
+  position: absolute;
+  left: 130px;
+  top: 230px;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+  -moz-animation: spin .5s infinite linear;
+  -webkit-animation: spin .5s infinite linear;
+}
+
+@-moz-keyframes spin {
+  0% { -moz-transform:rotate(0deg); }
+  100% { -moz-transform:rotate(360deg); }
+}
+@-moz-keyframes spinoff {
+  0% { -moz-transform:rotate(0deg); }
+  100% { -moz-transform:rotate(-360deg); }
+}
+@-webkit-keyframes spin {
+  0% { -webkit-transform:rotate(0deg); }
+  100% { -webkit-transform:rotate(360deg); }
+}
+@-webkit-keyframes spinoff {
+  0% { -webkit-transform:rotate(0deg); }
+  100% { -webkit-transform:rotate(-360deg); }
+}
+
+@font-face {
+  font-family: "Source Sans";
+  src: url("/fonts/SourceSansPro-Regular.otf");
+}
+
+@font-face {
+  font-family: "Source Sans";
+  src: url("/fonts/SourceSansPro-Light.otf");
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: "Source Sans";
+  src: url("/fonts/SourceSansPro-Semibold.otf");
+  font-weight: 600;
+}
