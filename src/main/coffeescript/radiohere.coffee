@@ -12,4 +12,12 @@ app.controller("RadiohereController", ["$scope", (scope) ->
 		exampleSocket.onmessage = (event) ->
 		  scope.$apply ->
 			  scope.artists.push jQuery.parseJSON(event.data)
+			  
+	scope.play = (streamUrl, track) ->
+		console.log streamUrl
+		$("#jquery_jplayer_1").jPlayer("setMedia",
+		      title: track
+		      mp3: streamUrl
+		      )
+		$("#jquery_jplayer_1").jPlayer("play")
 ])

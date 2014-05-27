@@ -9,7 +9,7 @@
     "$scope", function(scope) {
       var _this = this;
       scope.artists = [];
-      return scope.loadArtists = function() {
+      scope.loadArtists = function() {
         var exampleSocket;
         console.log("Loading artists");
         exampleSocket = new WebSocket("ws://localhost:8025/websockets/game", []);
@@ -19,6 +19,14 @@
             return scope.artists.push(jQuery.parseJSON(event.data));
           });
         };
+      };
+      return scope.play = function(streamUrl, track) {
+        console.log(streamUrl);
+        $("#jquery_jplayer_1").jPlayer("setMedia", {
+          title: track,
+          mp3: streamUrl
+        });
+        return $("#jquery_jplayer_1").jPlayer("play");
       };
     }
   ]);
