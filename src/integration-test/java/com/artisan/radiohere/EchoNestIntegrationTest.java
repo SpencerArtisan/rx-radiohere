@@ -2,7 +2,7 @@ package com.artisan.radiohere;
 
 import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 import net.avh4.test.junit.Nested;
 
 import org.json.JSONObject;
@@ -18,6 +18,13 @@ public class EchoNestIntegrationTest {
 		@Before
 		public void before() throws Exception {
 			artist = new EchoNest().getArtist(569763);
+		}
+		
+		@Test
+		public void throttle() throws Exception {
+			for (int i = 0; i < 22; i++) {
+				System.out.println("" + i + ". " + new EchoNest().getArtist(569763));
+			}
 		}
 		
 		@Test

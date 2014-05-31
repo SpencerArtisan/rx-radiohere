@@ -28,23 +28,22 @@ public class ArtistGenreObservableFactory {
 	}
 
 	public ArtistGenre echoNestToArtist(String echoNestJson) {
-		JSONArray artistGenres = extractArtistGenres(echoNestJson);
-		return createArtistGenre(artistGenres);
+		JSONObject artist = extractArtist(echoNestJson);
+		return createArtistGenre(artist);
 	}
 	
 	private boolean canCreateArtist(String echoNestJson) {
-		JSONArray artistGenres = extractArtistGenres(echoNestJson);
-		return true;
+		return new JSONObject(echoNestJson).getJSONObject("response").has("artist");
 	}
 	
-	private JSONArray extractArtistGenres(String echoNestJson) {
+	private JSONObject extractArtist(String echoNestJson) {
 		return new JSONObject(echoNestJson)
 				.getJSONObject("response")
-				.getJSONObject("artist")
-				.getJSONArray("artistGenres");
+				.getJSONObject("artist");
 	}
 
-	private ArtistGenre createArtistGenre(JSONArray artistGenres) {
+	private ArtistGenre createArtistGenre(JSONObject artist) {
+		JSONArray artistGenres = artist.getJSONArray("genres");
 		Stream<JSONObject> genres = JSONUtil.convertToList(artistGenres).stream();
 		List<String> genreNames = genres
 				.map((genreJson) -> genreJson.getString("name"))

@@ -13,4 +13,9 @@ public class ArtistGenre {
 	public List<String> getGenres() {
 		return genres;
 	}
+
+	@Override
+	public String toString() {
+		return "ArtistGenre [genres=" + genres + "]";
+	}
 }
