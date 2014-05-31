@@ -2,14 +2,17 @@ package com.artisan.radiohere;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import rx.Observable;
 import rx.observables.GroupedObservable;
 
 public class ArtistObservableFactory {
-	private final GigObservableFactory gigObservableFactory;
+    private Logger logger = Logger.getLogger(this.getClass().getName());
+
+    private final GigObservableFactory gigObservableFactory;
 	private final TrackObservableFactory trackObservableFactory;
-	private ArtistGenreObservableFactory artistGenreObservableFactory;
+	private final ArtistGenreObservableFactory artistGenreObservableFactory;
 
 	public ArtistObservableFactory(GigObservableFactory gigObservableFactory,
 			TrackObservableFactory trackObservableFactory,
@@ -54,6 +57,7 @@ public class ArtistObservableFactory {
 	}
 	
 	private Observable<Artist> createArtistWithGenreObserable(Artist artist) {
+		logger.info("Checking genre for " + artist.getName());
 		return artistGenreObservableFactory
 				.create(artist.getGigs().get(0).getSongkickArtistId())
 				.map(artist::addGenre);

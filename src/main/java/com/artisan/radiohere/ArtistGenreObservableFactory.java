@@ -60,6 +60,7 @@ public class ArtistGenreObservableFactory {
 	}
 
 	private boolean isInteresting(List<String> genres) {
+		logger.info("Genres: " + genres.toString());
 		boolean anyInteresting = genres.stream().anyMatch((name) -> 
 			name.contains("psychedel") ||
 		  	name.contains("folk") ||

@@ -6,7 +6,6 @@ public class ArtistGenre {
 	private final List<String> genres;
 	
 	public ArtistGenre(List<String> genres) {
-		super();
 		this.genres = genres;
 	}
 

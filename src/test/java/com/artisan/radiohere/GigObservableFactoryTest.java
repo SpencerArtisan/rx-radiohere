@@ -1,7 +1,8 @@
 package com.artisan.radiohere;
 
+import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;

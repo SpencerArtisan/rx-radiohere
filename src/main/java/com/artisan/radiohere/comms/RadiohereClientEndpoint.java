@@ -1,6 +1,5 @@
 package com.artisan.radiohere.comms;
 
-import java.io.IOException;
 import java.net.URI;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Logger;

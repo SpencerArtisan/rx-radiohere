@@ -1,10 +1,8 @@
 package com.artisan.radiohere;
 
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -17,7 +15,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import rx.Observable;
-import rx.observables.BlockingObservable;
 
 @RunWith(Nested.class)
 public class ArtistGenreObservableFactoryTest {

@@ -1,7 +1,11 @@
 package com.artisan.radiohere;
 
+import java.util.logging.Logger;
+
 public class Gig {
-	private final String artist;
+    private Logger logger = Logger.getLogger(this.getClass().getName());
+
+    private final String artist;
 	private final String date;
 	private final String venueName;
 	private final Integer venueId;
@@ -15,7 +19,6 @@ public class Gig {
 		this.venueName = venueName;
 		this.venueId = venueId;
 		this.venue = venue;
-		System.out.println(this);
 	}
 
 	public Gig addVenue(Venue venue) {
