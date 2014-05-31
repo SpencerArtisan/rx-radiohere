@@ -15,7 +15,7 @@ public class ArtistTest {
 	public void toJson() throws Exception {
 		Venue venue = new Venue("Scala", "E1", new Coordinate(1, 2));
 		List<Gig> gigs = Collections.singletonList(
-				new Gig("Radiohead", "1-1-2001", "Scala", 1, venue));
+				new Gig("Radiohead", 1, "1-1-2001", "Scala", 1, venue));
 		List<Track> tracks = new ArrayList<>();
 		Artist artist = new Artist(gigs, tracks);
 		System.out.println(new JSONObject(artist));

@@ -67,7 +67,12 @@ public class GigObservableFactoryTest {
 				"    'results': { 'event': [                              " +
 				"      {                                                  " +
 				"        'start':{'date':'2012-04-18'},                   " +
-				"        'performance':[{'displayName':'Wild Flag'}],     " +
+				"        'performance':[     							 " +
+				"           {											 " +
+				"			  'displayName': 'Wild Flag',     			 " +
+				"             'artist': {'id': 1},     					 " +
+				"           }     										 " +
+				"        ],     											 " +
 				"        'venue':{'displayName':'The Fillmore', 'id':42}  " +
 				"      }                                                  " +
 				"    ]}                                                   " +
@@ -93,10 +98,15 @@ public class GigObservableFactoryTest {
 		}
 		
 		@Test
-		public void shouldProvideTheBand() throws Exception {
+		public void shouldProvideTheArtist() throws Exception {
 			assertThat(gigs.get(0).getArtist(), equalTo("Wild Flag"));
 		}
 		
+		@Test
+		public void shouldProvideTheArtistId() throws Exception {
+			assertThat(gigs.get(0).getSongkickArtistId(), equalTo(1));
+		}
+
 		@Test
 		public void shouldProvideTheDate() throws Exception {
 			assertThat(gigs.get(0).getDate(), equalTo("2012-04-18"));
@@ -125,7 +135,12 @@ public class GigObservableFactoryTest {
 				"    'results': { 'event': [                              " +
 				"      {                                                  " +
 				"        'start':{'date':'2012-04-18'},                   " +
-				"        'performance':[{'displayName':'Wild Flag'}],     " +
+				"        'performance':[     							 " +
+				"           {											 " +
+				"			  'displayName': 'Wild Flag',     			 " +
+				"             'artist': {'id': 1},     					 " +
+				"           }     										 " +
+				"        ],     											 " +
 				"        'venue':{'displayName':'The Fillmore', 'id':42}  " +
 				"      }                                                  " +
 				"    ]}                                                   " +
@@ -158,7 +173,12 @@ public class GigObservableFactoryTest {
 				"    'results': { 'event': [                              " +
 				"      {                                                  " +
 				"        'start':{'date':'2012-04-18'},                   " +
-				"        'performance':[{'displayName':'Wild Flag'}],     " +
+				"        'performance':[     							 " +
+				"           {											 " +
+				"			  'displayName': 'Wild Flag',     			 " +
+				"             'artist': {'id': 1},     					 " +
+				"           }     										 " +
+				"        ],     											 " +
 				"        'venue':{'displayName':'The Fillmore', 'id':null}" +
 				"      }                                                  " +
 				"    ]}                                                   " +
@@ -189,12 +209,22 @@ public class GigObservableFactoryTest {
 				"    'results': { 'event': [                              " +
 				"      {                                                  " +
 				"        'start':{'date':'2012-04-18'},                   " +
-				"        'performance':[{'displayName':'Wild Flag'}],     " +
+				"        'performance':[     							 " +
+				"           {											 " +
+				"			  'displayName': 'Wild Flag',     			 " +
+				"             'artist': {'id': 1},     					 " +
+				"           }     										 " +
+				"        ],     											 " +
 				"        'venue':{'displayName':'The Fillmore','id':42}   " +
 				"      },                                                 " +
 				"      {                                                  " +
 				"        'start':{'date':'2012-04-19'},                   " +
-				"        'performance':[{'displayName':'Steve Malkmus'}], " +
+				"        'performance':[     							 " +
+				"           {											 " +
+				"			  'displayName': 'Steve Malkmus',     		 " +
+				"             'artist': {'id': 2},     					 " +
+				"           }     										 " +
+				"        ],     											 " +
 				"        'venue':{'displayName':'Bush Hall','id':43}      " +
 				"      }                                                  " +
 				"    ]}                                                   " +
@@ -224,12 +254,12 @@ public class GigObservableFactoryTest {
 		
 		@Test
 		public void shouldProvideTheFirstGig() throws Exception {
-			assertThat(gigs, hasItem(new Gig("Wild Flag", "2012-04-18", "The Fillmore", 42, venue1)));
+			assertThat(gigs, hasItem(new Gig("Wild Flag", 1, "2012-04-18", "The Fillmore", 42, venue1)));
 		}
 		
 		@Test
 		public void shouldProvideTheSecondGig() throws Exception {
-			assertThat(gigs, hasItem(new Gig("Steve Malkmus", "2012-04-19", "Bush Hall", 43, venue2)));
+			assertThat(gigs, hasItem(new Gig("Steve Malkmus", 2, "2012-04-19", "Bush Hall", 43, venue2)));
 		}
 	}
 	
@@ -240,7 +270,12 @@ public class GigObservableFactoryTest {
 				"    'results': { 'event': [                              " +
 				"      {                                                  " +
 				"        'start':{'date':'2012-04-18'},                   " +
-				"        'performance':[{'displayName':'Wild Flag'}],	 " +
+				"        'performance':[     							 " +
+				"           {											 " +
+				"			  'displayName': 'Wild Flag',     			 " +
+				"             'artist': {'id': 1},     					 " +
+				"           }     										 " +
+				"        ],     											 " +
 				"        'venue':{'displayName':'The Fillmore','id':42}   " +
 				"      }                                                  " +
 				"    ]}                                                   " +
@@ -252,7 +287,12 @@ public class GigObservableFactoryTest {
 				"    'results': { 'event': [                              " +
 				"      {                                                  " +
 				"        'start':{'date':'2012-04-19'},                   " +
-				"        'performance':[{'displayName':'Steve Malkmus'}], " +
+				"        'performance':[     							 " +
+				"           {											 " +
+				"			  'displayName': 'Steve Malkmus',     		 " +
+				"             'artist': {'id': 2},     					 " +
+				"           }     										 " +
+				"        ],     											 " +
 				"        'venue':{'displayName':'Bush Hall', 'id':43}	 " +
 				"      }                                                  " +
 				"    ]}                                                   " +
@@ -283,12 +323,12 @@ public class GigObservableFactoryTest {
 		
 		@Test
 		public void shouldProvideTheFirstGig() throws Exception {
-			assertThat(gigs, hasItem(new Gig("Wild Flag", "2012-04-18", "The Fillmore", 42, venue1)));
+			assertThat(gigs, hasItem(new Gig("Wild Flag", 1, "2012-04-18", "The Fillmore", 42, venue1)));
 		}
 		
 		@Test
 		public void shouldProvideTheSecondGig() throws Exception {
-			assertThat(gigs, hasItem(new Gig("Steve Malkmus", "2012-04-19", "Bush Hall", 43, venue2)));
+			assertThat(gigs, hasItem(new Gig("Steve Malkmus", 2, "2012-04-19", "Bush Hall", 43, venue2)));
 		}
 	}
 }

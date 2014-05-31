@@ -6,9 +6,11 @@ public class Gig {
 	private final String venueName;
 	private final Integer venueId;
 	private final Venue venue;
+	private final Integer songkickArtistId;
 
-	public Gig(String artist, String date, String venueName, Integer venueId, Venue venue) {
+	public Gig(String artist, Integer songkickArtistId, String date, String venueName, Integer venueId, Venue venue) {
 		this.artist = artist;
+		this.songkickArtistId = songkickArtistId;
 		this.date = date;
 		this.venueName = venueName;
 		this.venueId = venueId;
@@ -16,7 +18,7 @@ public class Gig {
 	}
 
 	public Gig addVenue(Venue venue) {
-		return new Gig(artist, date, venueName, venueId, venue);
+		return new Gig(artist, getSongkickArtistId(), date, venueName, venueId, venue);
 	}
 
 	public String getArtist() {
@@ -38,15 +40,22 @@ public class Gig {
 	public Venue getVenue() {
 		return venue;
 	}
-	
+
+	public Integer getSongkickArtistId() {
+		return songkickArtistId;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((artist == null) ? 0 : artist.hashCode());
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
-		result = prime * result + ((getVenue() == null) ? 0 : getVenue().hashCode());
-		result = prime * result + venueId;
+		result = prime
+				* result
+				+ ((songkickArtistId == null) ? 0 : songkickArtistId.hashCode());
+		result = prime * result + ((venue == null) ? 0 : venue.hashCode());
+		result = prime * result + ((venueId == null) ? 0 : venueId.hashCode());
 		result = prime * result
 				+ ((venueName == null) ? 0 : venueName.hashCode());
 		return result;
@@ -71,12 +80,20 @@ public class Gig {
 				return false;
 		} else if (!date.equals(other.date))
 			return false;
-		if (getVenue() == null) {
-			if (other.getVenue() != null)
+		if (songkickArtistId == null) {
+			if (other.songkickArtistId != null)
 				return false;
-		} else if (!getVenue().equals(other.getVenue()))
+		} else if (!songkickArtistId.equals(other.songkickArtistId))
 			return false;
-		if (venueId != other.venueId)
+		if (venue == null) {
+			if (other.venue != null)
+				return false;
+		} else if (!venue.equals(other.venue))
+			return false;
+		if (venueId == null) {
+			if (other.venueId != null)
+				return false;
+		} else if (!venueId.equals(other.venueId))
 			return false;
 		if (venueName == null) {
 			if (other.venueName != null)
@@ -89,7 +106,7 @@ public class Gig {
 	@Override
 	public String toString() {
 		return "Gig [artist=" + artist + ", date=" + date + ", venueName="
-				+ venueName + ", venueId=" + venueId + ", venue=" + getVenue() + "]";
+				+ venueName + ", venueId=" + venueId + ", venue=" + venue
+				+ ", songkickArtistId=" + songkickArtistId + "]";
 	}
-
 }

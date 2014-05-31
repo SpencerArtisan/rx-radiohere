@@ -65,17 +65,17 @@ public class GigObservableFactory {
 	}
 
 	private Gig createGig(JSONObject event) {
-		String bandName = event
+		JSONObject performance = event
 				.getJSONArray("performance")
-				.getJSONObject(0)
-				.getString("displayName");
-		String date = event
-				.getJSONObject("start")
-				.getString("date");
+				.getJSONObject(0);
+		String bandName = performance.getString("displayName");
+		String date = event.getJSONObject("start").getString("date");
 		JSONObject venue = event.getJSONObject("venue");
+		JSONObject artist = performance.getJSONObject("artist");
 		String venueName = venue.getString("displayName");
 		Integer venueId = venue.isNull("id") ? null : venue.getInt("id");
+		Integer artistId = artist.isNull("id") ? null : artist.getInt("id");
 
-		return new Gig(bandName, date, venueName, venueId, null);
+		return new Gig(bandName, artistId, date, venueName, venueId, null);
 	}
 }
