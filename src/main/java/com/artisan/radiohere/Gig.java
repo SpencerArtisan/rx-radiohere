@@ -46,6 +46,14 @@ public class Gig {
 		return songkickArtistId;
 	}
 
+	public Double getDistance() {
+		return getVenueDistance(Coordinate.OLD_STREET);
+	}
+
+	public Double getVenueDistance(Coordinate origin) {
+		return venue == null ? null : origin.kmFrom(venue.getCoordinate());
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

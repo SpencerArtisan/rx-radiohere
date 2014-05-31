@@ -9,7 +9,6 @@ import rx.Observable;
 import rx.util.async.Async;
 
 public class GigObservableFactory {
-	private final Coordinate OLD_STREET = new Coordinate(51.5265, -0.0825);
 	private final SongKick songKick;
 	private final int pages;
 	private final VenueObservableFactory venueObservableFactory;
@@ -32,7 +31,7 @@ public class GigObservableFactory {
 				.flatMap(this::createSongKickPageObservable)
 				.flatMap(this::createGigObservable)
 				.flatMap(this::createGigWithVenueObservable)
-				.filter((gig) -> gig.getVenue().getCoordinate().kmFrom(OLD_STREET) < maximumDistanceFromCentralLondon);
+				.filter((gig) -> gig.getVenue().getCoordinate().kmFrom(Coordinate.OLD_STREET) < maximumDistanceFromCentralLondon);
 	}
 
 	private Observable<String> createSongKickPageObservable(Integer page) {

@@ -1,12 +1,22 @@
 package com.artisan.radiohere;
 
 public class Coordinate {
-	private double latitude;
-	private double longitude;
+	public static final Coordinate OLD_STREET = new Coordinate(51.5265, -0.0825);
+	
+	private final double latitude;
+	private final double longitude;
 
 	public Coordinate(double latitude, double longitude) {
 		this.latitude = latitude;
 		this.longitude = longitude;
+	}
+	
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
 	}
 
 	public static float distFrom(double lat1, double lng1, double lat2, double lng2) {

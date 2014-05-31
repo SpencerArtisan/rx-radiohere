@@ -1,7 +1,7 @@
 package com.artisan.radiohere;
 
 import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -85,7 +85,7 @@ public class GigObservableFactoryTest {
 		@Before
 		public void before() throws Exception {
 			gigObservableFactory = new GigObservableFactory(songKick, venueObservableFactory, 1, 100.0);
-			venue = new Venue("name", "postcode", new Coordinate(51, 1));
+			venue = new Venue("name", "postcode", new Coordinate(51.5, -0.1));
 			when(venueObservableFactory.create(42)).thenReturn(Observable.just(venue));
 			when(songKick.getGigs(0)).thenReturn(gigsJson);
 			Observable<Gig> observable = gigObservableFactory.create();
@@ -125,6 +125,16 @@ public class GigObservableFactoryTest {
 		@Test
 		public void shouldProvideTheVenue() throws Exception {
 			assertThat(gigs.get(0).getVenue(), equalTo(venue));
+		}
+
+		@Test
+		public void shouldProvideTheVenueDistance() throws Exception {
+			assertThat(gigs.get(0).getVenueDistance(Coordinate.OLD_STREET), closeTo(3.185, 0.006));
+		}
+
+		@Test
+		public void shouldProvideTheDistanceFromOldStreet() throws Exception {
+			assertThat(gigs.get(0).getDistance(), closeTo(3.185, 0.006));
 		}
 	}
 
