@@ -1,6 +1,7 @@
 package com.artisan.radiohere;
 
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -11,6 +12,7 @@ import rx.Observable;
 import rx.util.async.Async;
 
 public class ArtistGenreObservableFactory {
+    private Logger logger = Logger.getLogger(this.getClass().getName());
 	private EchoNest echoNest;
 
 	public ArtistGenreObservableFactory() {
@@ -25,7 +27,7 @@ public class ArtistGenreObservableFactory {
 		return Async.fromCallable(() -> echoNest.getArtist(songkickArtistId))
 				.filter(this::canCreateArtist)
 				.map(this::echoNestToArtist)
-				.filter(this::interestingGenre);
+				.filter(this::isInteresting);
 	}
 
 	public ArtistGenre echoNestToArtist(String echoNestJson) {
@@ -52,16 +54,20 @@ public class ArtistGenreObservableFactory {
 		return new ArtistGenre(genreNames);
 	}
 	
-	private boolean interestingGenre(ArtistGenre genre) {
+	private boolean isInteresting(ArtistGenre genre) {
 		List<String> genres = genre.getGenres();
-		return genres.size() == 0 ||
-			genres.stream().anyMatch((name) -> 
-				name.contains("psychedel") ||
-			  	name.contains("folk") ||
-			  	name.contains("iceland") ||
-			  	name.contains("nordic") ||
-			  	name.contains("norwegian") ||
-			  	name.contains("stomp") ||
-			  	name.contains("indie"));
+		return genres.size() == 0 || isInteresting(genres);
+	}
+
+	private boolean isInteresting(List<String> genres) {
+		boolean anyInteresting = genres.stream().anyMatch((name) -> 
+			name.contains("psychedel") ||
+		  	name.contains("folk") ||
+		  	name.contains("iceland") ||
+		  	name.contains("nordic") ||
+		  	name.contains("norwegian") ||
+		  	name.contains("stomp") ||
+		  	name.contains("indie"));
+		return anyInteresting;
 	}
 }

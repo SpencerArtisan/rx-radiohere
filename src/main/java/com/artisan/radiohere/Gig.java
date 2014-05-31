@@ -15,6 +15,7 @@ public class Gig {
 		this.venueName = venueName;
 		this.venueId = venueId;
 		this.venue = venue;
+		System.out.println(this);
 	}
 
 	public Gig addVenue(Venue venue) {
