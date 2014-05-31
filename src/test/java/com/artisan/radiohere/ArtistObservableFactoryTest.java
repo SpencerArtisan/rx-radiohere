@@ -84,7 +84,7 @@ public class ArtistObservableFactoryTest {
 		@Before
 		public void before() {
 			gig = new Gig("artist", 1, "date", "venue", 42, null);
-			genre = new ArtistGenre(Collections.singletonList("folk"));
+			genre = new ArtistGenre("artist", Collections.singletonList("folk"));
 			when(gigObservableFactory.create()).thenReturn(Observable.just(gig));
 			when(trackObservableFactory.create("artist")).thenReturn(Observable.empty());
 			when(artistGenreObservableFactory.create(1)).thenReturn(Observable.just(genre));
@@ -122,7 +122,7 @@ public class ArtistObservableFactoryTest {
 		public void before() {
 			gig = new Gig("artist", 1, "date", "venue", 42, null);
 			track = new Track("name", "streamurl");
-			genre = new ArtistGenre(Collections.singletonList("folk"));
+			genre = new ArtistGenre("artist", Collections.singletonList("folk"));
 			when(gigObservableFactory.create()).thenReturn(Observable.just(gig));
 			when(trackObservableFactory.create("artist")).thenReturn(Observable.just(track));
 			when(artistGenreObservableFactory.create(1)).thenReturn(Observable.just(genre));
@@ -172,7 +172,7 @@ public class ArtistObservableFactoryTest {
 			gig = new Gig("artist", 1, "date", "venue", 42, null);
 			track1 = new Track("name1", "streamurl1");
 			track2 = new Track("name2", "streamurl2");
-			genre = new ArtistGenre(Collections.singletonList("folk"));
+			genre = new ArtistGenre("artist", Collections.singletonList("folk"));
 			when(gigObservableFactory.create()).thenReturn(Observable.just(gig));
 			when(trackObservableFactory.create("artist")).thenReturn(Observable.from(track1, track2));
 			when(artistGenreObservableFactory.create(1)).thenReturn(Observable.just(genre));
@@ -224,7 +224,7 @@ public class ArtistObservableFactoryTest {
 			gig2 = new Gig("artist", 1, "date2", "venue2", 43, null);
 			track1 = new Track("name1", "streamurl1");
 			track2 = new Track("name2", "streamurl2");
-			genre = new ArtistGenre(Collections.singletonList("folk"));
+			genre = new ArtistGenre("artist", Collections.singletonList("folk"));
 			when(gigObservableFactory.create()).thenReturn(Observable.from(gig1, gig2));
 			when(trackObservableFactory.create("artist")).thenReturn(Observable.from(track1, track2));
 			when(artistGenreObservableFactory.create(1)).thenReturn(Observable.just(genre));
@@ -302,8 +302,8 @@ public class ArtistObservableFactoryTest {
 			gig2 = new Gig("artist2", 2, "date2", "venue2", 43, null);
 			track1 = new Track("name1", "streamurl1");
 			track2 = new Track("name2", "streamurl2");
-			genre1 = new ArtistGenre(Collections.singletonList("folk"));
-			genre2 = new ArtistGenre(Collections.singletonList("folk"));
+			genre1 = new ArtistGenre("artist1", Collections.singletonList("folk"));
+			genre2 = new ArtistGenre("artist2", Collections.singletonList("folk"));
 			when(gigObservableFactory.create()).thenReturn(Observable.from(gig1, gig2));
 			when(trackObservableFactory.create("artist1")).thenReturn(Observable.just(track1));
 			when(trackObservableFactory.create("artist2")).thenReturn(Observable.just(track2));

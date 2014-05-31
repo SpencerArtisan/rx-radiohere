@@ -4,8 +4,10 @@ import java.util.List;
 
 public class ArtistGenre {
 	private final List<String> genres;
+	private final String name;
 	
-	public ArtistGenre(List<String> genres) {
+	public ArtistGenre(String name, List<String> genres) {
+		this.name = name;
 		this.genres = genres;
 	}
 
@@ -13,8 +15,12 @@ public class ArtistGenre {
 		return genres;
 	}
 
+	public String getArtist() {
+		return name;
+	}
+
 	@Override
 	public String toString() {
-		return "ArtistGenre [genres=" + genres + "]";
+		return "ArtistGenre [name=" + name + ", genres=" + genres + "]";
 	}
 }

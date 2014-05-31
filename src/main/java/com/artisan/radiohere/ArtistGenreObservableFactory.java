@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import rx.Observable;
+import rx.schedulers.Schedulers;
 import rx.util.async.Async;
 
 public class ArtistGenreObservableFactory {
@@ -24,7 +25,7 @@ public class ArtistGenreObservableFactory {
 	}
 
 	public Observable<ArtistGenre> create(Integer songkickArtistId) {
-		return Async.fromCallable(() -> echoNest.getArtist(songkickArtistId))
+		return Async.fromCallable(() -> echoNest.getArtist(songkickArtistId), Schedulers.newThread())
 				.filter(this::canCreateArtist)
 				.map(this::echoNestToArtist)
 				.filter(this::isInteresting);
@@ -46,21 +47,22 @@ public class ArtistGenreObservableFactory {
 	}
 
 	private ArtistGenre createArtistGenre(JSONObject artist) {
+		String artistName = artist.getString("name");
 		JSONArray artistGenres = artist.getJSONArray("genres");
 		Stream<JSONObject> genres = JSONUtil.convertToList(artistGenres).stream();
 		List<String> genreNames = genres
 				.map((genreJson) -> genreJson.getString("name"))
 				.collect(Collectors.toList());
-		return new ArtistGenre(genreNames);
+		return new ArtistGenre(artistName, genreNames);
 	}
 	
 	private boolean isInteresting(ArtistGenre genre) {
+		logger.info(genre.toString());
 		List<String> genres = genre.getGenres();
 		return genres.size() == 0 || isInteresting(genres);
 	}
 
 	private boolean isInteresting(List<String> genres) {
-		logger.info("Genres: " + genres.toString());
 		boolean anyInteresting = genres.stream().anyMatch((name) -> 
 			name.contains("psychedel") ||
 		  	name.contains("folk") ||

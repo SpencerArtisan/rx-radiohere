@@ -15,7 +15,7 @@ public class ArtistTest {
 				new Gig("Radiohead", 1, "1-1-2001", "Scala", 1, venue));
 		List<Track> tracks = new ArrayList<>();
 		List<String> genres = Collections.singletonList("folk");
-		Artist artist = new Artist(gigs, tracks, new ArtistGenre(genres));
+		Artist artist = new Artist(gigs, tracks, new ArtistGenre("Radiohead", genres));
 		System.out.println(new JSONObject(artist));
 	}
 }

@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import rx.Observable;
+import rx.schedulers.Schedulers;
 import rx.util.async.Async;
 
 public class GigObservableFactory {
@@ -35,7 +36,7 @@ public class GigObservableFactory {
 	}
 
 	private Observable<String> createSongKickPageObservable(Integer page) {
-		return Async.fromCallable(() -> songKick.getGigs(page));
+		return Async.fromCallable(() -> songKick.getGigs(page), Schedulers.newThread());
 	}
 	
 	public Observable<Gig> createGigObservable(String songKickPage) {

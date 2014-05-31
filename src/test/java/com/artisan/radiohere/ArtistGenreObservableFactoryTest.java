@@ -1,6 +1,6 @@
 package com.artisan.radiohere;
 
-import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
@@ -100,7 +100,7 @@ public class ArtistGenreObservableFactoryTest {
 		}
 	}
 	
-	public class WhenArtistFound {
+	public class WhenInterestingGenreFound {
 		private static final String artistGenreJson = 
 				"	{                                         " +
 						"	  'response': {                           " +
@@ -129,6 +129,11 @@ public class ArtistGenreObservableFactoryTest {
 		@Test
 		public void shouldObserveTwoGenres() throws Exception {
 			assertThat(artistGenre.getGenres().size(), is(2));
+		}
+		
+		@Test
+		public void shouldProvideTheArtist() throws Exception {
+			assertThat(artistGenre.getArtist(), equalTo("Wooden Shjips"));
 		}
 		
 		@Test

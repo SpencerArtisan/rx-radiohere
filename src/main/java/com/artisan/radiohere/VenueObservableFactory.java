@@ -3,6 +3,7 @@ package com.artisan.radiohere;
 import org.json.JSONObject;
 
 import rx.Observable;
+import rx.schedulers.Schedulers;
 import rx.util.async.Async;
 
 public class VenueObservableFactory {
@@ -16,7 +17,7 @@ public class VenueObservableFactory {
 		if (id == null) {
 			return Observable.empty();
 		}
-		return Async.fromCallable(() -> songKick.getVenue(id))
+		return Async.fromCallable(() -> songKick.getVenue(id), Schedulers.newThread())
 				.filter(this::canCreateVenue)
 				.map(this::songKickToVenue);
 	}
