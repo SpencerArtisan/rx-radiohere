@@ -12,10 +12,10 @@ public class EchoNest {
 			try {
 				return callApi(String.format(ARTIST_URL, API_KEY, id));
 			} catch (EchoNestException e) {
+				System.out.println(e.getMessage());
 				try {
 					Thread.sleep(10000);
 				} catch (InterruptedException e1) {}
-				System.out.println(e.getMessage());
 			}
 		}
 		return callApi(String.format(ARTIST_URL, API_KEY, id));

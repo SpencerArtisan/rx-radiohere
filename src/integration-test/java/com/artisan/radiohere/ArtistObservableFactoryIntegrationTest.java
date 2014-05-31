@@ -5,6 +5,6 @@ import org.junit.Test;
 public class ArtistObservableFactoryIntegrationTest {
 	@Test
 	public void dump() throws Exception {
-		Dumper.dumpForTimePeriod(new ArtistObservableFactory().create(), 60000);
+		Dumper.dumpForTimePeriod(new ArtistObservableFactory().create(), 160000);
 	}
 }

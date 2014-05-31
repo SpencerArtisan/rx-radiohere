@@ -24,7 +24,8 @@ public class ArtistGenreObservableFactory {
 	public Observable<ArtistGenre> create(Integer songkickArtistId) {
 		return Async.fromCallable(() -> echoNest.getArtist(songkickArtistId))
 				.filter(this::canCreateArtist)
-				.map(this::echoNestToArtist);
+				.map(this::echoNestToArtist)
+				.filter(this::interestingGenre);
 	}
 
 	public ArtistGenre echoNestToArtist(String echoNestJson) {
@@ -49,5 +50,18 @@ public class ArtistGenreObservableFactory {
 				.map((genreJson) -> genreJson.getString("name"))
 				.collect(Collectors.toList());
 		return new ArtistGenre(genreNames);
+	}
+	
+	private boolean interestingGenre(ArtistGenre genre) {
+		List<String> genres = genre.getGenres();
+		return genres.size() == 0 ||
+			genres.stream().anyMatch((name) -> 
+				name.contains("psychedel") ||
+			  	name.contains("folk") ||
+			  	name.contains("iceland") ||
+			  	name.contains("nordic") ||
+			  	name.contains("norwegian") ||
+			  	name.contains("stomp") ||
+			  	name.contains("indie"));
 	}
 }

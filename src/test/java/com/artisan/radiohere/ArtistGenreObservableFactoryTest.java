@@ -4,7 +4,7 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -17,26 +17,109 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import rx.Observable;
+import rx.observables.BlockingObservable;
 
 @RunWith(Nested.class)
 public class ArtistGenreObservableFactoryTest {
-	public class WhenArtistFound {
+	public class WhenArtistNotFound {
 		private static final String artistGenreJson = 
 		"	{                                         " +
 		"	  'response': {                           " +
-		"	    'artist': {                           " +
-		"	      'artistGenres': [                         " +
-		"	        { 'name': 'neo-psychedelic'},     " +
-		"	        { 'name': 'space rock'},          " +
-		"	      ],                                  " +
-		"	      'id': 'AR2B0DQ1187B99B220',         " +
-		"	      'name': 'Wooden Shjips'             " +
-		"	    }                                     " +
 		"	  }                                       " +
 		"	}		                                  ";
 		
-		private ArtistGenre artistGenre;
+		private List<ArtistGenre> genres;
 	        
+		@Before
+		public void before() throws Exception {
+			EchoNest echoNest = mock(EchoNest.class);
+			when(echoNest.getArtist(42)).thenReturn(artistGenreJson);
+			ArtistGenreObservableFactory factory = new ArtistGenreObservableFactory(echoNest);
+			genres = factory.create(42).toList().toBlockingObservable().single();
+		}
+		
+		@Test
+		public void shouldObserveNoGenres() throws Exception {
+			assertThat(genres.size(), is(0));
+		}
+	}
+		
+	public class WhenRubbishGenreFound {
+		private static final String artistGenreJson = 
+				"	{                                         " +
+						"	  'response': {                           " +
+						"	    'artist': {                           " +
+						"	      'genres': [                         " +
+						"	        { 'name': 'hip hop'},     		  " +
+						"	      ],                                  " +
+						"	      'id': 'AR2B0DQ1187B99B220',         " +
+						"	      'name': 'Wooden Shjips'             " +
+						"	    }                                     " +
+						"	  }                                       " +
+						"	}		                                  ";
+		
+		private List<ArtistGenre> genres;
+        
+		@Before
+		public void before() throws Exception {
+			EchoNest echoNest = mock(EchoNest.class);
+			when(echoNest.getArtist(42)).thenReturn(artistGenreJson);
+			ArtistGenreObservableFactory factory = new ArtistGenreObservableFactory(echoNest);
+			genres = factory.create(42).toList().toBlockingObservable().single();
+		}
+				
+		@Test
+		public void shouldObserveNoGenres() throws Exception {
+			assertThat(genres.size(), is(0));
+		}
+	}
+
+	public class WhenUnknownGenreFound {
+		private static final String artistGenreJson = 
+				"	{                                         " +
+						"	  'response': {                           " +
+						"	    'artist': {                           " +
+						"	      'genres': [                         " +
+						"	      ],                                  " +
+						"	      'id': 'AR2B0DQ1187B99B220',         " +
+						"	      'name': 'Wooden Shjips'             " +
+						"	    }                                     " +
+						"	  }                                       " +
+						"	}		                                  ";
+		
+		private List<ArtistGenre> genres;
+		
+		@Before
+		public void before() throws Exception {
+			EchoNest echoNest = mock(EchoNest.class);
+			when(echoNest.getArtist(42)).thenReturn(artistGenreJson);
+			ArtistGenreObservableFactory factory = new ArtistGenreObservableFactory(echoNest);
+			genres = factory.create(42).toList().toBlockingObservable().single();
+		}
+		
+		@Test
+		public void shouldObserveEmptyGenres() throws Exception {
+			assertThat(genres.size(), is(1));
+		}
+	}
+	
+	public class WhenArtistFound {
+		private static final String artistGenreJson = 
+				"	{                                         " +
+						"	  'response': {                           " +
+						"	    'artist': {                           " +
+						"	      'genres': [                         " +
+						"	        { 'name': 'neo-psychedelic'},     " +
+						"	        { 'name': 'folk'},          " +
+						"	      ],                                  " +
+						"	      'id': 'AR2B0DQ1187B99B220',         " +
+						"	      'name': 'Wooden Shjips'             " +
+						"	    }                                     " +
+						"	  }                                       " +
+						"	}		                                  ";
+		
+		private ArtistGenre artistGenre;
+		
 		@Before
 		public void before() throws Exception {
 			EchoNest echoNest = mock(EchoNest.class);
@@ -58,7 +141,7 @@ public class ArtistGenreObservableFactoryTest {
 		
 		@Test
 		public void shouldProvideTheSecondGenre() throws Exception {
-			assertThat(artistGenre.getGenres(), hasItem("space rock"));
+			assertThat(artistGenre.getGenres(), hasItem("folk"));
 		}
 	}
 }

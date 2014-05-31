@@ -39,6 +39,8 @@ public class Artist {
 
 	@Override
 	public String toString() {
-		return "Artist [gigs=" + gigs + ", tracks=" + tracks + "]";
+		return "Artist [name=" + getName() + ", genre=" + genre
+				+ ", gigs=" + gigs + ", tracks=" + tracks + "]";
 	}
+	
 }
