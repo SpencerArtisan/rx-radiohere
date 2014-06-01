@@ -1,14 +1,17 @@
 package com.artisan.radiohere;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class Artist {
+    private Logger logger = Logger.getLogger(this.getClass().getName());
 	private final List<Gig> gigs;
 	private final List<Track> tracks;
 	private final ArtistGenre genre;
 
 	public Artist(List<Gig> gigs, List<Track> tracks) {
 		this(gigs, tracks, null);
+		logger.info("Created " + toString());
 	}
 	
 	public Artist(List<Gig> gigs, List<Track> tracks, ArtistGenre genre) {
@@ -34,6 +37,7 @@ public class Artist {
 	}
 	
 	public Artist addGenre(ArtistGenre artistGenre) {
+		logger.info("Adding genres to " + getName() + ": " + artistGenre.getGenres());
 		return new Artist(gigs, tracks, artistGenre);
 	}
 

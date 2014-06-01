@@ -1,6 +1,7 @@
 package com.artisan.radiohere;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -10,6 +11,7 @@ import rx.schedulers.Schedulers;
 import rx.util.async.Async;
 
 public class GigObservableFactory {
+    private Logger logger = Logger.getLogger(this.getClass().getName());
 	private final SongKick songKick;
 	private final int pages;
 	private final VenueObservableFactory venueObservableFactory;
@@ -23,7 +25,7 @@ public class GigObservableFactory {
 	}
 
 	public GigObservableFactory() {
-		this(new SongKick(), new VenueObservableFactory(new SongKick()), 4, 3);
+		this(new SongKick(), new VenueObservableFactory(new SongKick()), 20, 5);
 	}
 
 	public Observable<Gig> create() {
@@ -32,11 +34,17 @@ public class GigObservableFactory {
 				.flatMap(this::createSongKickPageObservable)
 				.flatMap(this::createGigObservable)
 				.flatMap(this::createGigWithVenueObservable)
-				.filter((gig) -> gig.getVenue().getCoordinate().kmFrom(Coordinate.OLD_STREET) < maximumDistanceFromCentralLondon);
+				.filter(this::isClose);
 	}
 
+	private boolean isClose(Gig gig) {
+		boolean isClose = gig.getDistance() < maximumDistanceFromCentralLondon;
+		logger.info(gig.getArtist() + " is close enough? " + isClose + " (" + gig.getDistance() + "km)");
+		return isClose;
+	}
+	
 	private Observable<String> createSongKickPageObservable(Integer page) {
-		return Async.fromCallable(() -> songKick.getGigs(page), Schedulers.newThread());
+		return Async.fromCallable(() -> songKick.getGigs(page), Schedulers.io());
 	}
 	
 	public Observable<Gig> createGigObservable(String songKickPage) {

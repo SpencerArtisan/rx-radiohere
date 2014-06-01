@@ -1,8 +1,11 @@
 package com.artisan.radiohere;
 
+import java.util.logging.Logger;
+
 import org.apache.http.client.fluent.Request;
 
 public class ApiRetrier {
+    private Logger logger = Logger.getLogger(this.getClass().getName());
 	private final int retries;
 	private final int msPauseBetween;
 	private final String url;
@@ -18,7 +21,7 @@ public class ApiRetrier {
 			try {
 				return callApi();
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				logger.warning(e.getMessage());
 				try {
 					Thread.sleep(msPauseBetween);
 				} catch (InterruptedException e1) {}

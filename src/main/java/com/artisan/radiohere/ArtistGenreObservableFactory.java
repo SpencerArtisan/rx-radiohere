@@ -25,7 +25,7 @@ public class ArtistGenreObservableFactory {
 	}
 
 	public Observable<ArtistGenre> create(Integer songkickArtistId) {
-		return Async.fromCallable(() -> echoNest.getArtist(songkickArtistId), Schedulers.newThread())
+		return Async.fromCallable(() -> echoNest.getArtist(songkickArtistId), Schedulers.io())
 				.filter(this::canCreateArtist)
 				.map(this::echoNestToArtist)
 				.filter(this::isInteresting);
@@ -57,9 +57,10 @@ public class ArtistGenreObservableFactory {
 	}
 	
 	private boolean isInteresting(ArtistGenre genre) {
-		logger.info(genre.toString());
 		List<String> genres = genre.getGenres();
-		return genres.size() == 0 || isInteresting(genres);
+		boolean interesting = genres.size() == 0 || isInteresting(genres);
+		logger.info(genre.toString() + " is interesting? " + interesting);
+		return interesting;
 	}
 
 	private boolean isInteresting(List<String> genres) {

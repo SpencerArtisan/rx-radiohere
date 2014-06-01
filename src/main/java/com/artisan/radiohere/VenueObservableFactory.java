@@ -17,7 +17,7 @@ public class VenueObservableFactory {
 		if (id == null) {
 			return Observable.empty();
 		}
-		return Async.fromCallable(() -> songKick.getVenue(id), Schedulers.newThread())
+		return Async.fromCallable(() -> songKick.getVenue(id), Schedulers.io())
 				.filter(this::canCreateVenue)
 				.map(this::songKickToVenue);
 	}
