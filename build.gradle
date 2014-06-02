@@ -8,17 +8,6 @@ applicationName = 'radiohere'
 repositories {
     mavenCentral()
 }
-buildscript {
-    repositories {
-        mavenCentral()
-        maven { url 'http://dl.bintray.com/vermeulen-mp/gradle-plugins' }
-    }
-    dependencies {
-        classpath 'com.wiredforcode:gradle-heroku-plugin:1.0.0'
-    }
-}
-
-apply plugin: 'heroku'
 
 dependencies {
 	compile 'org.json:json:20140107'
@@ -37,16 +26,6 @@ dependencies {
 	testCompile 'org.mockito:mockito-all:1.9.5'
 }
 
-heroku {
-    //get this from heroku
-    apiKey = 'cb174f57-382a-42a8-8fb4-3989ab4b4a60'
-
-    //set this on first run if you don't want a generated name
-    //appName = 'some-unique-app-name'
-
-    //set this if you are not happy with the default gradlew buildpack
-    buildpack = 'https://github.com/krro/heroku-buildpack-gradle.git'
-}
 
 task stage(dependsOn: ['clean', 'installApp'])
 
