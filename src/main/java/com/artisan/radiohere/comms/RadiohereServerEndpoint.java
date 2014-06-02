@@ -51,6 +51,7 @@ public class RadiohereServerEndpoint {
 		
 		try {
 		    server.start();
+		    Thread.sleep(999999);
 		} catch (Exception e) {
 			logger.warning("Error starting server: " + e.getMessage());
 		    e.printStackTrace();
