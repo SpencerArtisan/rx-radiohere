@@ -55,4 +55,4 @@ class CompileCoffeeScript extends DefaultTask {
  
 }
  
-project.ext.CompileCoffeeScript = CompileCoffeeScript
+project.CompileCoffeeScript = CompileCoffeeScript
