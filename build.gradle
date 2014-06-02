@@ -5,9 +5,6 @@ apply from: "coffeescript.gradle"
 mainClassName = 'com.artisan.radiohere.comms.RadiohereServerEndpoint'
 applicationName = 'radiohere'
 
-sourceCompatibility = 1.8  
-targetCompatibility = 1.8
-
 repositories {
     mavenCentral()
 }
