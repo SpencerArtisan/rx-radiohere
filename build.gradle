@@ -6,7 +6,6 @@ targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
-    maven { url 'http://dl.bintray.com/vermeulen-mp/gradle-plugins' }
 }
 
 dependencies {
@@ -24,14 +23,6 @@ dependencies {
 	testCompile 'net.avh4.test:junit-nested:1.0.1'
     testCompile 'org.ow2.chameleon.commons.junit:junit-dep:4.8.2-0000'
 	testCompile 'org.mockito:mockito-all:1.9.5'
-    classpath "org.gradle.api.plugins:gradle-heroku:0.9.6"
-}
-
-apply plugin: 'heroku'
-
-heroku {
-    apiKey = 'cb174f57-382a-42a8-8fb4-3989ab4b4a60'
-    buildpack = 'http://github.com/heroku/heroku-buildpack-java.git'
 }
 
 task compileCoffeeScript(type: CompileCoffeeScript)
