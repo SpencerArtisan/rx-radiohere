@@ -47,11 +47,10 @@ public class RadiohereServerEndpoint {
 
     public static void main(String[] args) {
         logger.info("Starting glassfish server on " + System.getenv("HOSTNAME"));
-        Server server = new Server(System.getenv("HOSTNAME"), 8025, "/websockets", null, RadiohereServerEndpoint.class);
+        Server server = new Server(System.getenv("HOSTNAME"), Integer.valueOf(System.getenv("PORT")), "/websockets", null, RadiohereServerEndpoint.class);
 		
 		try {
 		    server.start();
-		    Thread.sleep(999999);
 		} catch (Exception e) {
 			logger.warning("Error starting server: " + e.getMessage());
 		    e.printStackTrace();
