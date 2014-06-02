@@ -28,9 +28,8 @@ class CompileCoffeeScript extends DefaultTask {
     // Recursively delete output directory if it exists
     outputDirFile.deleteDir()
  
-    def tree = project.fileTree srcDir, { 
-      include '**/*.coffee'
-    }
+    def tree = project.fileTree(dir: srcDir)
+    tree.include '**/*.coffee'
  
     tree.visit { visit ->
       if (visit.directory) return
