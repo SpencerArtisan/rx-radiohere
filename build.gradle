@@ -1,4 +1,5 @@
 apply plugin: 'java'
+apply plugin: 'heroku'
 apply from: "coffeescript.gradle"
 
 sourceCompatibility = 1.8  
@@ -6,9 +7,11 @@ targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven { url 'http://dl.bintray.com/vermeulen-mp/gradle-plugins' }
 }
 
 dependencies {
+    classpath "org.gradle.api.plugins:gradle-heroku:0.9.6"
 	compile 'org.json:json:20140107'
 	compile 'org.apache.httpcomponents:fluent-hc:4.3.2'
     compile 'com.netflix.rxjava:rxjava-core:0.18.3'
@@ -23,6 +26,17 @@ dependencies {
 	testCompile 'net.avh4.test:junit-nested:1.0.1'
     testCompile 'org.ow2.chameleon.commons.junit:junit-dep:4.8.2-0000'
 	testCompile 'org.mockito:mockito-all:1.9.5'
+}
+
+heroku {
+    //get this from heroku
+    apiKey = 'cb174f57-382a-42a8-8fb4-3989ab4b4a60'
+
+    //set this on first run if you don't want a generated name
+    //appName = 'some-unique-app-name'
+
+    //set this if you are not happy with the default gradlew buildpack
+    buildpack = 'https://github.com/krro/heroku-buildpack-gradle.git'
 }
 
 task compileCoffeeScript(type: CompileCoffeeScript)
