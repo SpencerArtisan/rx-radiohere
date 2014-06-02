@@ -118,7 +118,7 @@ public class Gig {
 	@Override
 	public String toString() {
 		return "Gig [artist=" + artist + ", date=" + date + ", venueName="
-				+ venueName + ", venueId=" + venueId + ", venue=" + venue
+				+ venueName + ", venueId=" + venueId + ", distance=" + getDistance() + ", venue=" + venue
 				+ ", songkickArtistId=" + songkickArtistId + "]";
 	}
 }

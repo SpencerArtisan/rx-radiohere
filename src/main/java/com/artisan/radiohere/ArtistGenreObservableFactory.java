@@ -58,7 +58,7 @@ public class ArtistGenreObservableFactory {
 	
 	private boolean isInteresting(ArtistGenre genre) {
 		List<String> genres = genre.getGenres();
-		boolean interesting = genres.size() == 0 || isInteresting(genres);
+		boolean interesting = isInteresting(genres);
 		logger.info(genre.toString() + " is interesting? " + interesting);
 		return interesting;
 	}
@@ -71,6 +71,10 @@ public class ArtistGenreObservableFactory {
 		  	name.contains("nordic") ||
 		  	name.contains("norwegian") ||
 		  	name.contains("stomp") ||
+		  	name.contains("lo-fi") ||
+		  	name.contains("danish") ||
+		  	name.contains("swedish") ||
+		  	name.contains("french") ||
 		  	name.contains("indie"));
 		return anyInteresting;
 	}

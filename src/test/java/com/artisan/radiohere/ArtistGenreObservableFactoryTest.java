@@ -96,7 +96,7 @@ public class ArtistGenreObservableFactoryTest {
 		
 		@Test
 		public void shouldObserveEmptyGenres() throws Exception {
-			assertThat(genres.size(), is(1));
+			assertThat(genres.size(), is(0));
 		}
 	}
 	
