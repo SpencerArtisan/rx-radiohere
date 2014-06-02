@@ -51,11 +51,10 @@ public class RadiohereServerEndpoint {
 		
 		try {
 		    server.start();
-		    server.wait();
 		} catch (Exception e) {
 		    e.printStackTrace();
 		} finally {
-		    server.stop();
+//		    server.stop();
 		}
     }
 }
