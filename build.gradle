@@ -1,5 +1,9 @@
 apply plugin: 'java'
+apply plugin: 'application'
 apply from: "coffeescript.gradle"
+
+mainClassName = 'com.artisan.radiohere.comms.RadiohereServerEndpoint'
+applicationName = 'radiohere'
 
 sourceCompatibility = 1.8  
 targetCompatibility = 1.8
@@ -46,6 +50,8 @@ heroku {
     //set this if you are not happy with the default gradlew buildpack
     buildpack = 'https://github.com/krro/heroku-buildpack-gradle.git'
 }
+
+task stage(dependsOn: ['clean', 'installApp'])
 
 task compileCoffeeScript(type: CompileCoffeeScript)
 
