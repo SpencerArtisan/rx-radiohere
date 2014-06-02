@@ -21,7 +21,7 @@ import com.artisan.radiohere.ArtistObservableFactory;
 
 @ServerEndpoint(value = "/game")
 public class RadiohereServerEndpoint {
-    private Logger logger = Logger.getLogger(this.getClass().getName());
+    private static Logger logger = Logger.getLogger(RadiohereServerEndpoint.class.getName());
 
     @OnOpen
     public void onOpen(Session session) {
@@ -46,7 +46,8 @@ public class RadiohereServerEndpoint {
     }
 
     public static void main(String[] args) {
-        Server server = new Server("localhost", 8025, "/websockets", null, RadiohereServerEndpoint.class);
+        logger.info("Starting glassfish server on " + System.getenv("HOSTNAME"));
+        Server server = new Server(System.getenv("HOSTNAME"), 8025, "/websockets", null, RadiohereServerEndpoint.class);
 		
 		try {
 		    server.start();
