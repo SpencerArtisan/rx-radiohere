@@ -10,32 +10,7 @@ repositories {
     mavenCentral()
 }
 
-buildscript {
-    repositories {
-        mavenCentral()
-        maven { url 'http://dl.bintray.com/vermeulen-mp/gradle-plugins' }
-    }
-    dependencies {
-        classpath "org.gradle.api.plugins:gradle-heroku:0.9.6"
-    }
-}
-
-
-apply plugin: 'heroku'
-
-heroku {
-    //get this from heroku
-    apiKey = 'cb174f57-382a-42a8-8fb4-3989ab4b4a60'
-
-    //set this on first run if you don't want a generated name
-    //appName = 'some-unique-app-name'
-
-    //set this if you are not happy with the default gradlew buildpack
-    //buildpack = 'http://somebuildpack
-}
-
 dependencies {
-
 	compile 'org.json:json:20140107'
 	compile 'org.apache.httpcomponents:fluent-hc:4.3.2'
     compile 'com.netflix.rxjava:rxjava-core:0.18.3'
@@ -58,7 +33,7 @@ dependencies {
 }
 
 
-task stage(dependsOn: ['clean', 'build', 'installApp'])
+task stage(dependsOn: ['clean', 'installApp'])
 
 task compileCoffeeScript(type: CompileCoffeeScript)
 
