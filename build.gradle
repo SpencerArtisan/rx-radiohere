@@ -20,13 +20,11 @@ dependencies {
     compile 'org.eclipse.jetty:jetty-client:9.0.0.RC2'
     compile 'org.eclipse.jetty:jetty-server:9.0.0.RC2'
     compile 'org.eclipse.jetty:jetty-servlet:9.0.0.RC2'
-    compile 'org.eclipse.jetty.websocket:websocket-core:9.0.0.RC2'
     compile 'org.eclipse.jetty.websocket:websocket-server:9.0.0.RC2'
     compile 'org.eclipse.jetty.websocket:websocket-client:9.0.0.RC2'
     compile 'org.eclipse.jetty.websocket:websocket-api:9.0.0.RC2'
     compile 'org.eclipse.jetty.websocket:websocket-servlet:9.0.0.RC2'
     compile 'org.eclipse.jetty.websocket:websocket-common:9.0.0.RC2'
-    compile 'org.eclipse.jetty.websocket:javax-websocket-server-impl:9.0.0.RC2'
     
     compile 'javax.websocket:javax.websocket-api:1.0'
     testCompile 'org.hamcrest:hamcrest-all:1.3'
