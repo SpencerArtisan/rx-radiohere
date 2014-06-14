@@ -58,7 +58,7 @@ public class ArtistGenreObservableFactory {
 	
 	private boolean isInteresting(ArtistGenre genre) {
 		List<String> genres = genre.getGenres();
-		boolean interesting = isInteresting(genres);
+		boolean interesting = genres.isEmpty() || isInteresting(genres);
 		logger.info(genre.toString() + " is interesting? " + interesting);
 		return interesting;
 	}

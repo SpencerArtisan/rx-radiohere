@@ -2,44 +2,64 @@ package com.artisan.radiohere.comms;
 
 import java.net.URI;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import javax.websocket.ClientEndpoint;
-import javax.websocket.CloseReason;
-import javax.websocket.OnClose;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
+import org.eclipse.jetty.websocket.api.Session;
+import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
+import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
+import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
+import org.eclipse.jetty.websocket.api.annotations.WebSocket;
+import org.eclipse.jetty.websocket.client.ClientUpgradeRequest;
+import org.eclipse.jetty.websocket.client.WebSocketClient;
 
-import org.glassfish.tyrus.client.ClientManager;
 
-@ClientEndpoint
+@WebSocket
 public class RadiohereClientEndpoint {
-    private static CountDownLatch latch;
+    private static CountDownLatch closeLatch = new CountDownLatch(1);
     private Logger logger = Logger.getLogger(this.getClass().getName());
 
-    @OnOpen
+    @OnWebSocketConnect
     public void onOpen(Session session) {
-        logger.info("Connected ... " + session.getId());
+        logger.info("Connected ... " + session);
     }
 
-    @OnMessage
-    public String onMessage(String scrambledWord, Session session) {
+    @OnWebSocketMessage
+    public void onMessage(Session session, String scrambledWord) {
         logger.info("Client receives ...." + scrambledWord);
-        return null;
     }
 
-    @OnClose
-    public void onClose(Session session, CloseReason closeReason) {
-        logger.info(String.format("Session %s close because of %s", session.getId(), closeReason));
-        latch.countDown();
+    @OnWebSocketClose
+    public void onClose(Session session, int statusCode, String reason) {
+        logger.info(String.format("Session %s close because of %s", session, reason));
+        closeLatch.countDown();
     }
 
-    public static void main(String[] args) throws Exception {
-        latch = new CountDownLatch(1);
-        ClientManager.createClient().connectToServer(
-        			RadiohereClientEndpoint.class, 
-        			new URI("ws://localhost:8025/websockets/game"));
-        latch.await();
+    public boolean awaitClose(int duration, TimeUnit unit) throws InterruptedException {
+        return this.closeLatch.await(duration, unit);
     }
-}
+
+    public static void main(String[] args) {
+        String destUri = "ws://localhost:8025/game";
+        if (args.length > 0) {
+            destUri = args[0];
+        }
+        WebSocketClient client = new WebSocketClient();
+        RadiohereClientEndpoint socket = new RadiohereClientEndpoint();
+        try {
+            client.start();
+            URI echoUri = new URI(destUri);
+            ClientUpgradeRequest request = new ClientUpgradeRequest();
+            client.connect(socket, echoUri, request);
+            System.out.printf("Connecting to : %s%n", echoUri);
+            socket.awaitClose(50, TimeUnit.SECONDS);
+        } catch (Throwable t) {
+            t.printStackTrace();
+        } finally {
+            try {
+                client.stop();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }}

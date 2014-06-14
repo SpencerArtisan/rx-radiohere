@@ -5,13 +5,23 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.logging.Logger;
 
+import javax.net.ssl.ExtendedSSLSession;
+import javax.servlet.annotation.WebServlet;
 import javax.websocket.CloseReason;
 import javax.websocket.OnClose;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-import org.glassfish.tyrus.server.Server;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
+import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
+import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
+import org.eclipse.jetty.websocket.api.annotations.WebSocket;
+import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
+import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 import org.json.JSONObject;
 
 import rx.Observable;
@@ -19,43 +29,23 @@ import rx.Observable;
 import com.artisan.radiohere.Artist;
 import com.artisan.radiohere.ArtistObservableFactory;
 
-@ServerEndpoint(value = "/game")
-public class RadiohereServerEndpoint {
+@WebServlet(name = "MyEcho WebSocket Servlet", urlPatterns = { "/game" })
+public class RadiohereServerEndpoint extends WebSocketServlet {
     private static Logger logger = Logger.getLogger(RadiohereServerEndpoint.class.getName());
 
-    @OnOpen
-    public void onOpen(Session session) {
-        logger.info("Client initiates Radiohere... " + session.getId());
-    		Observable<Artist> factory = new ArtistObservableFactory().create();
-    		factory.subscribe((artist) -> sendToClient(session, artist));
+    @Override
+    public void configure(WebSocketServletFactory factory) {
+        factory.getPolicy().setIdleTimeout(1000000);
+        factory.register(RadiohereServerSocket.class);
     }
     
-    private void sendToClient(Session session, Artist artist) {
-    		try {
-    			String artistJSON = new JSONObject(artist).toString();
-    	        logger.info("Server sending artist to client... " + artistJSON);
-			session.getBasicRemote().sendText(artistJSON);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    }
-
-    @OnClose
-    public void onClose(Session session, CloseReason closeReason) {
-        logger.info(String.format("Session %s closed because of %s", session.getId(), closeReason));
-    }
-
-    public static void main(String[] args) {
-        logger.info("Starting glassfish server on " + System.getenv("HOSTNAME"));
-        Server server = new Server(System.getenv("HOSTNAME"), Integer.valueOf(System.getenv("PORT")), "/websockets", null, RadiohereServerEndpoint.class);
-		
-		try {
-		    server.start();
-		} catch (Exception e) {
-			logger.warning("Error starting server: " + e.getMessage());
-		    e.printStackTrace();
-		} finally {
-//		    server.stop();
-		}
+    public static void main(String[] args) throws Exception{
+        Server server = new Server(Integer.valueOf(System.getenv("PORT")));
+        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        context.setContextPath("/");
+        server.setHandler(context);
+        context.addServlet(new ServletHolder(new RadiohereServerEndpoint()),"/*");
+        server.start();
+        server.join();
     }
 }
