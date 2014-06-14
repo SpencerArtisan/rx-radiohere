@@ -17,14 +17,13 @@ dependencies {
     compile 'com.netflix.rxjava:rxjava-async-util:0.18.3'
     compile 'com.netflix.rxjava:rxjava-string:0.18.3'
     
-    compile 'org.eclipse.jetty:jetty-client:9.0.0.RC2'
-    compile 'org.eclipse.jetty:jetty-server:9.0.0.RC2'
-    compile 'org.eclipse.jetty:jetty-servlet:9.0.0.RC2'
-    compile 'org.eclipse.jetty.websocket:websocket-server:9.0.0.RC2'
-    compile 'org.eclipse.jetty.websocket:websocket-client:9.0.0.RC2'
-    compile 'org.eclipse.jetty.websocket:websocket-api:9.0.0.RC2'
-    compile 'org.eclipse.jetty.websocket:websocket-servlet:9.0.0.RC2'
-    compile 'org.eclipse.jetty.websocket:websocket-common:9.0.0.RC2'
+    compile 'org.eclipse.jetty:jetty-servlet:+'
+    compile 'org.eclipse.jetty:jetty-webapp:+'
+    compile 'org.eclipse.jetty:jetty-jsp:+'
+    compile 'org.eclipse.jetty:jetty-annotations:+'
+
+    // add support for jetty implementation of websockets
+    compile 'org.eclipse.jetty.websocket:websocket-server:+'
     
     compile 'javax.websocket:javax.websocket-api:1.0'
     testCompile 'org.hamcrest:hamcrest-all:1.3'
