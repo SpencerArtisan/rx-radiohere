@@ -3,6 +3,7 @@ package com.artisan.radiohere.comms;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Collections;
 import java.util.logging.Logger;
 
 import javax.websocket.CloseReason;
@@ -22,6 +23,9 @@ import rx.Observable;
 
 import com.artisan.radiohere.Artist;
 import com.artisan.radiohere.ArtistObservableFactory;
+import com.artisan.radiohere.Coordinate;
+import com.artisan.radiohere.Gig;
+import com.artisan.radiohere.Venue;
 
 @WebSocket
 public class RadiohereServerSocket {
@@ -39,6 +43,12 @@ public class RadiohereServerSocket {
     @OnWebSocketMessage
     public void onMessage(Session session, String message) {
     		logger.info("** Received message from client: " + message);
+    		Artist dummyArtist = new Artist(
+    				Collections.singletonList(new Gig("Dummy", 1, "01/01/2014", "dummy", 0, 
+    						new Venue("gummy", null, new Coordinate(51,0)))), 
+    				Collections.EMPTY_LIST, 
+    				null);
+		sendToClient(session, dummyArtist);
     }
 
     	private void sendToClient(Session session, Artist artist) {
