@@ -34,7 +34,12 @@ public class RadiohereServerSocket {
     		factory.subscribe((artist) -> sendToClient(session, artist));
     }
     
-    private void sendToClient(Session session, Artist artist) {
+    @OnWebSocketMessage
+    public void onMessage(Session session, String message) {
+    		logger.info("** Received message from client: " + message);
+    }
+
+    	private void sendToClient(Session session, Artist artist) {
 		String artistJSON = new JSONObject(artist).toString();
         logger.info("Server sending artist to client... " + artistJSON);
 		session.getRemote().sendStringByFuture(artistJSON);
