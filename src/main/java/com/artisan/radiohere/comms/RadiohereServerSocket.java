@@ -32,8 +32,8 @@ public class RadiohereServerSocket {
         logger.info("Client initiates Radiohere... " + session);
     		Observable<Artist> factory = new ArtistObservableFactory().create();
     		factory.subscribe((artist) -> sendToClient(session, artist),
-    				(e) -> System.out.println(" ✖ " + e.getMessage()),
-					 () -> System.out.println(" ‾"));
+    				(e) -> logger.warning("!!!!!!!!!!!!!!!!!!!!!!" + e.getMessage()),
+					 () -> logger.warning("--------------------------------"));
     }
     
     @OnWebSocketMessage
@@ -42,7 +42,7 @@ public class RadiohereServerSocket {
     }
 
     	private void sendToClient(Session session, Artist artist) {
-    		System.out.println(" • " + artist);
+    		logger.info("Sending to client...");
 		String artistJSON = new JSONObject(artist).toString();
         logger.info("Server sending artist to client... " + artistJSON);
 		session.getRemote().sendStringByFuture(artistJSON);
