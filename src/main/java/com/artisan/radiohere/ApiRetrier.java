@@ -24,7 +24,9 @@ public class ApiRetrier {
 				logger.warning(e.getMessage());
 				try {
 					Thread.sleep(msPauseBetween);
-				} catch (InterruptedException e1) {}
+				} catch (InterruptedException e1) {
+					logger.warning("!!!! Exception during sleep: " + e1.getMessage());
+				}
 			}
 		}
 		return callApi();
