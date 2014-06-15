@@ -1,6 +1,7 @@
 package com.artisan.radiohere;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -10,7 +11,8 @@ import rx.schedulers.Schedulers;
 import rx.util.async.Async;
 
 public class TrackObservableFactory {
-	private SoundCloud soundCloud;
+    private Logger logger = Logger.getLogger(this.getClass().getName());
+    private SoundCloud soundCloud;
 	private int maxTracks;
 
 	public TrackObservableFactory(SoundCloud soundCloud, int maxTracks) {

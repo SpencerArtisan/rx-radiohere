@@ -29,38 +29,37 @@ public class ArtistObservableFactory {
 	public Observable<Artist> create() {
 		return gigObservableFactory
 				.create()
-				.groupBy(Gig::getArtist)
-				.flatMap(this::createArtist)
-				.flatMap(this::createArtistWithGenreObserable);
+				.groupBy(Gig::getArtistId)
+				.flatMap(this::createArtist);
 	}
 	
-	public Observable<Artist> createArtist(GroupedObservable<String, Gig> gigObservableForArtist) {
-		return Observable.zip(
+	public Observable<Artist> createArtist(GroupedObservable<ArtistId, Gig> gigObservableForArtist) {
+		return Observable.combineLatest(
 				createCumulativeGigsForArtistObserver(gigObservableForArtist), 
-				createTrackListSingletonObserver(gigObservableForArtist).repeat(5), 
-				Artist::new);
+				createTrackListSingletonObservable(gigObservableForArtist), 
+				createGenreSingletonObservable(gigObservableForArtist), 
+				Artist::new);		
 	}
 
 	private Observable<ArrayList<Gig>> createCumulativeGigsForArtistObserver(
-			GroupedObservable<String, Gig> gigObservableForArtist) {
+			GroupedObservable<ArtistId, Gig> gigObservableForArtist) {
 		return gigObservableForArtist
 				.asObservable()
 				.scan(new ArrayList<>(), this::append)
 				.filter((gigs) -> !gigs.isEmpty());
 	}
 
-	private Observable<List<Track>> createTrackListSingletonObserver(
-			GroupedObservable<String, Gig> gigObservableForArtist) {
+	private Observable<List<Track>> createTrackListSingletonObservable(
+			GroupedObservable<ArtistId, Gig> gigObservableForArtist) {
 		return trackObservableFactory
-			.create(gigObservableForArtist.getKey())
+			.create(gigObservableForArtist.getKey().getName())
 			.toList();
 	}
 	
-	private Observable<Artist> createArtistWithGenreObserable(Artist artist) {
-		logger.info("Checking genre for " + artist.getName());
+	private Observable<ArtistGenre> createGenreSingletonObservable(
+			GroupedObservable<ArtistId, Gig> gigObservableForArtist) {
 		return artistGenreObservableFactory
-				.create(artist.getGigs().get(0).getSongkickArtistId())
-				.map(artist::addGenre);
+				.create(gigObservableForArtist.getKey().getId());
 	}
 		
 	public ArrayList<Gig> append(ArrayList<Gig> gigs, Gig gig) {

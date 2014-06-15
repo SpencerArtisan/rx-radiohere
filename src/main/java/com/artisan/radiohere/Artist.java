@@ -9,15 +9,11 @@ public class Artist {
 	private final List<Track> tracks;
 	private final ArtistGenre genre;
 
-	public Artist(List<Gig> gigs, List<Track> tracks) {
-		this(gigs, tracks, null);
-		logger.info("Created " + toString());
-	}
-	
 	public Artist(List<Gig> gigs, List<Track> tracks, ArtistGenre genre) {
 		this.gigs = gigs;
 		this.tracks = tracks;
 		this.genre = genre;
+		logger.info("Created Artist " + this);
 	}
 
 	public List<Gig> getGigs() {
@@ -36,11 +32,6 @@ public class Artist {
 		return genre;
 	}
 	
-	public Artist addGenre(ArtistGenre artistGenre) {
-		logger.info("Adding genres to " + getName() + ": " + artistGenre.getGenres());
-		return new Artist(gigs, tracks, artistGenre);
-	}
-
 	@Override
 	public String toString() {
 		return "Artist [name=" + getName() + ", genre=" + genre

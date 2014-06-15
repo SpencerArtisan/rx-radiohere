@@ -29,6 +29,14 @@ public class Gig {
 		return artist;
 	}
 
+	public Integer getSongkickArtistId() {
+		return songkickArtistId;
+	}
+
+	public ArtistId getArtistId() {
+		return new ArtistId(songkickArtistId, artist);
+	}
+	
 	public String getDate() {
 		return date;
 	}
@@ -43,10 +51,6 @@ public class Gig {
 
 	public Venue getVenue() {
 		return venue;
-	}
-
-	public Integer getSongkickArtistId() {
-		return songkickArtistId;
 	}
 
 	public Double getDistance() {
@@ -120,5 +124,49 @@ public class Gig {
 		return "Gig [artist=" + artist + ", date=" + date + ", venueName="
 				+ venueName + ", venueId=" + venueId + ", distance=" + getDistance() + ", venue=" + venue
 				+ ", songkickArtistId=" + songkickArtistId + "]";
+	}
+}
+
+class ArtistId {
+	final private Integer id;
+	final private String name;
+	
+	public ArtistId(Integer id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ArtistId other = (ArtistId) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 }
