@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Collections;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import javax.websocket.CloseReason;
@@ -38,6 +39,20 @@ public class RadiohereServerSocket {
     		factory.subscribe((artist) -> sendToClient(session, artist),
     				(e) -> logger.warning("!!!!!!!!!!!!!!!!!!!!!!" + e.getMessage()),
 					 () -> logger.warning("--------------------------------"));
+    		
+    		keepAlive(session);
+    }
+    
+    public void keepAlive(Session session) {
+	    	Observable.interval(10, TimeUnit.SECONDS).subscribe((x) -> {
+	    		Artist dummyArtist = new Artist(
+	    				Collections.singletonList(new Gig("Dummy222", 1, "01/01/2014", "dummy222", 0, 
+	    						new Venue("gummy", null, new Coordinate(51,0)))), 
+	    				Collections.EMPTY_LIST, 
+	    				null);
+			sendToClient(session, dummyArtist);	    		
+	    	});
+    		
     }
     
     @OnWebSocketMessage
