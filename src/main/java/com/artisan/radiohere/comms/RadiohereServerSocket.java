@@ -44,7 +44,7 @@ public class RadiohereServerSocket {
     }
     
     public void keepAlive(Session session) {
-	    	Observable.interval(10, TimeUnit.SECONDS).subscribe((x) -> {
+	    	Observable.interval(3, TimeUnit.SECONDS).subscribe((x) -> {
 	    		Artist dummyArtist = new Artist(
 	    				Collections.singletonList(new Gig("Dummy222", 1, "01/01/2014", "dummy222", 0, 
 	    						new Venue("gummy", null, new Coordinate(51,0)))), 
