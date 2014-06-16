@@ -34,6 +34,7 @@ public class ApiRetrier {
 
 	private String callApi() throws ApiException {
 		try {
+			logger.info("Api call starting - " + url);
 			long start = System.currentTimeMillis();
 			String result = Request.Get(url).execute().returnContent().asString();
 			long duration = System.currentTimeMillis() - start;

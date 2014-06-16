@@ -44,7 +44,7 @@ public class GigObservableFactory {
 	}
 	
 	private Observable<String> createSongKickPageObservable(Integer page) {
-		return Async.fromCallable(() -> songKick.getGigs(page), Schedulers.io());
+		return Async.fromCallable(() -> songKick.getGigs(page), Schedulers.trampoline());
 	}
 	
 	public Observable<Gig> createGigObservable(String songKickPage) {
