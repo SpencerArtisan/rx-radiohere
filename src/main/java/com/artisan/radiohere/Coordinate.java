@@ -2,6 +2,7 @@ package com.artisan.radiohere;
 
 public class Coordinate {
 	public static final Coordinate OLD_STREET = new Coordinate(51.5265, -0.0825);
+	public static final Coordinate YEATE_STREET = new Coordinate(51.5403, -0.0884);
 	
 	private final double latitude;
 	private final double longitude;
