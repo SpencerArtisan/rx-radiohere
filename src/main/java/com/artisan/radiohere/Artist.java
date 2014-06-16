@@ -7,12 +7,10 @@ public class Artist {
     private Logger logger = Logger.getLogger(this.getClass().getName());
 	private final List<Gig> gigs;
 	private final List<Track> tracks;
-	private final ArtistGenre genre;
 
-	public Artist(List<Gig> gigs, List<Track> tracks, ArtistGenre genre) {
+	public Artist(List<Gig> gigs, List<Track> tracks) {
 		this.gigs = gigs;
 		this.tracks = tracks;
-		this.genre = genre;
 		logger.info("Created Artist " + this);
 	}
 
@@ -28,14 +26,8 @@ public class Artist {
 		return gigs.get(0).getArtist();
 	}
 	
-	public ArtistGenre getGenre() {
-		return genre;
-	}
-	
 	@Override
 	public String toString() {
-		return "Artist [name=" + getName() + ", genre=" + genre
-				+ ", gigs=" + gigs + ", tracks=" + tracks + "]";
+		return "Artist [name=" + getName() + ", gigs=" + gigs + ", tracks=" + tracks + "]";
 	}
-	
 }

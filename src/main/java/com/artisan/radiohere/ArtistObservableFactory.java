@@ -12,18 +12,15 @@ public class ArtistObservableFactory {
 
     private final GigObservableFactory gigObservableFactory;
 	private final TrackObservableFactory trackObservableFactory;
-	private final ArtistGenreObservableFactory artistGenreObservableFactory;
 
 	public ArtistObservableFactory(GigObservableFactory gigObservableFactory,
-			TrackObservableFactory trackObservableFactory,
-			ArtistGenreObservableFactory artistGenreObservableFactory) {
+			TrackObservableFactory trackObservableFactory) {
 		this.gigObservableFactory = gigObservableFactory;
 		this.trackObservableFactory = trackObservableFactory;
-		this.artistGenreObservableFactory = artistGenreObservableFactory;
 	}
 
 	public ArtistObservableFactory() {
-		this(new GigObservableFactory(), new TrackObservableFactory(), new ArtistGenreObservableFactory());
+		this(new GigObservableFactory(), new TrackObservableFactory());
 	}
 
 	public Observable<Artist> create() {
@@ -37,7 +34,6 @@ public class ArtistObservableFactory {
 		return Observable.combineLatest(
 				createCumulativeGigsForArtistObserver(gigObservableForArtist), 
 				createTrackListSingletonObservable(gigObservableForArtist), 
-				createGenreSingletonObservable(gigObservableForArtist), 
 				Artist::new);		
 	}
 
@@ -56,12 +52,6 @@ public class ArtistObservableFactory {
 			.toList();
 	}
 	
-	private Observable<ArtistGenre> createGenreSingletonObservable(
-			GroupedObservable<ArtistId, Gig> gigObservableForArtist) {
-		return artistGenreObservableFactory
-				.create(gigObservableForArtist.getKey().getId());
-	}
-		
 	public ArrayList<Gig> append(ArrayList<Gig> gigs, Gig gig) {
 		ArrayList<Gig> newList = new ArrayList<>(gigs);
 		newList.add(gig);

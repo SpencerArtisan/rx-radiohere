@@ -37,33 +37,13 @@ public class RadiohereServerSocket {
         logger.info("Client initiates Radiohere... " + session);
     		Observable<Artist> factory = new ArtistObservableFactory().create();
     		factory.subscribe((artist) -> sendToClient(session, artist),
-    				(e) -> logger.warning("!!!!!!!!!!!!!!!!!!!!!!" + e.getMessage()),
-					 () -> logger.warning("--------------------------------"));
-    		
-    		keepAlive(session);
-    }
-    
-    public void keepAlive(Session session) {
-	    	Observable.interval(3, TimeUnit.SECONDS).subscribe((x) -> {
-	    		Artist dummyArtist = new Artist(
-	    				Collections.singletonList(new Gig("Dummy222", 1, "01/01/2014", "dummy222", 0, 
-	    						new Venue("gummy", null, new Coordinate(51,0)))), 
-	    				Collections.EMPTY_LIST, 
-	    				null);
-			sendToClient(session, dummyArtist);	    		
-	    	});
-    		
+    				(e) -> logger.warning("STREAM ERROR: " + e.getMessage()),
+    				() -> logger.info("STREAM FINISHED"));
     }
     
     @OnWebSocketMessage
     public void onMessage(Session session, String message) {
     		logger.info("** Received message from client: " + message);
-    		Artist dummyArtist = new Artist(
-    				Collections.singletonList(new Gig("Dummy", 1, "01/01/2014", "dummy", 0, 
-    						new Venue("gummy", null, new Coordinate(51,0)))), 
-    				Collections.EMPTY_LIST, 
-    				null);
-		sendToClient(session, dummyArtist);
     }
 
     	private void sendToClient(Session session, Artist artist) {
