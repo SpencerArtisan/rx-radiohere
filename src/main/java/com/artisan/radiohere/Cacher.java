@@ -8,6 +8,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Protocol;
+import redis.clients.jedis.exceptions.JedisDataException;
 
 public class Cacher {
     private Logger logger = Logger.getLogger(this.getClass().getName());
@@ -44,6 +45,8 @@ public class Cacher {
 		Jedis resource = pool.getResource();
 		try {
 			resource.set(key, value);
+		} catch (JedisDataException ex) {
+			logger.warning("Jedis limit reached");
 		} finally {
 			pool.returnResource(resource);
 		}

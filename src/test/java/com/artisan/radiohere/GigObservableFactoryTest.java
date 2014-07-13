@@ -213,6 +213,117 @@ public class GigObservableFactoryTest {
 		}
 	}
 	
+	public class WithManyGigsSameArtistDifferentDate {
+		private static final String gigsJson = 
+				"{                                                        " +
+				"  'resultsPage': {                                       " +
+				"    'results': { 'event': [                              " +
+				"      {                                                  " +
+				"        'start':{'date':'2012-04-18'},                   " +
+				"        'performance':[     							 " +
+				"           {											 " +
+				"			  'displayName': 'Wild Flag',     			 " +
+				"             'artist': {'id': 1},     					 " +
+				"           }     										 " +
+				"        ],     											 " +
+				"        'venue':{'displayName':'The Fillmore','id':42}   " +
+				"      },                                                 " +
+				"      {                                                  " +
+				"        'start':{'date':'2012-04-19'},                   " +
+				"        'performance':[     							 " +
+				"           {											 " +
+				"			  'displayName': 'Wild Flag',     		     " +
+				"             'artist': {'id': 1},     					 " +
+				"           }     										 " +
+				"        ],     											 " +
+				"        'venue':{'displayName':'The Fillmore','id':42}   " +
+				"      }                                                  " +
+				"    ]}                                                   " +
+				"  }                                                      " +
+				"}  														 ";
+		
+		private List<Gig> gigs;
+		private Venue venue1;
+		
+		@Before
+		public void before() throws Exception {
+			gigObservableFactory = new GigObservableFactory(songKick, venueObservableFactory, 1, 100.0);
+			venue1 = new Venue("name1", "postcode1", new Coordinate(51, 1));
+			when(venueObservableFactory.create(42)).thenReturn(Observable.just(venue1));
+			when(songKick.getGigs(0)).thenReturn(gigsJson);
+			Observable<Gig> observable = gigObservableFactory.create();
+			gigs = observable.toList().toBlockingObservable().single();	
+		}
+		
+		@Test
+		public void shouldObserveTwoGigs() throws Exception {
+			assertThat(gigs.size(), is(2));
+		}
+		
+		@Test
+		public void shouldProvideTheFirstGig() throws Exception {
+			assertThat(gigs, hasItem(new Gig("Wild Flag", 1, "2012-04-18", "The Fillmore", 42, venue1)));
+		}
+		
+		@Test
+		public void shouldProvideTheSecondGig() throws Exception {
+			assertThat(gigs, hasItem(new Gig("Wild Flag", 1, "2012-04-19", "The Fillmore", 42, venue1)));
+		}
+	}
+	
+	public class WithManyGigsSameArtistSameDate {
+		private static final String gigsJson = 
+				"{                                                        " +
+						"  'resultsPage': {                                       " +
+						"    'results': { 'event': [                              " +
+						"      {                                                  " +
+						"        'start':{'date':'2012-04-18'},                   " +
+						"        'performance':[     							 " +
+						"           {											 " +
+						"			  'displayName': 'Wild Flag',     			 " +
+						"             'artist': {'id': 1},     					 " +
+						"           }     										 " +
+						"        ],     											 " +
+						"        'venue':{'displayName':'The Fillmore','id':42}   " +
+						"      },                                                 " +
+						"      {                                                  " +
+						"        'start':{'date':'2012-04-18'},                   " +
+						"        'performance':[     							 " +
+						"           {											 " +
+						"			  'displayName': 'Wild Flag',     		     " +
+						"             'artist': {'id': 1},     					 " +
+						"           }     										 " +
+						"        ],     											 " +
+						"        'venue':{'displayName':'The Fillmore','id':42}   " +
+						"      }                                                  " +
+						"    ]}                                                   " +
+						"  }                                                      " +
+						"}  														 ";
+		
+		private List<Gig> gigs;
+		private Venue venue1;
+		
+		@Before
+		public void before() throws Exception {
+			gigObservableFactory = new GigObservableFactory(songKick, venueObservableFactory, 1, 100.0);
+			venue1 = new Venue("name1", "postcode1", new Coordinate(51, 1));
+			when(venueObservableFactory.create(42)).thenReturn(Observable.just(venue1));
+			when(songKick.getGigs(0)).thenReturn(gigsJson);
+			Observable<Gig> observable = gigObservableFactory.create();
+			gigs = observable.toList().toBlockingObservable().single();	
+		}
+		
+		@Test
+		public void shouldObserveOneGig() throws Exception {
+			assertThat(gigs.size(), is(1));
+		}
+		
+		@Test
+		public void shouldProvideTheFirstGig() throws Exception {
+			assertThat(gigs, hasItem(new Gig("Wild Flag", 1, "2012-04-18", "The Fillmore", 42, venue1)));
+		}
+	}
+	
 	public class WithManyGigs {
 		private static final String gigsJson = 
 				"{                                                        " +

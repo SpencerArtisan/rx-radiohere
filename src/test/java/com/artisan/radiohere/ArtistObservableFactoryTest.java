@@ -72,13 +72,8 @@ public class ArtistObservableFactoryTest {
 		}
 		
 		@Test
-		public void shouldHaveOneGig() throws Exception {
-			assertThat(artists.get(0).getGigs().size(), is(1));
-		}
-		
-		@Test
 		public void shouldHaveTheGigDetails() throws Exception {
-			assertThat(artists.get(0).getGigs().get(0), equalTo(gig));
+			assertThat(artists.get(0).getGig(), equalTo(gig));
 		}
 		
 		@Test
@@ -107,18 +102,13 @@ public class ArtistObservableFactoryTest {
 		}
 		
 		@Test
-		public void shouldBeOneGig() throws Exception {
-			assertThat(artists.get(0).getGigs().size(), is(1));
-		}
-		
-		@Test
 		public void shouldBeOneTrack() throws Exception {
 			assertThat(artists.get(0).getTracks().size(), is(1));
 		}
 		
 		@Test
 		public void shouldHaveTheGigDetails() throws Exception {
-			assertThat(artists.get(0).getGigs().get(0), equalTo(gig));
+			assertThat(artists.get(0).getGig(), equalTo(gig));
 		}
 		
 		@Test
@@ -149,18 +139,13 @@ public class ArtistObservableFactoryTest {
 		}
 		
 		@Test
-		public void shouldBeOneGig() throws Exception {
-			assertThat(artists.get(0).getGigs().size(), is(1));
-		}
-		
-		@Test
 		public void shouldBeTwoTracks() throws Exception {
 			assertThat(artists.get(0).getTracks().size(), is(2));
 		}
 		
 		@Test
 		public void shouldHaveTheGigDetails() throws Exception {
-			assertThat(artists.get(0).getGigs().get(0), equalTo(gig));
+			assertThat(artists.get(0).getGig(), equalTo(gig));
 		}
 		
 		@Test
@@ -193,28 +178,18 @@ public class ArtistObservableFactoryTest {
 		}
 		
 		@Test
-		public void firstEmittedArtistShouldHaveOneGig() throws Exception {
-			assertThat(artists.get(0).getGigs().size(), is(1));
-		}
-		
-		@Test
 		public void firstEmittedArtistShouldHaveTwoTracks() throws Exception {
 			assertThat(artists.get(0).getTracks().size(), is(2));
 		}
 		
 		@Test
 		public void firstEmittedArtistShouldHaveTheGigDetails() throws Exception {
-			assertThat(artists.get(0).getGigs().get(0), equalTo(gig1));
+			assertThat(artists.get(0).getGig(), equalTo(gig1));
 		}
 		
 		@Test
 		public void firstEmittedArtistShouldHaveTheTrackDetails() throws Exception {
 			assertThat(artists.get(0).getTracks(), contains(track1, track2));
-		}
-		
-		@Test
-		public void secondEmittedArtistShouldHaveTwoGigs() throws Exception {
-			assertThat(artists.get(1).getGigs().size(), is(2));
 		}
 		
 		@Test
@@ -224,7 +199,7 @@ public class ArtistObservableFactoryTest {
 		
 		@Test
 		public void secondEmittedArtistShouldHaveTheGigDetails() throws Exception {
-			assertThat(artists.get(1).getGigs(), contains(gig1, gig2));
+			assertThat(artists.get(1).getGig(), equalTo(gig2));
 		}
 		
 		@Test
@@ -258,16 +233,6 @@ public class ArtistObservableFactoryTest {
 		}
 		
 		@Test
-		public void shouldBeOneGigForFirstArtist() throws Exception {
-			assertThat(artists.get(0).getGigs().size(), is(1));
-		}
-		
-		@Test
-		public void shouldBeOneGigForSecondArtist() throws Exception {
-			assertThat(artists.get(1).getGigs().size(), is(1));
-		}
-		
-		@Test
 		public void shouldBeOneTracksForFirstArtist() throws Exception {
 			assertThat(artists.get(0).getTracks().size(), is(1));
 		}
@@ -279,12 +244,12 @@ public class ArtistObservableFactoryTest {
 		
 		@Test
 		public void shouldHaveTheFirstArtistGigDetails() throws Exception {
-			assertThat(artists.get(0).getGigs().get(0), equalTo(gig1));
+			assertThat(artists.get(0).getGig(), equalTo(gig1));
 		}
 		
 		@Test
 		public void shouldHaveTheSecondArtistGigDetails() throws Exception {
-			assertThat(artists.get(1).getGigs().get(0), equalTo(gig2));
+			assertThat(artists.get(1).getGig(), equalTo(gig2));
 		}
 		
 		@Test

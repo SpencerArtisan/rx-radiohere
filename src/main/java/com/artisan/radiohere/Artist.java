@@ -5,17 +5,17 @@ import java.util.logging.Logger;
 
 public class Artist {
     private Logger logger = Logger.getLogger(this.getClass().getName());
-	private final List<Gig> gigs;
+	private final Gig gig;
 	private final List<Track> tracks;
 
-	public Artist(List<Gig> gigs, List<Track> tracks) {
-		this.gigs = gigs;
+	public Artist(Gig gig, List<Track> tracks) {
+		this.gig = gig;
 		this.tracks = tracks;
 		logger.info("Created Artist " + this);
 	}
 
-	public List<Gig> getGigs() {
-		return gigs;
+	public Gig getGig() {
+		return gig;
 	}
 
 	public List<Track> getTracks() {
@@ -23,11 +23,11 @@ public class Artist {
 	}
 	
 	public String getName() {
-		return gigs.get(0).getArtist();
+		return gig.getArtist();
 	}
 	
 	@Override
 	public String toString() {
-		return "Artist [name=" + getName() + ", gigs=" + gigs + ", tracks=" + tracks + "]";
+		return "Artist [name=" + getName() + ", gig=" + gig + ", tracks=" + tracks + "]";
 	}
 }

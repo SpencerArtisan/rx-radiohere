@@ -67,13 +67,6 @@ public class Gig {
 		int result = 1;
 		result = prime * result + ((artist == null) ? 0 : artist.hashCode());
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
-		result = prime
-				* result
-				+ ((songkickArtistId == null) ? 0 : songkickArtistId.hashCode());
-		result = prime * result + ((venue == null) ? 0 : venue.hashCode());
-		result = prime * result + ((venueId == null) ? 0 : venueId.hashCode());
-		result = prime * result
-				+ ((venueName == null) ? 0 : venueName.hashCode());
 		return result;
 	}
 
@@ -95,26 +88,6 @@ public class Gig {
 			if (other.date != null)
 				return false;
 		} else if (!date.equals(other.date))
-			return false;
-		if (songkickArtistId == null) {
-			if (other.songkickArtistId != null)
-				return false;
-		} else if (!songkickArtistId.equals(other.songkickArtistId))
-			return false;
-		if (venue == null) {
-			if (other.venue != null)
-				return false;
-		} else if (!venue.equals(other.venue))
-			return false;
-		if (venueId == null) {
-			if (other.venueId != null)
-				return false;
-		} else if (!venueId.equals(other.venueId))
-			return false;
-		if (venueName == null) {
-			if (other.venueName != null)
-				return false;
-		} else if (!venueName.equals(other.venueName))
 			return false;
 		return true;
 	}

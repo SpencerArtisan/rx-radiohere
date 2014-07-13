@@ -8,6 +8,6 @@ public class CacherTest {
 	@Test
 	public void test() {
 		System.out.print(new Cacher().get("x"));
-		new Cacher().set("x", "y");
+		new Cacher().set("xx", "y");
 	}
 }

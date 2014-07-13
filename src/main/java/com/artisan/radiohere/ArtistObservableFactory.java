@@ -32,17 +32,9 @@ public class ArtistObservableFactory {
 	
 	public Observable<Artist> createArtist(GroupedObservable<ArtistId, Gig> gigObservableForArtist) {
 		return Observable.combineLatest(
-				createCumulativeGigsForArtistObserver(gigObservableForArtist), 
+				gigObservableForArtist, 
 				createTrackListSingletonObservable(gigObservableForArtist), 
 				Artist::new);		
-	}
-
-	private Observable<ArrayList<Gig>> createCumulativeGigsForArtistObserver(
-			GroupedObservable<ArtistId, Gig> gigObservableForArtist) {
-		return gigObservableForArtist
-				.asObservable()
-				.scan(new ArrayList<>(), this::append)
-				.filter((gigs) -> !gigs.isEmpty());
 	}
 
 	private Observable<List<Track>> createTrackListSingletonObservable(

@@ -25,7 +25,7 @@ public class GigObservableFactory {
 	}
 
 	public GigObservableFactory() {
-		this(new SongKick(), new VenueObservableFactory(new SongKick()), 25, 5);
+		this(new SongKick(), new VenueObservableFactory(new SongKick()), 18, 5);
 	}
 
 	public Observable<Gig> create() {
@@ -33,6 +33,7 @@ public class GigObservableFactory {
 				.range(0, pages)
 				.flatMap(this::createSongKickPageObservable)
 				.flatMap(this::createGigObservable)
+				.distinct()
 				.flatMap(this::createGigWithVenueObservable)
 				.filter(this::isClose);
 	}
