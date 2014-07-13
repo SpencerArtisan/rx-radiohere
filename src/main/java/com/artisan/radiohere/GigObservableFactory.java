@@ -25,7 +25,7 @@ public class GigObservableFactory {
 	}
 
 	public GigObservableFactory() {
-		this(new SongKick(), new VenueObservableFactory(new SongKick()), 18, 5);
+		this(new SongKick(), new VenueObservableFactory(new SongKick()), 12, 5);
 	}
 
 	public Observable<Gig> create() {

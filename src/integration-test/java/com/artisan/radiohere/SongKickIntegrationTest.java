@@ -17,7 +17,8 @@ public class SongKickIntegrationTest {
 
 		@Before
 		public void before() throws Exception {
-			gigs = new SongKick().getGigs(0);
+			gigs = new SongKick().getGigs(6);
+			System.out.println(gigs);
 		}
 		
 		@Test
