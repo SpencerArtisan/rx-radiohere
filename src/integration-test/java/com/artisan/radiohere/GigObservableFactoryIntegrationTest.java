@@ -11,7 +11,7 @@ public class GigObservableFactoryIntegrationTest {
 		Observable<Gig> gigObservable = new GigObservableFactory(
 				songKick, 
 				new VenueObservableFactory(songKick), 
-				40, 5).create();
+				25, 5).create();
 		Dumper.dumpForTimePeriod(gigObservable, 12000);
 	}
 }

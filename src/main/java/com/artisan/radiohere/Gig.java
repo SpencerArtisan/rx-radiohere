@@ -54,7 +54,7 @@ public class Gig {
 	}
 
 	public Double getDistance() {
-		return getVenueDistance(Coordinate.YEATE_STREET);
+		return getVenueDistance(Coordinate.OLD_STREET);
 	}
 
 	public Double getVenueDistance(Coordinate origin) {
