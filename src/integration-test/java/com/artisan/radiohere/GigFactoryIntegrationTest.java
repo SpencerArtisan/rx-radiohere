@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import rx.Observable;
 
-public class GigObservableFactoryIntegrationTest {
+public class GigFactoryIntegrationTest {
 	@Test
 	public void dumpGigs() throws Exception {
 		Observable<Gig> gigObservable = new GigFactory().create();

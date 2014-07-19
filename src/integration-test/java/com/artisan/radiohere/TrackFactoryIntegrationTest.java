@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import rx.Observable;
 
-public class TrackObservableFactoryIntegrationTest {
+public class TrackFactoryIntegrationTest {
 	@Test
 	public void dumpTracks() throws Exception {
 		Observable<Track> trackObservable = new TrackFactory(new SoundCloud(), 20)
