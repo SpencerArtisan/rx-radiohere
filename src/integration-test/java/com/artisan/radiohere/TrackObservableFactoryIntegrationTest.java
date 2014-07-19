@@ -7,7 +7,7 @@ import rx.Observable;
 public class TrackObservableFactoryIntegrationTest {
 	@Test
 	public void dumpTracks() throws Exception {
-		Observable<Track> trackObservable = new TrackObservableFactory(new SoundCloud(), 20)
+		Observable<Track> trackObservable = new TrackFactory(new SoundCloud(), 20)
 				.create("Stephen Malkmus");
 		Dumper.dumpForTimePeriod(trackObservable, 2000);
 		Dumper.dumpForTimePeriod(trackObservable, 2000);

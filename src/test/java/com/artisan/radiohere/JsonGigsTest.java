@@ -33,7 +33,7 @@ public class JsonGigsTest {
 	                                                                                                                                  
 		@Before
 		public void before() throws Exception {
-			gigs = new JsonGigs(gigsJson).extract().toList().toBlockingObservable().single();
+			gigs = new JsonGigs().extract(gigsJson).toList().toBlockingObservable().single();
 		}
 		
 		@Test
@@ -68,7 +68,7 @@ public class JsonGigsTest {
 	                                                                                                                                  
 		@Before
 		public void before() throws Exception {
-			gigs = new JsonGigs(gigsJson).extract().toList().toBlockingObservable().single();
+			gigs = new JsonGigs().extract(gigsJson).toList().toBlockingObservable().single();
 		}
 		
 		@Test
@@ -123,7 +123,7 @@ public class JsonGigsTest {
 		
 		@Before
 		public void before() throws Exception {
-			gigs = new JsonGigs(gigsJson).extract().toList().toBlockingObservable().single();
+			gigs = new JsonGigs().extract(gigsJson).toList().toBlockingObservable().single();
 		}
 		
 		@Test
@@ -158,7 +158,7 @@ public class JsonGigsTest {
 		
 		@Before
 		public void before() throws Exception {
-			gigs = new JsonGigs(gigsJson).extract().toList().toBlockingObservable().single();
+			gigs = new JsonGigs().extract(gigsJson).toList().toBlockingObservable().single();
 		}
 		
 		@Test

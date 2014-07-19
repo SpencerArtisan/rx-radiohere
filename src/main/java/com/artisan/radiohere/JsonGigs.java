@@ -8,13 +8,7 @@ import org.json.JSONObject;
 import rx.Observable;
 
 class JsonGigs {
-	private String songKickJson;
-
-	public JsonGigs(String songKickJson) {
-		this.songKickJson = songKickJson;
-	}
-
-	public Observable<Gig> extract() {
+	public Observable<Gig> extract(String songKickJson) {
 		JSONArray events = new JSONObject(songKickJson)
 				.getJSONObject("resultsPage").getJSONObject("results")
 				.getJSONArray("event");

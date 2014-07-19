@@ -18,7 +18,7 @@ import org.junit.runner.RunWith;
 import rx.Observable;
 
 @RunWith(Nested.class)
-public class TrackObservableFactoryTest {
+public class TrackFactoryTest {
 	public class WithNoTracks {
 		private static final String tracksJson = "[]";
 	                                                                                                                                  
@@ -29,7 +29,7 @@ public class TrackObservableFactoryTest {
 			SoundCloud soundCloud = mock(SoundCloud.class);
 			when(soundCloud.getTracks("Kate Denny")).thenReturn(tracksJson);
 			when(soundCloud.getClientId()).thenReturn("CLIENT_ID");
-			TrackObservableFactory factory = new TrackObservableFactory(soundCloud, 99);
+			TrackFactory factory = new TrackFactory(soundCloud, 99);
 			Observable<Track> observable = factory.create("Kate Denny");
 			tracks = observable.toList().toBlockingObservable().single();	
 		}
@@ -55,7 +55,7 @@ public class TrackObservableFactoryTest {
 			SoundCloud soundCloud = mock(SoundCloud.class);
 			when(soundCloud.getTracks("Kate Denny")).thenReturn(tracksJson);
 			when(soundCloud.getClientId()).thenReturn("CLIENT_ID");
-			TrackObservableFactory factory = new TrackObservableFactory(soundCloud, 99);
+			TrackFactory factory = new TrackFactory(soundCloud, 99);
 			Observable<Track> observable = factory.create("Kate Denny");
 			tracks = observable.toList().toBlockingObservable().single();	
 		}
@@ -82,7 +82,7 @@ public class TrackObservableFactoryTest {
 			SoundCloud soundCloud = mock(SoundCloud.class);
 			when(soundCloud.getTracks("Kate Denny")).thenReturn(tracksJson);
 			when(soundCloud.getClientId()).thenReturn("CLIENT_ID");
-			TrackObservableFactory factory = new TrackObservableFactory(soundCloud, 99);
+			TrackFactory factory = new TrackFactory(soundCloud, 99);
 			Observable<Track> observable = factory.create("Kate Denny");
 			tracks = observable.toList().toBlockingObservable().single();	
 		}
@@ -119,7 +119,7 @@ public class TrackObservableFactoryTest {
 			SoundCloud soundCloud = mock(SoundCloud.class);
 			when(soundCloud.getTracks("Kate Denny")).thenReturn(tracksJson);
 			when(soundCloud.getClientId()).thenReturn("CLIENT_ID");
-			TrackObservableFactory factory = new TrackObservableFactory(soundCloud, 99);
+			TrackFactory factory = new TrackFactory(soundCloud, 99);
 			Observable<Track> observable = factory.create("Kate Denny");
 			tracks = observable.toList().toBlockingObservable().single();	
 		}
@@ -162,7 +162,7 @@ public class TrackObservableFactoryTest {
 			SoundCloud soundCloud = mock(SoundCloud.class);
 			when(soundCloud.getTracks("Kate Denny")).thenReturn(tracksJson);
 			when(soundCloud.getClientId()).thenReturn("CLIENT_ID");
-			TrackObservableFactory factory = new TrackObservableFactory(soundCloud, 1);
+			TrackFactory factory = new TrackFactory(soundCloud, 1);
 			Observable<Track> observable = factory.create("Kate Denny");
 			tracks = observable.toList().toBlockingObservable().single();	
 		}
