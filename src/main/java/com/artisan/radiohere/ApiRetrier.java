@@ -5,33 +5,19 @@ import java.util.logging.Logger;
 import org.apache.http.client.fluent.Request;
 
 public class ApiRetrier {
-	private static Cacher cacher = new Cacher();
     private Logger logger = Logger.getLogger(this.getClass().getName());
 	private final int retries;
 	private final int msPauseBetween;
 	private final String url;
-	private boolean cacheOn;
 	
-	public ApiRetrier(int retries, int msPauseBetween, String url, boolean cacheOn) {
+	public ApiRetrier(int retries, int msPauseBetween, String url) {
 		this.retries = retries;
 		this.msPauseBetween = msPauseBetween;
 		this.url = url;
-		this.cacheOn = cacheOn;
 	}
 
 	public String execute() throws ApiException {
-		if (cacheOn) {
-			String result = cacher.get(url);
-			
-			if (result == null) {
-				result = getValueFromApi();
-				cacher.set(url, result);
-			}
-			
-			return result;
-		} else {
-			return getValueFromApi();
-		}
+		return getValueFromApi();
 	}
 	
 	public String getValueFromApi() throws ApiException {
