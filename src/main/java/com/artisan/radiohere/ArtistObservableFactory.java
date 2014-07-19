@@ -21,7 +21,8 @@ public class ArtistObservableFactory {
 	}
 
 	public Observable<Artist> create() {
-		return gigObservableFactory.create().groupBy(Gig::getArtistId)
+		return gigObservableFactory.create()
+				.groupBy(Gig::getArtistId)
 				.flatMap(this::createArtist);
 	}
 
