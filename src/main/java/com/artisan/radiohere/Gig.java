@@ -9,18 +9,20 @@ public class Gig {
 	private final String date;
 	private final String venueName;
 	private final Coordinate venue;
-	private List<Track> tracks;
+	private final List<Track> tracks;
+	private final Double distance;
 
 	public Gig(String artist, String date, String venueName, Coordinate venue) {
-		this(artist, date, venueName, venue, new ArrayList<>());
+		this(artist, date, venueName, venue, null, new ArrayList<>());
 	}
 	
-	public Gig(String artist, String date, String venueName, Coordinate venue, List<Track> tracks) {
+	public Gig(String artist, String date, String venueName, Coordinate venue, Double distance, List<Track> tracks) {
 		this.artist = artist;
 		this.date = date;
 		this.venueName = venueName;
 		this.venue = venue;
 		this.tracks = tracks;
+		this.distance = distance;
 	}
 
 	public List<Track> getTracks() {
@@ -28,13 +30,13 @@ public class Gig {
 	}
 
 	public Gig setTracks(List<Track> tracks) {
-		return new Gig(artist, date, venueName, venue, tracks);
+		return new Gig(artist, date, venueName, venue, distance, tracks);
 	}
 
 	public Gig addTrack(Track track) {
 		ArrayList<Track> newTracks = new ArrayList<> (tracks);
 		newTracks.add(track);
-		return new Gig(artist, date, venueName, venue, newTracks);
+		return new Gig(artist, date, venueName, venue, distance, newTracks);
 	}
 	
 	public String getArtist() {
@@ -61,16 +63,16 @@ public class Gig {
 		return venue;
 	}
 
-	public boolean isVenueWithinKm(Coordinate origin, double km) {
-		return getVenueDistance(origin) < km;
+	public boolean isDistanceWithinKm(double km) {
+		return distance < km;
 	}
 
-	public Double getVenueDistance(Coordinate origin) {
-		return venue == null ? null : origin.kmFrom(venue);
+	public Gig setDistance(double distance) {
+		return new Gig(artist, date, venueName, venue, distance, tracks);
 	}
 
 	public Double getDistance() {
-		return getVenueDistance(Coordinate.YEATE_STREET);
+		return distance;
 	}
 	
 	@Override
@@ -110,7 +112,6 @@ public class Gig {
 				+ venueName + ", venue=" + venue + ", tracks=" + tracks
 				+ "]";
 	}
-
 }
 
 class ArtistId {

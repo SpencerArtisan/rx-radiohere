@@ -101,11 +101,6 @@ public class GigFactoryTest {
 		public void shouldProvideTheVenueName() throws Exception {
 			assertThat(gigs.get(0).getVenueName(), equalTo("venueName"));
 		}
-
-		@Test
-		public void shouldProvideTheVenueDistance() throws Exception {
-			assertThat(gigs.get(0).getVenueDistance(Coordinate.OLD_STREET), closeTo(3.185, 0.006));
-		}
 	}
 
 	public class WithOneGigALongWayAway {

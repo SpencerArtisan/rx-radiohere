@@ -48,7 +48,8 @@ public class GigFactory {
 	public Observable<Gig> create(Coordinate origin, double maximumDistanceFromOrigin) {
 		try {
 			return cachedGigs.get("LONDON")
-							 .filter((gig) -> gig.isVenueWithinKm(origin, maximumDistanceFromOrigin))
+							.map((gig) -> gig.setDistance(origin.kmFrom(gig.getVenue())))
+							 .filter((gig) -> gig.isDistanceWithinKm(maximumDistanceFromOrigin))
 							 .flatMap(this::addTracks);
 		} catch (ExecutionException e) {
 			throw new RuntimeException(e);
