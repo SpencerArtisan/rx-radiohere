@@ -14,8 +14,10 @@ import com.google.common.cache.LoadingCache;
 
 public class GigFactory {
 	private final LoadingCache<String, Observable<Gig>> cachedGigs;
+	private final TrackFactory trackFactory;
 
-	public GigFactory(TrackFactory trackFactory, SongKick songKick, JsonGigs jsonGigs, int pages, double maximumDistanceFromCentralLondon) {
+	public GigFactory(TrackFactory trackFactory, SongKick songKick, JsonGigs jsonGigs, int pages) {
+		this.trackFactory = trackFactory;
 		this.cachedGigs = CacheBuilder.newBuilder().expireAfterWrite(1, TimeUnit.DAYS).build(
 				new CacheLoader<String, Observable<Gig>>() {
 					@Override
@@ -25,20 +27,9 @@ public class GigFactory {
 								.flatMap(this::toSongkickPage)
 								.flatMap(this::songKickToGigs).distinct()
 								.filter(Gig::hasArtist)
-								.filter(Gig::hasVenue)
-								.filter(this::isClose)
-								.flatMap(this::addTracks);
+								.filter(Gig::hasVenue);
 					}
 			
-					public Observable<Gig> addTracks(Gig gig) {
-						Observable<Track> trackObservable = trackFactory.create(gig.getArtist());
-						return trackObservable.reduce(gig, Gig::addTrack);
-					}
-			
-					private boolean isClose(Gig gig) {
-						return gig.isVenueWithinKm(Coordinate.YEATE_STREET, maximumDistanceFromCentralLondon);
-					}
-					
 					private Observable<String> toSongkickPage(Integer page) {
 						return Async.fromCallable(() -> songKick.getGigs(page),
 								Schedulers.trampoline());
@@ -51,14 +42,21 @@ public class GigFactory {
 	}
 
 	public GigFactory() {
-		this(new TrackFactory(), new SongKick(), new JsonGigs(), 28, 5);
+		this(new TrackFactory(), new SongKick(), new JsonGigs(), 28);
 	}
 
-	public Observable<Gig> create() {
+	public Observable<Gig> create(Coordinate origin, double maximumDistanceFromOrigin) {
 		try {
-			return cachedGigs.get("LONDON");
+			return cachedGigs.get("LONDON")
+							 .filter((gig) -> gig.isVenueWithinKm(origin, maximumDistanceFromOrigin))
+							 .flatMap(this::addTracks);
 		} catch (ExecutionException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	private Observable<Gig> addTracks(Gig gig) {
+		Observable<Track> trackObservable = trackFactory.create(gig.getArtist());
+		return trackObservable.reduce(gig, Gig::addTrack);
 	}
 }
