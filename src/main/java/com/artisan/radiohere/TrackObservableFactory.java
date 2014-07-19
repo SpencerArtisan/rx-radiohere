@@ -34,7 +34,9 @@ public class TrackObservableFactory {
 												.from(extractTracks(page))
 												.filter(this::canCreateTrack)
 												.take(maxTracks)
-												.map(this::createTrack));
+												.map(this::createTrack))
+												.replay()
+												.refCount();
 					}
 
 					private List<JSONObject> extractTracks(String soundCloudJson) {
@@ -51,7 +53,6 @@ public class TrackObservableFactory {
 								+ "?client_id=" + soundCloud.getClientId();
 						return new Track(name, streamUrl);
 					}
-
 				});
 	}
 

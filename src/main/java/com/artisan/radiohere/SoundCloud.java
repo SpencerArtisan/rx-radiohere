@@ -17,6 +17,6 @@ public class SoundCloud {
 	public String getTracks(String artist) throws ApiException {
 		logger.info("Call SoundCloud for " + artist); 
 		String url = String.format(TRACK_URL, URLEncoder.encode(artist), CLIENT_ID);
-		return new ApiRetrier(RETRIES, MS_BETWEEN_RETRIES, url, true).execute();
+		return new ApiRetrier(RETRIES, MS_BETWEEN_RETRIES, url, false).execute();
 	}
 }

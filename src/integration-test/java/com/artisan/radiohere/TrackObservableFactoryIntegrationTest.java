@@ -10,5 +10,6 @@ public class TrackObservableFactoryIntegrationTest {
 		Observable<Track> trackObservable = new TrackObservableFactory(new SoundCloud(), 20)
 				.create("Stephen Malkmus");
 		Dumper.dumpForTimePeriod(trackObservable, 2000);
+		Dumper.dumpForTimePeriod(trackObservable, 2000);
 	}
 }

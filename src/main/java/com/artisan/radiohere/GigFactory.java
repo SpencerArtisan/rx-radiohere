@@ -23,7 +23,7 @@ public class GigFactory {
 	}
 
 	public GigFactory() {
-		this(new TrackObservableFactory(), new SongKick(), 12, 5);
+		this(new TrackObservableFactory(), new SongKick(), 28, 5);
 	}
 
 	public Observable<Gig> create() {
