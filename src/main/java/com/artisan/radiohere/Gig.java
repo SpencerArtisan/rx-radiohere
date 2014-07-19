@@ -11,16 +11,18 @@ public class Gig {
 	private final Coordinate venue;
 	private final List<Track> tracks;
 	private final Double distance;
+	private final String songkickUrl;
 
-	public Gig(String artist, String date, String venueName, Coordinate venue) {
-		this(artist, date, venueName, venue, null, new ArrayList<>());
+	public Gig(String artist, String date, String venueName, Coordinate venue, String songkickUrl) {
+		this(artist, date, venueName, venue, null, songkickUrl, new ArrayList<>());
 	}
 	
-	public Gig(String artist, String date, String venueName, Coordinate venue, Double distance, List<Track> tracks) {
+	public Gig(String artist, String date, String venueName, Coordinate venue, Double distance, String songkickUrl, List<Track> tracks) {
 		this.artist = artist;
 		this.date = date;
 		this.venueName = venueName;
 		this.venue = venue;
+		this.songkickUrl = songkickUrl;
 		this.tracks = tracks;
 		this.distance = distance;
 	}
@@ -29,14 +31,10 @@ public class Gig {
 		return tracks;
 	}
 
-	public Gig setTracks(List<Track> tracks) {
-		return new Gig(artist, date, venueName, venue, distance, tracks);
-	}
-
 	public Gig addTrack(Track track) {
 		ArrayList<Track> newTracks = new ArrayList<> (tracks);
 		newTracks.add(track);
-		return new Gig(artist, date, venueName, venue, distance, newTracks);
+		return new Gig(artist, date, venueName, venue, distance, songkickUrl, newTracks);
 	}
 	
 	public String getArtist() {
@@ -50,7 +48,11 @@ public class Gig {
 	public String getVenueName() {
 		return venueName;
 	}
-	
+
+	public String getSongkickUrl() {
+		return songkickUrl;
+	}
+
 	public boolean hasArtist() {
 		return artist != null;
 	}
@@ -68,7 +70,7 @@ public class Gig {
 	}
 
 	public Gig setDistance(double distance) {
-		return new Gig(artist, date, venueName, venue, distance, tracks);
+		return new Gig(artist, date, venueName, venue, distance, songkickUrl, tracks);
 	}
 
 	public Double getDistance() {
@@ -110,6 +112,7 @@ public class Gig {
 	public String toString() {
 		return "Gig [artist=" + artist + ", date=" + date + ", venueName="
 				+ venueName + ", venue=" + venue + ", tracks=" + tracks
+				+ ", distance=" + distance + ", songkickUrl=" + songkickUrl
 				+ "]";
 	}
 }

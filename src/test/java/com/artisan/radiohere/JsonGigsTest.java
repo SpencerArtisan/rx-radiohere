@@ -25,6 +25,7 @@ public class JsonGigsTest {
 				"      {                                                  " +
 				"        'start':{'date':'2012-04-18'},                   " +
 				"        'performance':[],     							 " +
+				"        'uri': 'songkick url',     				 	 	 " +
 				"        'venue':{'displayName':'The Fillmore', 'lat': 51, 'lng': 1}   " +
 				"      }                                                  " +
 				"    ]}                                                   " +
@@ -57,9 +58,10 @@ public class JsonGigsTest {
 				"        'performance':[     							 " +
 				"           {											 " +
 				"			  'displayName': 'Wild Flag',     			 " +
-				"             'artist': {'id': 1},     					 " +
+				"             'artist': {'id': 1}     					 " +
 				"           }     										 " +
 				"        ],     											 " +
+				"        'uri': 'songkick url',     				 	 	 " +
 				"        'venue':{'displayName':'The Fillmore', 'lat': 52, 'lng': 1}  " +
 				"      }                                                  " +
 				"    ]}                                                   " +
@@ -78,19 +80,24 @@ public class JsonGigsTest {
 		
 		@Test
 		public void shouldProvideTheArtist() throws Exception {
-			assertThat(gigs.get(0).getArtist(), equalTo("Wild Flag"));
+			assertThat(gigs.get(0).getArtist(), is("Wild Flag"));
 		}
 		
 		@Test
 		public void shouldProvideTheDate() throws Exception {
-			assertThat(gigs.get(0).getDate(), equalTo("2012-04-18"));
+			assertThat(gigs.get(0).getDate(), is("2012-04-18"));
 		}
 		
 		@Test
 		public void shouldProvideTheVenueName() throws Exception {
-			assertThat(gigs.get(0).getVenueName(), equalTo("The Fillmore"));
+			assertThat(gigs.get(0).getVenueName(), is("The Fillmore"));
 		}
 
+		@Test
+		public void shouldProvideTheSongkickUrl() throws Exception {
+			assertThat(gigs.get(0).getSongkickUrl(), is("songkick url"));
+		}
+		
 		@Test
 		public void shouldProvideALocation() throws Exception {
 			assertThat(gigs.get(0).getVenue(), is(new Coordinate(52, 1)));
@@ -107,9 +114,10 @@ public class JsonGigsTest {
 				"        'performance':[     							 " +
 				"           {											 " +
 				"			  'displayName': 'Wild Flag',     			 " +
-				"             'artist': {'id': 1},     					 " +
+				"             'artist': {'id': 1}     					 " +
 				"           }     										 " +
 				"        ],     											 " +
+				"        'uri': 'songkick url',     				 	 	 " +
 				"        'venue':{'displayName':'The Fillmore', 'lat':null, 'lng':null}" +
 				"      }                                                  " +
 				"    ]}                                                   " +
@@ -142,9 +150,10 @@ public class JsonGigsTest {
 						"        'performance':[     							 " +
 						"           {											 " +
 						"			  'displayName': 'Wild Flag',     			 " +
-						"             'artist': {'id': 1},     					 " +
+						"             'artist': {'id': 1}     					 " +
 						"           }     										 " +
 						"        ],     											 " +
+						"        'uri': 'songkick url',     				 	 	 " +
 						"        'venue':{'displayName':'The Fillmore'}" +
 						"      }                                                  " +
 						"    ]}                                                   " +

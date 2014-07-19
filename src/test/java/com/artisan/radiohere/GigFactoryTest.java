@@ -71,7 +71,7 @@ public class GigFactoryTest {
 	}
 	
 	public class WithOneGig {
-		private Gig gig = new Gig("artist", "date", "venueName", new Coordinate(51.5, -0.1));
+		private Gig gig = new Gig("artist", "date", "venueName", new Coordinate(51.5, -0.1), "songkickUrl");
 	        
 		@Before
 		public void before() throws Exception {
@@ -89,22 +89,27 @@ public class GigFactoryTest {
 		
 		@Test
 		public void shouldProvideTheArtist() throws Exception {
-			assertThat(gigs.get(0).getArtist(), equalTo("artist"));
+			assertThat(gigs.get(0).getArtist(), is("artist"));
 		}
 
 		@Test
 		public void shouldProvideTheDate() throws Exception {
-			assertThat(gigs.get(0).getDate(), equalTo("date"));
+			assertThat(gigs.get(0).getDate(), is("date"));
 		}
 		
 		@Test
 		public void shouldProvideTheVenueName() throws Exception {
-			assertThat(gigs.get(0).getVenueName(), equalTo("venueName"));
+			assertThat(gigs.get(0).getVenueName(), is("venueName"));
+		}
+
+		@Test
+		public void shouldProvideTheSongkickUrl() throws Exception {
+			assertThat(gigs.get(0).getSongkickUrl(), is("songkickUrl"));
 		}
 	}
 
 	public class WithOneGigALongWayAway {
-		private Gig gig = new Gig("artist", "date", "venueName", Coordinate.YEATE_STREET);
+		private Gig gig = new Gig("artist", "date", "venueName", Coordinate.YEATE_STREET, "songkickUrl");
 	        
 		@Before
 		public void before() throws Exception {
@@ -121,7 +126,7 @@ public class GigFactoryTest {
 	}
 	
 	public class WithUnknownVenue {
-		private Gig gig = new Gig("artist", "date", "venueName", null);
+		private Gig gig = new Gig("artist", "date", "venueName", null, "songkickUrl");
 		
 		@Before
 		public void before() throws Exception {
@@ -138,8 +143,8 @@ public class GigFactoryTest {
 	}
 	
 	public class WithManyGigsSameArtistDifferentDate {
-		private Gig gig1 = new Gig("artist", "date", "venueName", new Coordinate(51, 1));
-		private Gig gig2 = new Gig("artist", "different date", "venueName", new Coordinate(51, 1));
+		private Gig gig1 = new Gig("artist", "date", "venueName", new Coordinate(51, 1), "songkickUrl");
+		private Gig gig2 = new Gig("artist", "different date", "venueName", new Coordinate(51, 1), "songkickUrl");
 		
 		@Before
 		public void before() throws Exception {
@@ -167,8 +172,8 @@ public class GigFactoryTest {
 	}
 	
 	public class WithManyGigsSameArtistSameDate {
-		private Gig gig1 = new Gig("artist", "date", "venueName", new Coordinate(51, 1));
-		private Gig gig2 = new Gig("artist", "date", "venueName", new Coordinate(51, 1));
+		private Gig gig1 = new Gig("artist", "date", "venueName", new Coordinate(51, 1), "songkickUrl");
+		private Gig gig2 = new Gig("artist", "date", "venueName", new Coordinate(51, 1), "songkickUrl");
 		
 		@Before
 		public void before() throws Exception {
@@ -191,8 +196,8 @@ public class GigFactoryTest {
 	}
 	
 	public class WithManyGigs {
-		private Gig gig1 = new Gig("artist1", "date", "venueName 1", new Coordinate(51, 1));
-		private Gig gig2 = new Gig("artist2", "date", "venueName 2", new Coordinate(51.1, 0));
+		private Gig gig1 = new Gig("artist1", "date", "venueName 1", new Coordinate(51, 1), "songkickUrl");
+		private Gig gig2 = new Gig("artist2", "date", "venueName 2", new Coordinate(51.1, 0), "songkickUrl");
 		
 		@Before
 		public void before() throws Exception {
@@ -221,8 +226,8 @@ public class GigFactoryTest {
 	}
 	
 	public class WithManyPages {
-		private Gig gig1 = new Gig("artist1", "date", "venueName 1", new Coordinate(51, -1));
-		private Gig gig2 = new Gig("artist2", "date", "venueName 2", new Coordinate(52, 0));
+		private Gig gig1 = new Gig("artist1", "date", "venueName 1", new Coordinate(51, -1), "songkickUrl");
+		private Gig gig2 = new Gig("artist2", "date", "venueName 2", new Coordinate(52, 0), "songkickUrl");
 	        
 		@Before
 		public void before() throws Exception {
@@ -255,7 +260,7 @@ public class GigFactoryTest {
 	}
 
 	public class WithNoTracks {
-		private Gig gig = new Gig("artist", "date", "venueName", new Coordinate(51.5, -0.1));
+		private Gig gig = new Gig("artist", "date", "venueName", new Coordinate(51.5, -0.1), "songkickUrl");
 	        
 		@Before
 		public void before() throws Exception {
@@ -274,7 +279,7 @@ public class GigFactoryTest {
 
 	public class WithOneTrack {
 		private Track track = new Track("name", "streamurl");
-		private Gig gig = new Gig("artist", "date", "venueName", new Coordinate(51.5, -0.1));
+		private Gig gig = new Gig("artist", "date", "venueName", new Coordinate(51.5, -0.1), "songkickUrl");
 		
 		@Before
 		public void before() throws Exception {
@@ -293,14 +298,14 @@ public class GigFactoryTest {
 
 		@Test
 		public void shouldHaveTheTrackDetails() throws Exception {
-			assertThat(gigs.get(0).getTracks().get(0), equalTo(track));
+			assertThat(gigs.get(0).getTracks().get(0), is(track));
 		}
 	}
 
 	public class WithTwoTracks {
 		private Track track1 = new Track("name1", "streamurl1");
 		private Track track2 = new Track("name2", "streamurl2");
-		private Gig gig = new Gig("artist", "date", "venueName", new Coordinate(51.5, -0.1));
+		private Gig gig = new Gig("artist", "date", "venueName", new Coordinate(51.5, -0.1), "songkickUrl");
 		
 		@Before
 		public void before() throws Exception {

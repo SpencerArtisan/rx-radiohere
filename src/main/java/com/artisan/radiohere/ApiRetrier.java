@@ -43,7 +43,6 @@ public class ApiRetrier {
 			String result = Request.Get(url).execute().returnContent().asString();
 			long duration = System.currentTimeMillis() - start;
 			logger.info("Api call took " + duration + "ms - " + url);
-					
 			return result;
 		} catch (Exception e) {
 			logger.warning("Problem calling url " + url);
