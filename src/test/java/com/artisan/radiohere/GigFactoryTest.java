@@ -27,16 +27,16 @@ import rx.observers.TestObserver;
 @RunWith(Nested.class)
 public class GigFactoryTest {
 	private SongKick songKick;
-	private GigFactory gigObservableFactory;
-	private TrackFactory trackObservableFactory;
+	private GigFactory gigFactory;
+	private TrackFactory trackFactory;
 	private JsonGigs jsonGigs;
 
 	@Before
 	public void before() {
 		songKick = mock(SongKick.class);
 		jsonGigs = mock(JsonGigs.class);
-		trackObservableFactory = mock(TrackFactory.class);
-		gigObservableFactory = spy(new GigFactory(trackObservableFactory, songKick, jsonGigs, 1, 100.0));
+		trackFactory = mock(TrackFactory.class);
+		gigFactory = spy(new GigFactory(trackFactory, songKick, jsonGigs, 1, 100.0));
 	}
 
 	public class WithNoGigs {
@@ -46,7 +46,7 @@ public class GigFactoryTest {
 		public void before() throws Exception {
 			when(songKick.getGigs(0)).thenReturn("{}");
 			when(jsonGigs.extract("{}")).thenReturn(Observable.empty());
-			Observable<Gig> observable = gigObservableFactory.create();
+			Observable<Gig> observable = gigFactory.create();
 			gigs = observable.toList().toBlockingObservable().single();	
 		}
 		
@@ -62,7 +62,7 @@ public class GigFactoryTest {
 		@Before
 		public void before() throws Exception {
 			when(songKick.getGigs(0)).thenThrow(new ApiException("", new Throwable()));
-			observable = gigObservableFactory.create();
+			observable = gigFactory.create();
 		}
 		
 		@Test
@@ -81,10 +81,10 @@ public class GigFactoryTest {
 	        
 		@Before
 		public void before() throws Exception {
-			when(trackObservableFactory.create("artist")).thenReturn(Observable.empty());
+			when(trackFactory.create("artist")).thenReturn(Observable.empty());
 			when(songKick.getGigs(0)).thenReturn("gigs Json");
 			when(jsonGigs.extract("gigs Json")).thenReturn(Observable.just(gig));
-			Observable<Gig> observable = gigObservableFactory.create();
+			Observable<Gig> observable = gigFactory.create();
 			gigs = observable.toList().toBlockingObservable().single();	
 		}
 		
@@ -120,10 +120,10 @@ public class GigFactoryTest {
 	        
 		@Before
 		public void before() throws Exception {
-			when(trackObservableFactory.create("artist")).thenReturn(Observable.empty());
+			when(trackFactory.create("artist")).thenReturn(Observable.empty());
 			when(songKick.getGigs(0)).thenReturn("gigs Json");
 			when(jsonGigs.extract("gigs Json")).thenReturn(Observable.just(gig));
-			Observable<Gig> observable = gigObservableFactory.create();
+			Observable<Gig> observable = gigFactory.create();
 			gigs = observable.toList().toBlockingObservable().single();	
 		}
 		
@@ -140,7 +140,7 @@ public class GigFactoryTest {
 		@Before
 		public void before() throws Exception {
 			when(songKick.getGigs(0)).thenReturn("gigs Json");
-			Observable<Gig> observable = gigObservableFactory.create();
+			Observable<Gig> observable = gigFactory.create();
 			when(jsonGigs.extract("gigs Json")).thenReturn(Observable.just(gig));
 			gigs = observable.toList().toBlockingObservable().single();	
 		}
@@ -158,9 +158,9 @@ public class GigFactoryTest {
 		
 		@Before
 		public void before() throws Exception {
-			when(trackObservableFactory.create("artist")).thenReturn(Observable.empty());
+			when(trackFactory.create("artist")).thenReturn(Observable.empty());
 			when(songKick.getGigs(0)).thenReturn("gigs Json");
-			Observable<Gig> observable = gigObservableFactory.create();
+			Observable<Gig> observable = gigFactory.create();
 			when(jsonGigs.extract("gigs Json")).thenReturn(Observable.from(gig1, gig2));
 			gigs = observable.toList().toBlockingObservable().single();	
 		}
@@ -188,10 +188,10 @@ public class GigFactoryTest {
 		
 		@Before
 		public void before() throws Exception {
-			when(trackObservableFactory.create("artist")).thenReturn(Observable.empty());
+			when(trackFactory.create("artist")).thenReturn(Observable.empty());
 			when(songKick.getGigs(0)).thenReturn("gigs Json");
 			when(jsonGigs.extract("gigs Json")).thenReturn(Observable.from(gig1, gig2));
-			Observable<Gig> observable = gigObservableFactory.create();
+			Observable<Gig> observable = gigFactory.create();
 			gigs = observable.toList().toBlockingObservable().single();	
 		}
 		
@@ -213,11 +213,11 @@ public class GigFactoryTest {
 		
 		@Before
 		public void before() throws Exception {
-			when(trackObservableFactory.create("artist1")).thenReturn(Observable.empty());
-			when(trackObservableFactory.create("artist2")).thenReturn(Observable.empty());
+			when(trackFactory.create("artist1")).thenReturn(Observable.empty());
+			when(trackFactory.create("artist2")).thenReturn(Observable.empty());
 			when(songKick.getGigs(0)).thenReturn("gigs Json");
 			when(jsonGigs.extract("gigs Json")).thenReturn(Observable.from(gig1, gig2));
-			Observable<Gig> observable = gigObservableFactory.create();
+			Observable<Gig> observable = gigFactory.create();
 			gigs = observable.toList().toBlockingObservable().single();	
 		}
 		
@@ -244,15 +244,15 @@ public class GigFactoryTest {
 	        
 		@Before
 		public void before() throws Exception {
-			when(trackObservableFactory.create("artist1")).thenReturn(Observable.empty());
-			when(trackObservableFactory.create("artist2")).thenReturn(Observable.empty());
-			gigObservableFactory = spy(new GigFactory(trackObservableFactory, songKick, jsonGigs, 2, 100.0));
+			when(trackFactory.create("artist1")).thenReturn(Observable.empty());
+			when(trackFactory.create("artist2")).thenReturn(Observable.empty());
+			gigFactory = spy(new GigFactory(trackFactory, songKick, jsonGigs, 2, 100.0));
 
 			when(songKick.getGigs(0)).thenReturn("gigsJsonPage1");
 			when(songKick.getGigs(1)).thenReturn("gigsJsonPage2");
 			when(jsonGigs.extract("gigsJsonPage1")).thenReturn(Observable.just(gig1));
 			when(jsonGigs.extract("gigsJsonPage2")).thenReturn(Observable.just(gig2));
-			Observable<Gig> observable = gigObservableFactory.create();
+			Observable<Gig> observable = gigFactory.create();
 			gigs = observable.toList().toBlockingObservable().single();	
 		}
 		
@@ -280,8 +280,8 @@ public class GigFactoryTest {
 		public void before() throws Exception {
 			when(songKick.getGigs(0)).thenReturn("gigs Json");
 			when(jsonGigs.extract("gigs Json")).thenReturn(Observable.just(gig));
-			Observable<Gig> observable = gigObservableFactory.create();
-			when(trackObservableFactory.create("artist")).thenReturn(Observable.empty());
+			Observable<Gig> observable = gigFactory.create();
+			when(trackFactory.create("artist")).thenReturn(Observable.empty());
 			gigs = observable.toList().toBlockingObservable().single();	
 		}
 				
@@ -298,11 +298,11 @@ public class GigFactoryTest {
 		
 		@Before
 		public void before() throws Exception {
-			when(trackObservableFactory.create("artist")).thenReturn(Observable.empty());
+			when(trackFactory.create("artist")).thenReturn(Observable.empty());
 			when(songKick.getGigs(0)).thenReturn("gigs Json");
 			when(jsonGigs.extract("gigs Json")).thenReturn(Observable.just(gig));
-			Observable<Gig> observable = gigObservableFactory.create();
-			when(trackObservableFactory.create("artist")).thenReturn(Observable.just(track));
+			Observable<Gig> observable = gigFactory.create();
+			when(trackFactory.create("artist")).thenReturn(Observable.just(track));
 			gigs = observable.toList().toBlockingObservable().single();	
 		}
 		
@@ -325,11 +325,11 @@ public class GigFactoryTest {
 		
 		@Before
 		public void before() throws Exception {
-			when(trackObservableFactory.create("artist")).thenReturn(Observable.empty());
+			when(trackFactory.create("artist")).thenReturn(Observable.empty());
 			when(songKick.getGigs(0)).thenReturn("gigs Json");
 			when(jsonGigs.extract("gigs Json")).thenReturn(Observable.just(gig));
-			Observable<Gig> observable = gigObservableFactory.create();
-			when(trackObservableFactory.create("artist")).thenReturn(Observable.from(track1, track2));
+			Observable<Gig> observable = gigFactory.create();
+			when(trackFactory.create("artist")).thenReturn(Observable.from(track1, track2));
 			gigs = observable.toList().toBlockingObservable().single();	
 		}
 		
