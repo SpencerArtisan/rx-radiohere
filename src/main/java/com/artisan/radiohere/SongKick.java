@@ -11,11 +11,11 @@ public class SongKick {
 
 	public String getGigs(int page) throws ApiException {
 		String url = String.format(GIG_URL, LONDON, API_KEY, page);
-		return new ApiRetrier(RETRIES, MS_BETWEEN_RETRIES, url, false).execute();
+		return new ApiRetrier(RETRIES, MS_BETWEEN_RETRIES, url).execute();
 	}
 	
 	public String getVenue(int id) throws ApiException {
 		String url = String.format(VENUE_URL, id, API_KEY);
-		return new ApiRetrier(RETRIES, MS_BETWEEN_RETRIES, url, true).execute();
+		return new ApiRetrier(RETRIES, MS_BETWEEN_RETRIES, url).execute();
 	}
 }
