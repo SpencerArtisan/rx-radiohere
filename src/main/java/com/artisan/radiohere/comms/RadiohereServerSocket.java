@@ -11,8 +11,8 @@ import org.json.JSONObject;
 
 import rx.Observable;
 
-import com.artisan.radiohere.Artist;
-import com.artisan.radiohere.ArtistObservableFactory;
+import com.artisan.radiohere.Gig;
+import com.artisan.radiohere.GigFactory;
 
 @WebSocket
 public class RadiohereServerSocket {
@@ -21,8 +21,8 @@ public class RadiohereServerSocket {
     @OnWebSocketConnect
     public void onOpen(Session session) {
         logger.info("Client initiates Radiohere... " + session);
-    		Observable<Artist> factory = new ArtistObservableFactory().create();
-    		factory.subscribe((artist) -> sendToClient(session, artist),
+    		Observable<Gig> factory = new GigFactory().create();
+    		factory.subscribe((gig) -> sendToClient(session, gig),
     				(e) -> logger.warning("STREAM ERROR: " + e.getMessage()),
     				() -> logger.info("STREAM FINISHED"));
     }
@@ -32,11 +32,11 @@ public class RadiohereServerSocket {
     		logger.info("** Received message from client: " + message);
     }
 
-    	private void sendToClient(Session session, Artist artist) {
+    	private void sendToClient(Session session, Gig gig) {
     		logger.info("Sending to client...");
-		String artistJSON = new JSONObject(artist).toString();
-        logger.info("Server sending artist to client... " + artistJSON);
-		session.getRemote().sendStringByFuture(artistJSON);
+		String gigJSON = new JSONObject(gig).toString();
+        logger.info("Server sending artist to client... " + gigJSON);
+		session.getRemote().sendStringByFuture(gigJSON);
     }
 
     @OnWebSocketClose

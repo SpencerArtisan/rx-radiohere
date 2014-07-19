@@ -1,27 +1,46 @@
 package com.artisan.radiohere;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Gig {
     private final String artist;
 	private final String date;
 	private final String venueName;
 	private final Integer venueId;
-	private final Venue venue;
 	private final Integer songkickArtistId;
+	private final Coordinate venue;
+	private List<Track> tracks;
 
-	public Gig(String artist, Integer songkickArtistId, String date, String venueName, Integer venueId, Venue venue) {
+	public Gig(String artist, Integer songkickArtistId, String date, String venueName, Integer venueId, Coordinate venue) {
+		this(artist, songkickArtistId, date, venueName, venueId, venue, new ArrayList<>());
+	}
+	
+	public Gig(String artist, Integer songkickArtistId, String date, String venueName, Integer venueId, Coordinate venue, List<Track> tracks) {
 		this.artist = artist;
 		this.songkickArtistId = songkickArtistId;
 		this.date = date;
 		this.venueName = venueName;
 		this.venueId = venueId;
 		this.venue = venue;
+		this.tracks = tracks;
 	}
 
-	public Gig addVenue(Venue venue) {
-		return new Gig(artist, getSongkickArtistId(), date, venueName, venueId, venue);
+	public List<Track> getTracks() {
+		return tracks;
 	}
 
+	public Gig setTracks(List<Track> tracks) {
+		return new Gig(artist, songkickArtistId, date, venueName, venueId, venue, tracks);
+	}
+
+	public Gig addTrack(Track track) {
+		ArrayList<Track> newTracks = new ArrayList<> (tracks);
+		newTracks.add(track);
+		return new Gig(artist, songkickArtistId, date, venueName, venueId, venue, newTracks);
+	}
+	
 	public String getArtist() {
 		return artist;
 	}
@@ -45,19 +64,31 @@ public class Gig {
 	public Integer getVenueId() {
 		return venueId;
 	}
+	
+	public boolean hasArtist() {
+		return artist != null;
+	}
 
-	public Venue getVenue() {
+	public boolean hasVenue() {
+		return venue != null;
+	}
+
+	public Coordinate getVenue() {
 		return venue;
 	}
 
-	public Double getDistance() {
-		return getVenueDistance(Coordinate.OLD_STREET);
+	public boolean isVenueWithinKm(Coordinate origin, double km) {
+		return getVenueDistance(origin) < km;
 	}
 
 	public Double getVenueDistance(Coordinate origin) {
-		return venue == null ? null : origin.kmFrom(venue.getCoordinate());
+		return venue == null ? null : origin.kmFrom(venue);
 	}
 
+	public Double getDistance() {
+		return getVenueDistance(Coordinate.YEATE_STREET);
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -92,9 +123,11 @@ public class Gig {
 	@Override
 	public String toString() {
 		return "Gig [artist=" + artist + ", date=" + date + ", venueName="
-				+ venueName + ", venueId=" + venueId + ", distance=" + getDistance() + ", venue=" + venue
-				+ ", songkickArtistId=" + songkickArtistId + "]";
+				+ venueName + ", venueId=" + venueId + ", songkickArtistId="
+				+ songkickArtistId + ", venue=" + venue + ", tracks=" + tracks
+				+ "]";
 	}
+
 }
 
 class ArtistId {

@@ -28,7 +28,6 @@ public class ApiRetrier {
 				cacher.set(url, result);
 			}
 			
-			System.out.print(result);
 			return result;
 		} else {
 			return getValueFromApi();
@@ -59,7 +58,6 @@ public class ApiRetrier {
 			long duration = System.currentTimeMillis() - start;
 			logger.info("Api call took " + duration + "ms - " + url);
 					
-			System.out.print(result);
 			return result;
 		} catch (Exception e) {
 			logger.warning("Problem calling url " + url);

@@ -26,23 +26,28 @@ class JsonGigs {
 	}
 
 	private Gig createGig(JSONObject event) {
-		if (event.getJSONArray("performance").length() == 0) {
-			return null;
+		String bandName = null;
+		Integer artistId = null;
+		
+		if (event.getJSONArray("performance").length() != 0) {
+			JSONObject performance = event.getJSONArray("performance")
+					.getJSONObject(0);
+			bandName = performance.getString("displayName");
+			JSONObject artist = performance.getJSONObject("artist");
+			artistId = artist.isNull("id") ? null : artist.getInt("id");
 		}
-		JSONObject performance = event.getJSONArray("performance")
-				.getJSONObject(0);
-		return performanceToGig(event, performance);
-	}
-
-	private Gig performanceToGig(JSONObject event, JSONObject performance) {
-		String bandName = performance.getString("displayName");
+		
 		String date = event.getJSONObject("start").getString("date");
 		JSONObject venue = event.getJSONObject("venue");
-		JSONObject artist = performance.getJSONObject("artist");
 		String venueName = venue.getString("displayName");
 		Integer venueId = venue.isNull("id") ? null : venue.getInt("id");
-		Integer artistId = artist.isNull("id") ? null : artist.getInt("id");
+		Coordinate venueLocation = getLocation(venue);
+		return new Gig(bandName, artistId, date, venueName, venueId, venueLocation);
+	}
 
-		return new Gig(bandName, artistId, date, venueName, venueId, null);
+	private Coordinate getLocation(JSONObject venue) {
+		Double latitude = venue.isNull("lat") ? null : venue.getDouble("lat");
+		Double longitude = venue.isNull("lng") ? null : venue.getDouble("lng");
+		return latitude == null || longitude == null ? null : new Coordinate(latitude, longitude);
 	}
 }

@@ -1,16 +1,17 @@
 package com.artisan.radiohere;
 
 import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.avh4.test.junit.Nested;
@@ -18,21 +19,22 @@ import net.avh4.test.junit.Nested;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 
 import rx.Observable;
 import rx.observers.TestObserver;
 
 @RunWith(Nested.class)
-public class GigObservableFactoryTest {
+public class GigFactoryTest {
 	private SongKick songKick;
-	private GigObservableFactory gigObservableFactory;
-	private VenueObservableFactory venueObservableFactory;
+	private GigFactory gigObservableFactory;
+	private TrackObservableFactory trackObservableFactory;
 
 	@Before
 	public void before() {
 		songKick = mock(SongKick.class);
-		venueObservableFactory = mock(VenueObservableFactory.class);
-		gigObservableFactory = spy(new GigObservableFactory(songKick, venueObservableFactory, 1, 100.0));
+		trackObservableFactory = mock(TrackObservableFactory.class);
+		gigObservableFactory = spy(new GigFactory(trackObservableFactory, songKick, 1, 100.0));
 	}
 
 	public class WithNoGigs {
@@ -73,13 +75,11 @@ public class GigObservableFactoryTest {
 	
 	public class WithOneGig {
 		private List<Gig> gigs;
-		private Venue venue;
-		private Gig gig = new Gig("artist", 1, "date", "venueName", 2, null);
+		private Gig gig = new Gig("artist", 1, "date", "venueName", 2, new Coordinate(51.5, -0.1));
 	        
 		@Before
 		public void before() throws Exception {
-			venue = new Venue("name", "postcode", new Coordinate(51.5, -0.1));
-			when(venueObservableFactory.create(2)).thenReturn(Observable.just(venue));
+			when(trackObservableFactory.create("artist")).thenReturn(Observable.empty());
 			when(songKick.getGigs(0)).thenReturn("gigs Json");
 			doReturn(Observable.just(gig)).when(gigObservableFactory).songKickToGigs("gigs Json");
 			Observable<Gig> observable = gigObservableFactory.create();
@@ -117,30 +117,18 @@ public class GigObservableFactoryTest {
 		}
 		
 		@Test
-		public void shouldProvideTheVenue() throws Exception {
-			assertThat(gigs.get(0).getVenue(), equalTo(venue));
-		}
-
-		@Test
 		public void shouldProvideTheVenueDistance() throws Exception {
 			assertThat(gigs.get(0).getVenueDistance(Coordinate.OLD_STREET), closeTo(3.185, 0.006));
-		}
-
-		@Test
-		public void shouldProvideTheDistanceFromOldStreet() throws Exception {
-			assertThat(gigs.get(0).getDistance(), closeTo(3.185, 0.006));
 		}
 	}
 
 	public class WithOneGigALongWayAway {
-		private Gig gig = new Gig("artist", 1, "date", "venueName", 2, null);
+		private Gig gig = new Gig("artist", 1, "date", "venueName", 2, new Coordinate(12, 30));
 		private List<Gig> gigs;
-		private Venue venue;
 	        
 		@Before
 		public void before() throws Exception {
-			venue = new Venue("name", "postcode", new Coordinate(12, 30));
-			when(venueObservableFactory.create(2)).thenReturn(Observable.just(venue));
+			when(trackObservableFactory.create("artist")).thenReturn(Observable.empty());
 			when(songKick.getGigs(0)).thenReturn("gigs Json");
 			doReturn(Observable.just(gig)).when(gigObservableFactory).songKickToGigs("gigs Json");
 			Observable<Gig> observable = gigObservableFactory.create();
@@ -159,7 +147,6 @@ public class GigObservableFactoryTest {
 		
 		@Before
 		public void before() throws Exception {
-			when(venueObservableFactory.create(null)).thenReturn(Observable.empty());
 			when(songKick.getGigs(0)).thenReturn("gigs Json");
 			Observable<Gig> observable = gigObservableFactory.create();
 			doReturn(Observable.just(gig)).when(gigObservableFactory).songKickToGigs("gigs Json");
@@ -167,21 +154,19 @@ public class GigObservableFactoryTest {
 		}
 		
 		@Test
-		public void shouldObserveOneGig() throws Exception {
+		public void shouldObserveNoGigs() throws Exception {
 			assertThat(gigs, empty());
 		}
 	}
 	
 	public class WithManyGigsSameArtistDifferentDate {
-		private Gig gig1 = new Gig("artist", 1, "date", "venueName", 2, null);
-		private Gig gig2 = new Gig("artist", 1, "different date", "venueName", 2, null);
+		private Gig gig1 = new Gig("artist", 1, "date", "venueName", 2, new Coordinate(51, 1));
+		private Gig gig2 = new Gig("artist", 1, "different date", "venueName", 2, new Coordinate(51, 1));
 		private List<Gig> gigs;
-		private Venue venue1;
 		
 		@Before
 		public void before() throws Exception {
-			venue1 = new Venue("name1", "postcode1", new Coordinate(51, 1));
-			when(venueObservableFactory.create(2)).thenReturn(Observable.just(venue1));
+			when(trackObservableFactory.create("artist")).thenReturn(Observable.empty());
 			when(songKick.getGigs(0)).thenReturn("gigs Json");
 			Observable<Gig> observable = gigObservableFactory.create();
 			doReturn(Observable.from(gig1, gig2)).when(gigObservableFactory).songKickToGigs("gigs Json");
@@ -205,15 +190,13 @@ public class GigObservableFactoryTest {
 	}
 	
 	public class WithManyGigsSameArtistSameDate {
-		private Gig gig1 = new Gig("artist", 1, "date", "venueName", 2, null);
-		private Gig gig2 = new Gig("artist", 1, "date", "venueName", 2, null);
+		private Gig gig1 = new Gig("artist", 1, "date", "venueName", 2, new Coordinate(51, 1));
+		private Gig gig2 = new Gig("artist", 1, "date", "venueName", 2, new Coordinate(51, 1));
 		private List<Gig> gigs;
-		private Venue venue1;
 		
 		@Before
 		public void before() throws Exception {
-			venue1 = new Venue("name1", "postcode1", new Coordinate(51, 1));
-			when(venueObservableFactory.create(2)).thenReturn(Observable.just(venue1));
+			when(trackObservableFactory.create("artist")).thenReturn(Observable.empty());
 			when(songKick.getGigs(0)).thenReturn("gigs Json");
 			doReturn(Observable.from(gig1, gig2)).when(gigObservableFactory).songKickToGigs("gigs Json");
 			Observable<Gig> observable = gigObservableFactory.create();
@@ -232,18 +215,14 @@ public class GigObservableFactoryTest {
 	}
 	
 	public class WithManyGigs {
-		private Gig gig1 = new Gig("artist1", 1, "date", "venueName 1", 2, null);
-		private Gig gig2 = new Gig("artist2", 1, "date", "venueName 2", 3, null);
+		private Gig gig1 = new Gig("artist1", 1, "date", "venueName 1", 2, new Coordinate(51, 1));
+		private Gig gig2 = new Gig("artist2", 1, "date", "venueName 2", 3, new Coordinate(51.1, 0));
 		private List<Gig> gigs;
-		private Venue venue1;
-		private Venue venue2;
 		
 		@Before
 		public void before() throws Exception {
-			venue1 = new Venue("name1", "postcode1", new Coordinate(51, 1));
-			venue2 = new Venue("name2", "postcode2", new Coordinate(51.1, 0));
-			when(venueObservableFactory.create(2)).thenReturn(Observable.just(venue1));
-			when(venueObservableFactory.create(3)).thenReturn(Observable.just(venue2));
+			when(trackObservableFactory.create("artist1")).thenReturn(Observable.empty());
+			when(trackObservableFactory.create("artist2")).thenReturn(Observable.empty());
 			when(songKick.getGigs(0)).thenReturn("gigs Json");
 			doReturn(Observable.from(gig1, gig2)).when(gigObservableFactory).songKickToGigs("gigs Json");
 			Observable<Gig> observable = gigObservableFactory.create();
@@ -267,20 +246,16 @@ public class GigObservableFactoryTest {
 	}
 	
 	public class WithManyPages {
-		private Gig gig1 = new Gig("artist1", 1, "date", "venueName 1", 2, null);
-		private Gig gig2 = new Gig("artist2", 1, "date", "venueName 2", 3, null);
+		private Gig gig1 = new Gig("artist1", 1, "date", "venueName 1", 2, new Coordinate(51, -1));
+		private Gig gig2 = new Gig("artist2", 1, "date", "venueName 2", 3, new Coordinate(52, 0));
 		private List<Gig> gigs;
-		private Venue venue1;
-		private Venue venue2;
 	        
 		@Before
 		public void before() throws Exception {
-			gigObservableFactory = spy(new GigObservableFactory(songKick, venueObservableFactory, 2, 100.0));
+			when(trackObservableFactory.create("artist1")).thenReturn(Observable.empty());
+			when(trackObservableFactory.create("artist2")).thenReturn(Observable.empty());
+			gigObservableFactory = spy(new GigFactory(trackObservableFactory, songKick, 2, 100.0));
 
-			venue1 = new Venue("name1", "postcode1", new Coordinate(51, -1));
-			venue2 = new Venue("name2", "postcode2", new Coordinate(52, 0));
-			when(venueObservableFactory.create(2)).thenReturn(Observable.just(venue1));
-			when(venueObservableFactory.create(3)).thenReturn(Observable.just(venue2));
 			when(songKick.getGigs(0)).thenReturn("gigsJsonPage1");
 			when(songKick.getGigs(1)).thenReturn("gigsJsonPage2");
 			doReturn(Observable.just(gig1)).when(gigObservableFactory).songKickToGigs("gigsJsonPage1");
@@ -302,6 +277,78 @@ public class GigObservableFactoryTest {
 		@Test
 		public void shouldProvideTheSecondGig() throws Exception {
 			assertThat(gigs, hasItem(gig2));
+		}
+	}
+
+	public class WithNoTracks {
+		private List<Gig> gigs;
+		private Gig gig = new Gig("artist", 1, "date", "venueName", 2, new Coordinate(51.5, -0.1));
+	        
+		@Before
+		public void before() throws Exception {
+			when(songKick.getGigs(0)).thenReturn("gigs Json");
+			doReturn(Observable.just(gig)).when(gigObservableFactory).songKickToGigs("gigs Json");
+			Observable<Gig> observable = gigObservableFactory.create();
+			when(trackObservableFactory.create("artist")).thenReturn(Observable.empty());
+			gigs = observable.toList().toBlockingObservable().single();	
+		}
+				
+		@Test
+		public void shouldHaveNoTracks() throws Exception {
+			assertThat(gigs.get(0).getTracks(), empty());
+		}
+	}
+
+	public class WithOneTrack {
+		private Track track = new Track("name", "streamurl");
+		private List<Gig> gigs;
+		private Gig gig = new Gig("artist", 1, "date", "venueName", 2, new Coordinate(51.5, -0.1));
+		
+		@Before
+		public void before() throws Exception {
+			when(trackObservableFactory.create("artist")).thenReturn(Observable.empty());
+			when(songKick.getGigs(0)).thenReturn("gigs Json");
+			doReturn(Observable.just(gig)).when(gigObservableFactory).songKickToGigs("gigs Json");
+			Observable<Gig> observable = gigObservableFactory.create();
+			when(trackObservableFactory.create("artist")).thenReturn(Observable.just(track));
+			gigs = observable.toList().toBlockingObservable().single();	
+		}
+		
+		@Test
+		public void shouldHaveOneTracks() throws Exception {
+			assertThat(gigs.get(0).getTracks().size(), is(1));
+		}
+
+		@Test
+		public void shouldHaveTheTrackDetails() throws Exception {
+			assertThat(gigs.get(0).getTracks().get(0), equalTo(track));
+		}
+	}
+
+	public class WithTwoTracks {
+		private Track track1 = new Track("name1", "streamurl1");
+		private Track track2 = new Track("name2", "streamurl2");
+		private List<Gig> gigs;
+		private Gig gig = new Gig("artist", 1, "date", "venueName", 2, new Coordinate(51.5, -0.1));
+		
+		@Before
+		public void before() throws Exception {
+			when(trackObservableFactory.create("artist")).thenReturn(Observable.empty());
+			when(songKick.getGigs(0)).thenReturn("gigs Json");
+			doReturn(Observable.just(gig)).when(gigObservableFactory).songKickToGigs("gigs Json");
+			Observable<Gig> observable = gigObservableFactory.create();
+			when(trackObservableFactory.create("artist")).thenReturn(Observable.from(track1, track2));
+			gigs = observable.toList().toBlockingObservable().single();	
+		}
+		
+		@Test
+		public void shouldHaveOneTracks() throws Exception {
+			assertThat(gigs.get(0).getTracks().size(), is(2));
+		}
+		
+		@Test
+		public void shouldHaveTheTrackDetails() throws Exception {
+			assertThat(gigs.get(0).getTracks(), contains(track1, track2));
 		}
 	}
 }

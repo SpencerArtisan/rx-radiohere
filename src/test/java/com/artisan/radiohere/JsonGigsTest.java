@@ -1,18 +1,10 @@
 package com.artisan.radiohere;
 
-import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.avh4.test.junit.Nested;
@@ -20,8 +12,6 @@ import net.avh4.test.junit.Nested;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import rx.Observable;
 
 @RunWith(Nested.class)
 public class JsonGigsTest {
@@ -35,7 +25,7 @@ public class JsonGigsTest {
 				"      {                                                  " +
 				"        'start':{'date':'2012-04-18'},                   " +
 				"        'performance':[],     							 " +
-				"        'venue':{'displayName':'The Fillmore','id':42}   " +
+				"        'venue':{'displayName':'The Fillmore', 'lat': 51, 'lng': 1}   " +
 				"      }                                                  " +
 				"    ]}                                                   " +
 				"  }                                                      " +
@@ -47,8 +37,13 @@ public class JsonGigsTest {
 		}
 		
 		@Test
-		public void shouldObserveNoGigs() throws Exception {
-			assertThat(gigs, empty());
+		public void shouldObserveOneGig() throws Exception {
+			assertThat(gigs.size(), is(1));
+		}
+
+		@Test
+		public void shouldProvideANullArtist() throws Exception {
+			assertThat(gigs.get(0).getArtist(), nullValue());
 		}
 	}
 	
@@ -65,7 +60,7 @@ public class JsonGigsTest {
 				"             'artist': {'id': 1},     					 " +
 				"           }     										 " +
 				"        ],     											 " +
-				"        'venue':{'displayName':'The Fillmore', 'id':42}  " +
+				"        'venue':{'displayName':'The Fillmore', 'lat': 52, 'lng': 1}  " +
 				"      }                                                  " +
 				"    ]}                                                   " +
 				"  }                                                      " +
@@ -102,12 +97,12 @@ public class JsonGigsTest {
 		}
 
 		@Test
-		public void shouldProvideTheVenueId() throws Exception {
-			assertThat(gigs.get(0).getVenueId(), equalTo(42));
+		public void shouldProvideALocation() throws Exception {
+			assertThat(gigs.get(0).getVenue(), is(new Coordinate(52, 1)));
 		}
 	}
 	
-	public class WithUnknownVenue {
+	public class WithNullLatLong {
 		private static final String gigsJson = 
 				"{                                                        " +
 				"  'resultsPage': {                                       " +
@@ -120,7 +115,7 @@ public class JsonGigsTest {
 				"             'artist': {'id': 1},     					 " +
 				"           }     										 " +
 				"        ],     											 " +
-				"        'venue':{'displayName':'The Fillmore', 'id':null}" +
+				"        'venue':{'displayName':'The Fillmore', 'lat':null, 'lng':null}" +
 				"      }                                                  " +
 				"    ]}                                                   " +
 				"  }                                                      " +
@@ -131,9 +126,49 @@ public class JsonGigsTest {
 			gigs = new JsonGigs(gigsJson).extract().toList().toBlockingObservable().single();
 		}
 		
-//		@Test
-//		public void shouldObserveNoGigs() throws Exception {
-//			assertThat(gigs, empty());
-//		}
+		@Test
+		public void shouldObserveOneGig() throws Exception {
+			assertThat(gigs.size(), is(1));
+		}
+
+		@Test
+		public void shouldProvideANullLocation() throws Exception {
+			assertThat(gigs.get(0).getVenue(), nullValue());
+		}
+	}
+	
+	public class WithoutLatLong {
+		private static final String gigsJson = 
+				"{                                                        " +
+						"  'resultsPage': {                                       " +
+						"    'results': { 'event': [                              " +
+						"      {                                                  " +
+						"        'start':{'date':'2012-04-18'},                   " +
+						"        'performance':[     							 " +
+						"           {											 " +
+						"			  'displayName': 'Wild Flag',     			 " +
+						"             'artist': {'id': 1},     					 " +
+						"           }     										 " +
+						"        ],     											 " +
+						"        'venue':{'displayName':'The Fillmore'}" +
+						"      }                                                  " +
+						"    ]}                                                   " +
+						"  }                                                      " +
+						"}  														 ";
+		
+		@Before
+		public void before() throws Exception {
+			gigs = new JsonGigs(gigsJson).extract().toList().toBlockingObservable().single();
+		}
+		
+		@Test
+		public void shouldObserveOneGig() throws Exception {
+			assertThat(gigs.size(), is(1));
+		}
+		
+		@Test
+		public void shouldProvideANullLocation() throws Exception {
+			assertThat(gigs.get(0).getVenue(), nullValue());
+		}
 	}
 }

@@ -7,11 +7,7 @@ import rx.Observable;
 public class GigObservableFactoryIntegrationTest {
 	@Test
 	public void dumpGigs() throws Exception {
-		SongKick songKick = new SongKick();
-		Observable<Gig> gigObservable = new GigObservableFactory(
-				songKick, 
-				new VenueObservableFactory(songKick), 
-				25, 5).create();
+		Observable<Gig> gigObservable = new GigFactory().create();
 		Dumper.dumpForTimePeriod(gigObservable, 12000);
 	}
 }

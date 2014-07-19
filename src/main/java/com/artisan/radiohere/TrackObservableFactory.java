@@ -30,7 +30,7 @@ public class TrackObservableFactory {
 	}
 
 	private Observable<String> createSoundCloudPageObservable(String artist) {
-		return Async.fromCallable(() -> soundCloud.getTracks(artist), Schedulers.trampoline());
+		return Async.fromCallable(() -> soundCloud.getTracks(artist), Schedulers.io());
 	}
 	
 	public Observable<Track> createTrackObservable(String soundCloudJson) {
