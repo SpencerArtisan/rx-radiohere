@@ -1,11 +1,7 @@
 package com.artisan.radiohere.comms;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.logging.Logger;
 
-import javax.net.ssl.ExtendedSSLSession;
 import javax.servlet.annotation.WebServlet;
 
 import org.eclipse.jetty.server.Server;
@@ -14,12 +10,6 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
-import org.json.JSONObject;
-
-import rx.Observable;
-
-import com.artisan.radiohere.Artist;
-import com.artisan.radiohere.ArtistObservableFactory;
 
 @WebServlet(name = "MyEcho WebSocket Servlet", urlPatterns = { "/game" })
 public class RadiohereServerEndpoint extends WebSocketServlet {

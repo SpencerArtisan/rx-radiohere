@@ -1,10 +1,7 @@
 package com.artisan.radiohere;
 
-import java.util.logging.Logger;
 
 public class Gig {
-    private Logger logger = Logger.getLogger(this.getClass().getName());
-
     private final String artist;
 	private final String date;
 	private final String venueName;

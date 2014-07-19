@@ -1,14 +1,8 @@
 package com.artisan.radiohere;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.logging.Logger;
 
 import org.apache.http.client.fluent.Request;
-
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.Protocol;
 
 public class ApiRetrier {
 	private static Cacher cacher = new Cacher();

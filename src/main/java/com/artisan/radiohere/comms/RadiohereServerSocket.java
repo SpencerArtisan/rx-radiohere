@@ -1,18 +1,7 @@
 package com.artisan.radiohere.comms;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Collections;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import javax.websocket.CloseReason;
-import javax.websocket.OnClose;
-import javax.websocket.OnOpen;
-import javax.websocket.server.ServerEndpoint;
-
-import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
@@ -24,9 +13,6 @@ import rx.Observable;
 
 import com.artisan.radiohere.Artist;
 import com.artisan.radiohere.ArtistObservableFactory;
-import com.artisan.radiohere.Coordinate;
-import com.artisan.radiohere.Gig;
-import com.artisan.radiohere.Venue;
 
 @WebSocket
 public class RadiohereServerSocket {

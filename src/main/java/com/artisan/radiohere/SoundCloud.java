@@ -3,8 +3,6 @@ package com.artisan.radiohere;
 import java.net.URLEncoder;
 import java.util.logging.Logger;
 
-import org.apache.http.client.fluent.Request;
-
 public class SoundCloud {
     private Logger logger = Logger.getLogger(this.getClass().getName());
 	private static final String CLIENT_ID = "ab2cd50270f2b1097c169d43f06a3d17";
