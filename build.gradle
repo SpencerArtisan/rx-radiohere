@@ -23,6 +23,7 @@ dependencies {
     compile 'org.eclipse.jetty:jetty-annotations:+'
     
     compile 'redis.clients:jedis:2.1.0'
+	compile 'com.google.guava:guava:11.0.2'
 
     // add support for jetty implementation of websockets
     compile 'org.eclipse.jetty.websocket:websocket-server:+'
