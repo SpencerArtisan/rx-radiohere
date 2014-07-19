@@ -42,7 +42,7 @@ public class GigFactory {
 	}
 
 	public GigFactory() {
-		this(new TrackFactory(), new SongKick(), new JsonGigs(), 28);
+		this(new TrackFactory(), new SongKick(), new JsonGigs(), 18);
 	}
 
 	public Observable<Gig> create(Coordinate origin, double maximumDistanceFromOrigin) {
