@@ -36,7 +36,7 @@ class JsonGigs {
 		String venueName = venue.getString("displayName");
 		Integer venueId = venue.isNull("id") ? null : venue.getInt("id");
 		Coordinate venueLocation = getLocation(venue);
-		return new Gig(bandName, artistId, date, venueName, venueId, venueLocation);
+		return new Gig(bandName, date, venueName, venueLocation);
 	}
 
 	private Coordinate getLocation(JSONObject venue) {

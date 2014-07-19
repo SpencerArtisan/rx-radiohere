@@ -77,7 +77,7 @@ public class GigFactoryTest {
 	
 	public class WithOneGig {
 		private List<Gig> gigs;
-		private Gig gig = new Gig("artist", 1, "date", "venueName", 2, new Coordinate(51.5, -0.1));
+		private Gig gig = new Gig("artist", "date", "venueName", new Coordinate(51.5, -0.1));
 	        
 		@Before
 		public void before() throws Exception {
@@ -97,11 +97,6 @@ public class GigFactoryTest {
 		public void shouldProvideTheArtist() throws Exception {
 			assertThat(gigs.get(0).getArtist(), equalTo("artist"));
 		}
-		
-		@Test
-		public void shouldProvideTheArtistId() throws Exception {
-			assertThat(gigs.get(0).getSongkickArtistId(), equalTo(1));
-		}
 
 		@Test
 		public void shouldProvideTheDate() throws Exception {
@@ -114,18 +109,13 @@ public class GigFactoryTest {
 		}
 
 		@Test
-		public void shouldProvideTheVenueId() throws Exception {
-			assertThat(gigs.get(0).getVenueId(), equalTo(2));
-		}
-		
-		@Test
 		public void shouldProvideTheVenueDistance() throws Exception {
 			assertThat(gigs.get(0).getVenueDistance(Coordinate.OLD_STREET), closeTo(3.185, 0.006));
 		}
 	}
 
 	public class WithOneGigALongWayAway {
-		private Gig gig = new Gig("artist", 1, "date", "venueName", 2, new Coordinate(12, 30));
+		private Gig gig = new Gig("artist", "date", "venueName", new Coordinate(12, 30));
 		private List<Gig> gigs;
 	        
 		@Before
@@ -144,7 +134,7 @@ public class GigFactoryTest {
 	}
 	
 	public class WithUnknownVenue {
-		private Gig gig = new Gig("artist", 1, "date", "venueName", null, null);
+		private Gig gig = new Gig("artist", "date", "venueName", null);
 		private List<Gig> gigs;
 		
 		@Before
@@ -162,8 +152,8 @@ public class GigFactoryTest {
 	}
 	
 	public class WithManyGigsSameArtistDifferentDate {
-		private Gig gig1 = new Gig("artist", 1, "date", "venueName", 2, new Coordinate(51, 1));
-		private Gig gig2 = new Gig("artist", 1, "different date", "venueName", 2, new Coordinate(51, 1));
+		private Gig gig1 = new Gig("artist", "date", "venueName", new Coordinate(51, 1));
+		private Gig gig2 = new Gig("artist", "different date", "venueName", new Coordinate(51, 1));
 		private List<Gig> gigs;
 		
 		@Before
@@ -192,8 +182,8 @@ public class GigFactoryTest {
 	}
 	
 	public class WithManyGigsSameArtistSameDate {
-		private Gig gig1 = new Gig("artist", 1, "date", "venueName", 2, new Coordinate(51, 1));
-		private Gig gig2 = new Gig("artist", 1, "date", "venueName", 2, new Coordinate(51, 1));
+		private Gig gig1 = new Gig("artist", "date", "venueName", new Coordinate(51, 1));
+		private Gig gig2 = new Gig("artist", "date", "venueName", new Coordinate(51, 1));
 		private List<Gig> gigs;
 		
 		@Before
@@ -217,8 +207,8 @@ public class GigFactoryTest {
 	}
 	
 	public class WithManyGigs {
-		private Gig gig1 = new Gig("artist1", 1, "date", "venueName 1", 2, new Coordinate(51, 1));
-		private Gig gig2 = new Gig("artist2", 1, "date", "venueName 2", 3, new Coordinate(51.1, 0));
+		private Gig gig1 = new Gig("artist1", "date", "venueName 1", new Coordinate(51, 1));
+		private Gig gig2 = new Gig("artist2", "date", "venueName 2", new Coordinate(51.1, 0));
 		private List<Gig> gigs;
 		
 		@Before
@@ -248,8 +238,8 @@ public class GigFactoryTest {
 	}
 	
 	public class WithManyPages {
-		private Gig gig1 = new Gig("artist1", 1, "date", "venueName 1", 2, new Coordinate(51, -1));
-		private Gig gig2 = new Gig("artist2", 1, "date", "venueName 2", 3, new Coordinate(52, 0));
+		private Gig gig1 = new Gig("artist1", "date", "venueName 1", new Coordinate(51, -1));
+		private Gig gig2 = new Gig("artist2", "date", "venueName 2", new Coordinate(52, 0));
 		private List<Gig> gigs;
 	        
 		@Before
@@ -284,7 +274,7 @@ public class GigFactoryTest {
 
 	public class WithNoTracks {
 		private List<Gig> gigs;
-		private Gig gig = new Gig("artist", 1, "date", "venueName", 2, new Coordinate(51.5, -0.1));
+		private Gig gig = new Gig("artist", "date", "venueName", new Coordinate(51.5, -0.1));
 	        
 		@Before
 		public void before() throws Exception {
@@ -304,7 +294,7 @@ public class GigFactoryTest {
 	public class WithOneTrack {
 		private Track track = new Track("name", "streamurl");
 		private List<Gig> gigs;
-		private Gig gig = new Gig("artist", 1, "date", "venueName", 2, new Coordinate(51.5, -0.1));
+		private Gig gig = new Gig("artist", "date", "venueName", new Coordinate(51.5, -0.1));
 		
 		@Before
 		public void before() throws Exception {
@@ -331,7 +321,7 @@ public class GigFactoryTest {
 		private Track track1 = new Track("name1", "streamurl1");
 		private Track track2 = new Track("name2", "streamurl2");
 		private List<Gig> gigs;
-		private Gig gig = new Gig("artist", 1, "date", "venueName", 2, new Coordinate(51.5, -0.1));
+		private Gig gig = new Gig("artist", "date", "venueName", new Coordinate(51.5, -0.1));
 		
 		@Before
 		public void before() throws Exception {

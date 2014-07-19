@@ -8,21 +8,17 @@ public class Gig {
     private final String artist;
 	private final String date;
 	private final String venueName;
-	private final Integer venueId;
-	private final Integer songkickArtistId;
 	private final Coordinate venue;
 	private List<Track> tracks;
 
-	public Gig(String artist, Integer songkickArtistId, String date, String venueName, Integer venueId, Coordinate venue) {
-		this(artist, songkickArtistId, date, venueName, venueId, venue, new ArrayList<>());
+	public Gig(String artist, String date, String venueName, Coordinate venue) {
+		this(artist, date, venueName, venue, new ArrayList<>());
 	}
 	
-	public Gig(String artist, Integer songkickArtistId, String date, String venueName, Integer venueId, Coordinate venue, List<Track> tracks) {
+	public Gig(String artist, String date, String venueName, Coordinate venue, List<Track> tracks) {
 		this.artist = artist;
-		this.songkickArtistId = songkickArtistId;
 		this.date = date;
 		this.venueName = venueName;
-		this.venueId = venueId;
 		this.venue = venue;
 		this.tracks = tracks;
 	}
@@ -32,37 +28,25 @@ public class Gig {
 	}
 
 	public Gig setTracks(List<Track> tracks) {
-		return new Gig(artist, songkickArtistId, date, venueName, venueId, venue, tracks);
+		return new Gig(artist, date, venueName, venue, tracks);
 	}
 
 	public Gig addTrack(Track track) {
 		ArrayList<Track> newTracks = new ArrayList<> (tracks);
 		newTracks.add(track);
-		return new Gig(artist, songkickArtistId, date, venueName, venueId, venue, newTracks);
+		return new Gig(artist, date, venueName, venue, newTracks);
 	}
 	
 	public String getArtist() {
 		return artist;
 	}
 
-	public Integer getSongkickArtistId() {
-		return songkickArtistId;
-	}
-
-	public ArtistId getArtistId() {
-		return new ArtistId(songkickArtistId, artist);
-	}
-	
 	public String getDate() {
 		return date;
 	}
 
 	public String getVenueName() {
 		return venueName;
-	}
-
-	public Integer getVenueId() {
-		return venueId;
 	}
 	
 	public boolean hasArtist() {
@@ -123,8 +107,7 @@ public class Gig {
 	@Override
 	public String toString() {
 		return "Gig [artist=" + artist + ", date=" + date + ", venueName="
-				+ venueName + ", venueId=" + venueId + ", songkickArtistId="
-				+ songkickArtistId + ", venue=" + venue + ", tracks=" + tracks
+				+ venueName + ", venue=" + venue + ", tracks=" + tracks
 				+ "]";
 	}
 

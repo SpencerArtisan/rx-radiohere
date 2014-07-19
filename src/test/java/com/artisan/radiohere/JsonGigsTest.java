@@ -82,11 +82,6 @@ public class JsonGigsTest {
 		}
 		
 		@Test
-		public void shouldProvideTheArtistId() throws Exception {
-			assertThat(gigs.get(0).getSongkickArtistId(), equalTo(1));
-		}
-
-		@Test
 		public void shouldProvideTheDate() throws Exception {
 			assertThat(gigs.get(0).getDate(), equalTo("2012-04-18"));
 		}
