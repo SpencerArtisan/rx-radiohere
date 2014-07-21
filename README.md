@@ -3,4 +3,5 @@
 rx-radiohere
 ============
 
-Generates playlists of bands playing live in London in the next month
+Provides information and sample tracks for gigs in London.  Data is pushed to the client through a web socket.
+
