@@ -36,28 +36,4 @@ public class SongKickIntegrationTest {
 			new JSONObject(gigs).getJSONObject("resultsPage");
 		}
 	}
-	
-	public class WhenVenueRetrieved {		
-		private String venue;
-		
-		@Before
-		public void before() throws Exception {
-			venue = new SongKick().getVenue(7039);
-		}
-		
-		@Test
-		public void shouldReturnSomething() throws Exception {
-			assertThat(venue, not(isEmptyOrNullString()));
-		}
-		
-		@Test
-		public void shouldReturnValidJSON() throws Exception {
-			new JSONObject(venue);
-		}
-		
-		@Test
-		public void shouldContainAResultsPageNode() throws Exception {
-			new JSONObject(venue).getJSONObject("resultsPage");
-		}
-	}
 }

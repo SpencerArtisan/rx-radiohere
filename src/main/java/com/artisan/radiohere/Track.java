@@ -2,19 +2,23 @@ package com.artisan.radiohere;
 
 public class Track {
 	private final String name;
-	private final String streamUri;
+	private final String streamUrl;
 
-	public Track(String name, String streamUri) {
+	public Track(String name, String streamUrl) {
 		this.name = name;
-		this.streamUri = streamUri;
+		this.streamUrl = streamUrl;
 	}
 	
 	public String getName() {
 		return name;
 	}
 	
+	public boolean hasStreamUrl() {
+		return streamUrl != null;
+	}
+	
 	public String getStreamUrl() {
-		return streamUri;
+		return streamUrl;
 	}
 
 	@Override
@@ -23,7 +27,7 @@ public class Track {
 		int result = 1;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result
-				+ ((streamUri == null) ? 0 : streamUri.hashCode());
+				+ ((streamUrl == null) ? 0 : streamUrl.hashCode());
 		return result;
 	}
 
@@ -41,16 +45,16 @@ public class Track {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (streamUri == null) {
-			if (other.streamUri != null)
+		if (streamUrl == null) {
+			if (other.streamUrl != null)
 				return false;
-		} else if (!streamUri.equals(other.streamUri))
+		} else if (!streamUrl.equals(other.streamUrl))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Track [name=" + name + ", streamUri=" + streamUri + "]";
+		return "Track [name=" + name + ", streamUri=" + streamUrl + "]";
 	}
 }

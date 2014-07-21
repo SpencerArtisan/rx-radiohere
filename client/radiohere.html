@@ -75,9 +75,9 @@
 
 	<div ng-init="loadArtists()">
 		<ul class="list">
-			<li ng-repeat="artist in artists">
-				<a href="#" ng-click='play(artist.tracks[0].streamUrl, artist.tracks[0].name)'>{{artist.name}}</a>
-				(playing at {{artist.gigs[0].venue.name}})
+			<li ng-repeat="gig in gigs">
+				<a href="#" ng-click='play(gig)'>{{gig.artist}}</a>
+				(playing {{gig.date}} {{gig.distance.toFixed(1)}}km away at {{gig.venueName}})
 			</li>
 		</ul>
 	</div>

@@ -3,15 +3,14 @@ package com.artisan.radiohere;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Gig {
     private final String artist;
 	private final String date;
 	private final String venueName;
 	private final Coordinate venue;
-	private final List<Track> tracks;
 	private final Double distance;
 	private final String songkickUrl;
+	private final List<Track> tracks;
 
 	public Gig(String artist, String date, String venueName, Coordinate venue, String songkickUrl) {
 		this(artist, date, venueName, venue, null, songkickUrl, new ArrayList<>());
@@ -66,7 +65,7 @@ public class Gig {
 	}
 
 	public boolean isDistanceWithinKm(double km) {
-		return distance < km;
+		return distance <= km;
 	}
 
 	public Gig setDistance(double distance) {
@@ -112,51 +111,6 @@ public class Gig {
 	public String toString() {
 		return "Gig [artist=" + artist + ", date=" + date + ", venueName="
 				+ venueName + ", venue=" + venue + ", tracks=" + tracks
-				+ ", distance=" + distance + ", songkickUrl=" + songkickUrl
-				+ "]";
-	}
-}
-
-class ArtistId {
-	final private Integer id;
-	final private String name;
-	
-	public ArtistId(Integer id, String name) {
-		super();
-		this.id = id;
-		this.name = name;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ArtistId other = (ArtistId) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
+				+ ", distance=" + distance + ", songkickUrl=" + songkickUrl + "]";
 	}
 }

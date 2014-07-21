@@ -17,10 +17,6 @@ public class ApiRetrier {
 	}
 
 	public String execute() throws ApiException {
-		return getValueFromApi();
-	}
-	
-	public String getValueFromApi() throws ApiException {
 		for (int i = 0; i < retries; i++) {
 			try {
 				return callApi();

@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import rx.Observable;
 
-class JsonGigs {
+class JsonGigExtractor {
 	public Observable<Gig> extract(String songKickJson) {
 		JSONArray events = new JSONObject(songKickJson)
 				.getJSONObject("resultsPage").getJSONObject("results")
@@ -15,26 +15,21 @@ class JsonGigs {
 		List<JSONObject> eventsJson = JSONUtil.convertToList(events);
 		return Observable
 				.from(eventsJson)
-				.map(this::createGig)
-				.filter((gig) -> gig != null);
+				.map(this::createGig);
 	}
 
 	private Gig createGig(JSONObject event) {
 		String bandName = null;
-		Integer artistId = null;
 		
 		if (event.getJSONArray("performance").length() != 0) {
-			JSONObject performance = event.getJSONArray("performance")
-					.getJSONObject(0);
+			JSONObject performance = event.getJSONArray("performance").getJSONObject(0);
 			bandName = performance.getString("displayName");
-			JSONObject artist = performance.getJSONObject("artist");
-			artistId = artist.isNull("id") ? null : artist.getInt("id");
 		}
 		
 		String date = event.getJSONObject("start").getString("date");
 		JSONObject venue = event.getJSONObject("venue");
-		String venueName = venue.getString("displayName");
 		Coordinate venueLocation = getLocation(venue);
+		String venueName = venue.getString("displayName");
 		String songkickUrl = event.getString("uri");
 		return new Gig(bandName, date, venueName, venueLocation, songkickUrl);
 	}
