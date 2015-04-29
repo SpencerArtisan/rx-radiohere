@@ -13,7 +13,7 @@ import com.google.common.cache.LoadingCache;
 
 public class GigFactory {
 	private static final String CACHE_KEY = "LONDON";
-	private static final int DEFAULT_SONGKICK_PAGES = 28;
+	private static final int DEFAULT_SONGKICK_PAGES = 40;
 	private final LoadingCache<String, Observable<Gig>> cachedGigs;
 	private final TrackFactory trackFactory;
 
