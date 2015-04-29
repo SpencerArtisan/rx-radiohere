@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import java.util.logging.Logger;
 
 import rx.Observable;
 
