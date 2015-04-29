@@ -10,6 +10,8 @@ import org.json.JSONObject;
 import rx.Observable;
 
 class JsonTrackExtractor {
+    private Logger logger = Logger.getLogger(this.getClass().getName());
+
 	public Observable<Track> extract(String soundCloudJson, String soundCloudClientId) {
         try {
             List<JSONObject> tracksJson = JSONUtil.convertToList(new JSONArray(soundCloudJson));
