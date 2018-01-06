@@ -27,7 +27,7 @@ public class RadiohereServerSocket {
     @OnWebSocketMessage
     public void onMessage(Session session, String message) {
     		logger.info("** Received message from client: " + message);
-    		String[] args = message.split(",");
+    		String[] args = message.replaceAll("\"", "").split(",");
     		Coordinate origin = new Coordinate(Double.parseDouble(args[0]), Double.parseDouble(args[1]));
     		Double distance = Double.parseDouble(args[2]);
     		logger.info("Retrieving gigs within " + distance + "km of " + origin);
