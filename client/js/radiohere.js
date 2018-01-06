@@ -16,7 +16,8 @@
 //        exampleSocket = new WebSocket("ws://localhost:8025/game", []);
         console.log(exampleSocket);
         exampleSocket.onopen = function() {
-        	exampleSocket.send("51.5403,-0.0884,5.0");
+        	exampleSocket.send("51.5544,-0.0907,4.0");
+        	//exampleSocket.send("51.5403,-0.0884,5.0");
         };
         return exampleSocket.onmessage = function(event) {
           return scope.$apply(function() {

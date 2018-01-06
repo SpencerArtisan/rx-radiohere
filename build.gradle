@@ -1,6 +1,5 @@
 apply plugin: 'java'
 apply plugin: 'application'
-apply from: "coffeescript.gradle"
 apply plugin: 'jetty'
 
 mainClassName = 'com.artisan.radiohere.comms.RadiohereServerEndpoint'
@@ -37,10 +36,4 @@ dependencies {
 
 
 task stage(dependsOn: ['clean', 'installApp'])
-
-task compileCoffeeScript(type: CompileCoffeeScript)
-
-processResources { 
-  from compileCoffeeScript
-}
 

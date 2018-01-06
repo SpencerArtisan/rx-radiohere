@@ -77,7 +77,7 @@
 		<ul class="list">
 			<li ng-repeat="gig in gigs">
 				<a href="#" ng-click='play(gig)'>{{gig.artist}}</a>
-				(playing {{gig.date}} {{gig.distance.toFixed(1)}}km away at {{gig.venueName}})
+				(playing {{gig.date}} {{gig.distance.toFixed(3)}}km away at {{gig.venueName}})
 			</li>
 		</ul>
 	</div>

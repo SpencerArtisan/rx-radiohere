@@ -1,11 +1,11 @@
 package com.artisan.radiohere;
 
-import java.util.ArrayList;
-
 import rx.Observable;
 import rx.Subscription;
 import rx.functions.Func0;
 import rx.observables.GroupedObservable;
+
+import java.util.ArrayList;
 
 public class Dumper {
 	public static void dumpForTimePeriod(Observable<?> observable, long milliseconds) throws InterruptedException {
